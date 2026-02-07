@@ -1,0 +1,1334 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>닥터앤서 3.0 공식 기술 명세 | TRI-Agentic AI</title>
+    <meta
+      name="description"
+      content="초개인화 질환 관리를 통한 예후 향상 지원 Agentic AI 토탈 솔루션"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
+
+    <style>
+      :root {
+        /* 배경색 - 더 밝고 부드러운 톤 */
+        --bg: #0a0e17;
+        --card: #131820;
+        --border: #2a3441;
+        --text: #f0f4f8;
+        --text-dim: #9ca3af;
+
+        /* 메인 컬러 - 차분하고 프로페셔널한 톤 */
+        --cyan: #3b82f6; /* 차분한 블루 */
+        --violet: #7c3aed; /* 절제된 바이올렛 */
+        --emerald: #059669; /* 차분한 에메랄드 */
+
+        /* 기관별 색상 코딩 - 통일성 있는 팔레트 */
+        --org-lead: #3b82f6;
+        --org-hospital: #059669;
+        --org-ai: #7c3aed;
+
+        --radius: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background:
+          radial-gradient(
+            at 0% 0%,
+            rgba(59, 130, 246, 0.06) 0,
+            transparent 60%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            rgba(124, 58, 237, 0.06) 0,
+            transparent 60%
+          ),
+          var(--bg);
+        color: var(--text);
+        font-family:
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          sans-serif;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* 헤더 - 더 밝은 배경 */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(10, 14, 23, 0.9);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .logo {
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--text);
+      }
+
+      .logo span {
+        color: var(--cyan);
+      }
+
+      .header-sub {
+        font-size: 12px;
+        color: var(--text-dim);
+        text-align: right;
+        line-height: 1.3;
+      }
+
+      /* 히어로 섹션 */
+      .hero {
+        padding: 80px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        background: rgba(59, 130, 246, 0.12);
+        color: #60a5fa;
+        border: 1px solid rgba(59, 130, 246, 0.25);
+      }
+
+      h1 {
+        font-size: clamp(28px, 5vw, 48px);
+        font-weight: 800;
+        margin: 0 0 24px;
+        line-height: 1.2;
+        letter-spacing: -1.5px;
+      }
+
+      .hero-desc {
+        font-size: clamp(15px, 2vw, 18px);
+        color: #b8c5d0;
+        max-width: 880px;
+        margin-bottom: 40px;
+        line-height: 1.7;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .info-item {
+        background: rgba(19, 24, 32, 0.6);
+        padding: 24px;
+        transition: background 0.2s ease;
+      }
+
+      .info-item:hover {
+        background: rgba(19, 24, 32, 0.8);
+      }
+
+      .info-item label {
+        display: block;
+        font-size: 12px;
+        color: #9ca3af;
+        margin-bottom: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .info-item p {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      /* 섹션 타이틀 */
+      .section-title {
+        margin: 80px 0 32px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(24px, 4vw, 32px);
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: -1px;
+      }
+
+      .section-title p {
+        color: #9ca3af;
+        margin-top: 8px;
+        font-size: 15px;
+      }
+
+      /* 아키텍처 카드 - 더 밝은 배경 */
+      .arch-card {
+        background: rgba(19, 24, 32, 0.85);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 40px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .integration-box {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+        position: relative;
+      }
+
+      .integration-box::after {
+        content: "";
+        position: absolute;
+        top: 40px;
+        left: 15%;
+        right: 15%;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          rgba(59, 130, 246, 0.3),
+          rgba(124, 58, 237, 0.3),
+          rgba(5, 150, 105, 0.3)
+        );
+        opacity: 0.5;
+        z-index: 0;
+      }
+
+      .int-node {
+        text-align: center;
+        z-index: 1;
+        position: relative;
+      }
+
+      .node-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(10, 14, 23, 0.9);
+        border: 2px solid var(--cyan);
+        margin: 0 auto 16px;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 14px;
+        color: var(--cyan);
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+      }
+
+      .int-node h4 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+
+      .int-node p {
+        font-size: 13px;
+        color: #9ca3af;
+        line-height: 1.5;
+      }
+
+      /* 서비스 그리드 */
+      .svc-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-top: 40px;
+      }
+
+      .svc-card {
+        background: rgba(19, 24, 32, 0.85);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .svc-card:hover {
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .svc-header {
+        padding: 24px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        flex-wrap: wrap;
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      .svc-title-wrap {
+        display: grid;
+        gap: 6px;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .svc-index {
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.4px;
+        color: #60a5fa;
+        opacity: 0.95;
+      }
+
+      .svc-header h3 {
+        margin: 0;
+        font-size: clamp(17px, 2.5vw, 20px);
+        font-weight: 800;
+        line-height: 1.3;
+      }
+
+      .svc-tag {
+        font-size: 11px;
+        font-weight: 800;
+        padding: 6px 10px;
+        border-radius: 6px;
+        background: rgba(42, 52, 65, 0.8);
+        color: #9ca3af;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        white-space: nowrap;
+        align-self: flex-start;
+      }
+
+      .svc-body {
+        padding: 24px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+
+      .svc-body h4 {
+        font-size: 14px;
+        margin: 0 0 12px;
+        color: var(--text);
+      }
+
+      .svc-footer {
+        padding: 20px 24px;
+        background: rgba(0, 0, 0, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .mod-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .mod-list li {
+        font-size: 13px;
+        color: #b8c5d0;
+        margin-bottom: 10px;
+        padding-left: 16px;
+        position: relative;
+        line-height: 1.5;
+      }
+
+      .mod-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #60a5fa;
+        font-weight: bold;
+      }
+
+      .as-is-to-be {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .box {
+        padding: 16px;
+        border-radius: 10px;
+        font-size: 13px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        line-height: 1.5;
+      }
+
+      .box b {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+      }
+
+      .box-as {
+        background: rgba(220, 38, 38, 0.08);
+        border-color: rgba(220, 38, 38, 0.2);
+        color: #fca5a5;
+      }
+
+      .box-to {
+        background: rgba(5, 150, 105, 0.08);
+        border-color: rgba(5, 150, 105, 0.2);
+        color: #6ee7b7;
+      }
+
+      /* AITRICS 하이라이트 - 차분하고 프로페셔널하게 */
+      .aitrics-highlight {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(124, 58, 237, 0.06) 0%,
+          rgba(19, 24, 32, 0.85) 40%
+        );
+        border-color: rgba(124, 58, 237, 0.35);
+        box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1);
+      }
+
+      .aitrics-highlight .svc-header {
+        background: linear-gradient(
+          90deg,
+          rgba(124, 58, 237, 0.08),
+          rgba(124, 58, 237, 0.02)
+        );
+      }
+
+      .aitrics-tag {
+        background: linear-gradient(
+          135deg,
+          #7c3aed 0%,
+          #6366f1 100%
+        ) !important;
+        color: #fff !important;
+        border-color: rgba(124, 58, 237, 0.4) !important;
+        box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+      }
+
+      .aitrics-highlight::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 30% 25%,
+          rgba(124, 58, 237, 0.1),
+          transparent 60%
+        );
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .aitrics-highlight:hover {
+        transform: translateY(-2px);
+        border-color: rgba(124, 58, 237, 0.5);
+        box-shadow:
+          0 0 0 1px rgba(124, 58, 237, 0.25),
+          0 12px 24px rgba(124, 58, 237, 0.12);
+      }
+
+      .aitrics-highlight .svc-header h3::after {
+        content: "aitrics";
+        margin-left: 10px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: #fff;
+        background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+        padding: 3px 8px;
+        border-radius: 999px;
+        vertical-align: middle;
+        box-shadow: 0 2px 6px rgba(124, 58, 237, 0.3);
+      }
+
+      .aitrics-highlight .mod-list li {
+        color: #d1d5db;
+      }
+
+      .aitrics-highlight .mod-list li::before {
+        color: #a78bfa;
+      }
+
+      /* 기관별 색상 범례 */
+      .org-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 32px;
+        font-size: 13px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .legend-dot.lead {
+        background: #3b82f6;
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+      }
+      .legend-dot.hospital {
+        background: #059669;
+        box-shadow: 0 0 8px rgba(5, 150, 105, 0.4);
+      }
+      .legend-dot.ai {
+        background: #7c3aed;
+        box-shadow: 0 0 8px rgba(124, 58, 237, 0.4);
+      }
+
+      /* 역할 테이블 */
+      .role-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .role-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        text-align: left;
+        min-width: 600px;
+      }
+
+      .role-table th {
+        background: rgba(59, 130, 246, 0.08);
+        color: #60a5fa;
+        padding: 16px;
+        font-weight: 700;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .role-table td {
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+
+      .role-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .role-table tr.role-lead {
+        border-left: 4px solid #3b82f6;
+        background: rgba(59, 130, 246, 0.04);
+      }
+
+      .role-table tr.role-hospital {
+        border-left: 4px solid #059669;
+        background: rgba(5, 150, 105, 0.04);
+      }
+
+      .role-table tr.role-ai {
+        border-left: 4px solid #7c3aed;
+        background: rgba(124, 58, 237, 0.04);
+      }
+
+      .role-category {
+        background: transparent;
+        font-weight: 800;
+        color: var(--text);
+        min-width: 100px;
+        padding-left: 12px;
+      }
+
+      .inst-name {
+        color: var(--text);
+        font-weight: 700;
+        min-width: 180px;
+      }
+
+      .inst-name.lead {
+        color: #60a5fa;
+      }
+      .inst-name.hospital {
+        color: #34d399;
+      }
+      .inst-name.ai {
+        color: #a78bfa;
+      }
+
+      .role-desc {
+        color: #b8c5d0;
+        line-height: 1.6;
+      }
+
+      /* 로고 태그 */
+      .logos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .logo-tag {
+        padding: 8px 14px;
+        background: rgba(42, 52, 65, 0.6);
+        border-radius: 999px;
+        font-size: 12px;
+        color: #9ca3af;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 1.2;
+        transition: all 0.2s ease;
+      }
+
+      .logo-tag:hover {
+        background: rgba(42, 52, 65, 0.9);
+      }
+
+      .logo-tag.tag-lead {
+        border-color: rgba(59, 130, 246, 0.35);
+        background: rgba(59, 130, 246, 0.1);
+        color: #60a5fa;
+      }
+
+      .logo-tag.tag-hospital {
+        border-color: rgba(5, 150, 105, 0.35);
+        background: rgba(5, 150, 105, 0.1);
+        color: #34d399;
+      }
+
+      .logo-tag.tag-ai {
+        border-color: rgba(124, 58, 237, 0.35);
+        background: rgba(124, 58, 237, 0.1);
+        color: #a78bfa;
+      }
+
+      .logo-tag::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: currentColor;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .pill {
+        font-size: 10px;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        white-space: nowrap;
+      }
+
+      .pill.cross {
+        border-color: rgba(59, 130, 246, 0.3);
+        color: #60a5fa;
+        background: rgba(59, 130, 246, 0.1);
+      }
+
+      .pill.multi {
+        border-color: rgba(5, 150, 105, 0.3);
+        color: #34d399;
+        background: rgba(5, 150, 105, 0.1);
+      }
+
+      /* 푸터 */
+      footer {
+        padding: 80px 0 40px;
+        text-align: center;
+        border-top: 1px solid var(--border);
+        margin-top: 80px;
+      }
+
+      footer p {
+        margin: 8px 0;
+      }
+
+      /* 반응형 디자인 개선 */
+      @media (max-width: 850px) {
+        .svc-body,
+        .as-is-to-be,
+        .integration-box {
+          grid-template-columns: 1fr;
+        }
+
+        .integration-box::after {
+          display: none;
+        }
+
+        h1 {
+          font-size: 28px;
+        }
+
+        .arch-card {
+          padding: 24px;
+        }
+
+        .org-legend {
+          gap: 12px;
+          font-size: 12px;
+        }
+
+        .role-table {
+          font-size: 13px;
+        }
+
+        .role-table td,
+        .role-table th {
+          padding: 12px 10px;
+        }
+
+        .svc-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding: 60px 0;
+        }
+
+        .section-title {
+          margin: 60px 0 24px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 16px;
+        }
+
+        .header-inner {
+          padding: 0 16px;
+        }
+
+        .logo {
+          font-size: 1.1rem;
+        }
+
+        .header-sub {
+          font-size: 10px;
+        }
+
+        .badge {
+          font-size: 11px;
+          padding: 5px 12px;
+        }
+
+        .node-circle {
+          width: 70px;
+          height: 70px;
+          font-size: 12px;
+        }
+
+        .as-is-to-be {
+          gap: 8px;
+        }
+
+        .box {
+          padding: 14px;
+          font-size: 12px;
+        }
+      }
+
+      /* 접근성 개선 */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* 포커스 스타일 개선 */
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--cyan);
+        outline-offset: 2px;
+      }
+
+      /* 인쇄 스타일 */
+      @media print {
+        header {
+          position: relative;
+        }
+
+        .aitrics-highlight::before,
+        .integration-box::after {
+          display: none;
+        }
+
+        .svc-card,
+        .arch-card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 헤더 섹션 -->
+    <header>
+      <div class="header-inner">
+        <div class="logo">닥터앤서 <span>3.0</span></div>
+        <div class="header-sub">
+          TRI-Agentic AI<br />
+          Technical Specification
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="container">
+      <!-- 히어로 섹션 -->
+      <section class="hero" aria-labelledby="hero-title">
+        <span class="badge">과학기술정보통신부 · NIPA 지원사업</span>
+        <h1 id="hero-title">
+          초개인화 질환 관리를 통한<br />예후 향상 지원
+          <span style="color: var(--cyan)">Agentic AI</span> 토탈 솔루션
+        </h1>
+        <p class="hero-desc">
+          본 과제는 6대 고위험 질환을 대상으로, 다기관 데이터와 웨어러블을
+          결합한 TRI-Agentic AI 기반 예후 관리 서비스: 자가 선별(Self-Triage),
+          예후 예측(Prognosis), 초개인화 관리(Individualized Care)를
+          개발·실증하여, 치료 이후까지 책임지는 국가 차원의 차세대 의료 AI 표준
+          모델을 구축하는 사업입니다.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <label>연구개발기간</label>
+            <p>2025. 10. 01 ~ 2028. 12. 31</p>
+          </div>
+          <div class="info-item">
+            <label>주관기관</label>
+            <p>세브란스병원 (연세대 산단)</p>
+          </div>
+          <div class="info-item">
+            <label>1차년도 예산</label>
+            <p>정부지원금 38억원</p>
+          </div>
+          <div class="info-item">
+            <label>성과 목표</label>
+            <p>SCI 논문 7건 / 인허가 7건</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRI-Agentic AI 아키텍처 -->
+      <section aria-labelledby="tri-architecture">
+        <div class="section-title">
+          <h2 id="tri-architecture">TRI-Agentic AI Architecture</h2>
+          <p>EMR + AI + Device의 전격적 연동을 통한 Holistic Care 실현</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="integration-box">
+            <div class="int-node">
+              <div class="node-circle" aria-label="EMR 연계">EMR</div>
+              <h4 style="margin: 0; color: var(--cyan)">의료 데이터 연계</h4>
+              <p style="font-size: 13px; color: var(--text-dim)">
+                개인 의료데이터(PHR) 기반<br />신뢰 기반 서비스 제공
+              </p>
+            </div>
+            <div class="int-node">
+              <div
+                class="node-circle"
+                style="border-color: var(--violet); color: var(--violet)"
+                aria-label="AI 에이전트"
+              >
+                AI
+              </div>
+              <h4 style="margin: 0; color: var(--violet)">지능형 에이전트</h4>
+              <p style="font-size: 13px; color: var(--text-dim)">
+                자가 선별 및 위험 예측<br />의료진 진료 현장 활용
+              </p>
+            </div>
+            <div class="int-node">
+              <div
+                class="node-circle"
+                style="border-color: var(--emerald); color: var(--emerald)"
+                aria-label="디바이스 모니터링"
+              >
+                DEVICE
+              </div>
+              <h4 style="margin: 0; color: var(--emerald)">실시간 모니터링</h4>
+              <p style="font-size: 13px; color: var(--text-dim)">
+                IoT 디바이스 데이터 수집<br />일상 속 상시적 관리
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 기관별 역할 상세 -->
+      <section aria-labelledby="roles-table">
+        <div class="section-title">
+          <h2 id="roles-table">기관별 역할 상세 명세</h2>
+          <p>주관기관, 의료기관 및 기술 파트너 간의 R&R 최적화</p>
+        </div>
+
+        <!-- 기관별 색상 범례 -->
+        <div class="org-legend" role="list">
+          <div class="legend-item" role="listitem">
+            <div class="legend-dot lead" aria-hidden="true"></div>
+            <span><strong>주관기관</strong> - 총괄 및 통합 조정</span>
+          </div>
+          <div class="legend-item" role="listitem">
+            <div class="legend-dot hospital" aria-hidden="true"></div>
+            <span><strong>의료기관</strong> - 임상 데이터 및 실증</span>
+          </div>
+          <div class="legend-item" role="listitem">
+            <div class="legend-dot ai" aria-hidden="true"></div>
+            <span><strong>AI·기업</strong> - 기술 개발 및 플랫폼</span>
+          </div>
+        </div>
+
+        <div class="arch-card" style="padding: 0; overflow: hidden">
+          <div class="role-table-wrapper">
+            <table class="role-table">
+              <thead>
+                <tr>
+                  <th scope="col">구분</th>
+                  <th scope="col">기관명</th>
+                  <th scope="col">주요 역할 및 담당 질환</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="role-lead">
+                  <td class="role-category">주관기관</td>
+                  <td class="inst-name lead">연세대학교 산학협력단</td>
+                  <td class="role-desc">
+                    총괄 PMO, 사업 관리 및 통합 조정, 임상·기술·사업화 연계
+                  </td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="role-category" rowspan="5">의료기관</td>
+                  <td class="inst-name hospital">서울아산병원</td>
+                  <td class="role-desc">소아 만성호흡부전 주관기관</td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">삼성서울병원</td>
+                  <td class="role-desc">
+                    전립선비대증 데이터셋 구축 및 의학적 전문성 제공
+                  </td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">중앙대학교병원</td>
+                  <td class="role-desc">척추·관절 수술 후 재활 관리 실증</td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">분당차병원</td>
+                  <td class="role-desc">위암 수술 후 합병증 예측 모델 검증</td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">길의료재단</td>
+                  <td class="role-desc">대장암 예후 관리 및 생활 습관 실증</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="role-category" rowspan="8">
+                    AI·플랫폼<br />디바이스
+                  </td>
+                  <td class="inst-name ai">파이디지털헬스케어</td>
+                  <td class="role-desc">데이터 연계 플랫폼 (T-Bridge) 구축</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">아크릴</td>
+                  <td class="role-desc">Agentic AI 핵심 엔진 개발</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">aitrics</td>
+                  <td class="role-desc">
+                    예후·합병증 예측 AI 모델 & Agentic AI 개발
+                  </td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">아이픽셀</td>
+                  <td class="role-desc">AI 기반 재활 운동 콘텐츠 개발</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">메쥬 / 에터널</td>
+                  <td class="role-desc">
+                    웨어러블 생체신호 및 산모·태아 신호 측정 디바이스
+                  </td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">에버트라이</td>
+                  <td class="role-desc">
+                    의료기기 규제 대응 및 인허가 전략 수립
+                  </td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">사운더블헬스코리아</td>
+                  <td class="role-desc">소리 분석 기반 배뇨/호흡 모니터링</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">Xolution</td>
+                  <td class="role-desc">생활습관 중재 프로그램 개발</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 중점질환 예후관리 서비스 -->
+      <section aria-labelledby="svc-spec">
+        <div class="section-title">
+          <h2 id="svc-spec">중점질환 예후관리 서비스 명세</h2>
+          <p>각 세부 과제별 핵심 모듈 및 기대 효과</p>
+        </div>
+
+        <div class="svc-grid">
+          <!-- SERVICE 01 -->
+          <article class="svc-card">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index">SERVICE 01</div>
+                <h3>산모 전주기 관리 모니터링</h3>
+              </div>
+              <span class="svc-tag">세브란스병원 (권자영 교수)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>임상질의 기반 개인 상태 자가 Triage</li>
+                  <li>태아 도플러 시그널 실시간 모니터링</li>
+                  <li>임신부 자궁 수축 자가 선별 서비스</li>
+                  <li>임신부 고혈압/당뇨 능동형 모니터링</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>
+                    온라인 정보 불신 및 막연한 불안감
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>
+                    병력 기반 가이드로 심리적 안심 제공
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 02 - AITRICS -->
+          <article class="svc-card aitrics-highlight">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index" style="color: #a78bfa">SERVICE 02</div>
+                <h3>소아 만성호흡부전 환자 재택 모니터링</h3>
+              </div>
+              <span class="svc-tag aitrics-tag"
+                >서울아산병원 (김경원 교수)</span
+              >
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성 (기술집약)</h4>
+                <ul class="mod-list">
+                  <li><strong>EMR 기반 개인 맞춤형 상담 에이전트</strong></li>
+                  <li>가정용 인공호흡기 위험도 예측 및 알람</li>
+                  <li>데이터 기반 자가 증상(PRO) 실시간 분류</li>
+                  <li>응급 상황 시 의료진 연계 및 내원 권고</li>
+                </ul>
+                <p
+                  style="
+                    font-size: 11px;
+                    color: #a78bfa;
+                    margin-top: 10px;
+                    font-weight: 700;
+                  "
+                >
+                  ※ 에이아이트릭스: 데이터 기반 위험도 트리아제 분류(3단계) 및
+                  인공호흡기 분석·위험도별 알람 시스템 앱 개발
+                </p>
+              </div>
+
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>
+                    보호자의 조치 방법 미숙 및 불안
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>
+                    위험 징후 실시간 확인 및 트리아제
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="svc-footer">
+              <div class="logos">
+                <span class="logo-tag tag-hospital"
+                  >신촌세브란스병원
+                  <span class="pill cross">교차검증</span></span
+                >
+                <span class="logo-tag tag-hospital"
+                  >삼성서울병원 <span class="pill cross">교차검증</span></span
+                >
+                <span class="logo-tag tag-hospital"
+                  >서울아산병원 <span class="pill cross">교차검증</span></span
+                >
+                <span class="logo-tag tag-hospital"
+                  >서울대학교병원
+                  <span class="pill multi">다기관실증</span></span
+                >
+                <span class="logo-tag tag-hospital"
+                  >전남대병원 <span class="pill multi">다기관실증</span></span
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 03 -->
+          <article class="svc-card">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index">SERVICE 03</div>
+                <h3>수술 후 재활운동 재택 관리</h3>
+              </div>
+              <span class="svc-tag">중앙대병원 (김성환 교수)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>하지/척추 수술 후 맞춤형 예후 관리 설명</li>
+                  <li>AI 기반 개인 맞춤형 재활 코칭 서비스</li>
+                  <li>실시간 자세 및 운동 분석 피드백 모듈</li>
+                  <li>이상징후 감지 시 의료진 연계 모듈</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>
+                    혼자 할 때 자세가 틀릴까 봐 걱정
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>
+                    실시간 AI 코칭으로 재활 회복 속도 향상
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 04 -->
+          <article class="svc-card">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index">SERVICE 04</div>
+                <h3>전립선 비대증 환자 생활 습관 관리</h3>
+              </div>
+              <span class="svc-tag">삼성서울병원 (한덕현 교수)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>가정 내 요속 측정 및 지능형 분석 서비스</li>
+                  <li>PRO 기반 잔뇨량 증가 위험도 평가</li>
+                  <li>남성 하부요로증상(LUTS) 원인 감별 AI</li>
+                  <li>하부요로증상 중증도 자동 분류 AI</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>
+                    진료 대기 중 증상 악화 불안
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>
+                    자동 배뇨 기록 및 선제적 조치 알림
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 05 - AITRICS -->
+          <article class="svc-card aitrics-highlight">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index" style="color: #a78bfa">SERVICE 05</div>
+                <h3>위암 환자 수술 후 합병증 관리</h3>
+              </div>
+              <span class="svc-tag aitrics-tag">분당차병원 (AITRICS 참여)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li><strong>능동형 위암 예후관리 Agentic AI</strong></li>
+                  <li>수술 후 합병증 발생 예측 AI 서비스</li>
+                  <li>웨어러블 디바이스 연동 생체신호 모니터링</li>
+                  <li>EMR 연동 맞춤형 식이/영양 관리 솔루션</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>
+                    퇴원 후 증상 발생 시 병원 방문 판단 어려움
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>
+                    실시간 데이터 기반 합병증 전조 증상 알림
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 06 - AITRICS -->
+          <article class="svc-card aitrics-highlight">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index" style="color: #a78bfa">SERVICE 06</div>
+                <h3>대장암 항암 환자 생활 습관 관리</h3>
+              </div>
+              <span class="svc-tag aitrics-tag">길의료재단 (AITRICS 참여)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>대장암 및 용종 재발 발생률 정밀 예측</li>
+                  <li>항암 부작용 예측 및 자가 대처 가이드</li>
+                  <li>웨어러블 연동 운동 가이드 및 모니터링</li>
+                  <li>개인 맞춤형 항암 생활습관 상담 에이전트</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>
+                    재발 공포 및 정보 부족으로 인한 무리한 운동
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>
+                    믿을 수 있는 정보와 맞춤형 식단/운동 관리
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 사업 컨소시엄 -->
+      <section aria-labelledby="consortium">
+        <div class="section-title">
+          <h2 id="consortium">사업 컨소시엄 구성</h2>
+          <p>국내 의료기관 및 기술 기업 협업 체계</p>
+        </div>
+
+        <div class="arch-card">
+          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 0 12px">
+            공동연구 개발기관 (의료/기업)
+          </h4>
+          <div class="logos">
+            <span class="logo-tag tag-hospital">서울아산병원</span>
+            <span class="logo-tag tag-hospital">중앙대학교병원</span>
+            <span class="logo-tag tag-hospital">삼성서울병원</span>
+            <span class="logo-tag tag-hospital">분당차병원</span>
+            <span class="logo-tag tag-hospital">길의료재단</span>
+            <span class="logo-tag tag-ai">에이아이트릭스 (AITRICS)</span>
+            <span class="logo-tag tag-ai">파이디지털헬스케어</span>
+            <span class="logo-tag tag-ai">아크릴</span>
+            <span class="logo-tag tag-ai">메쥬</span>
+            <span class="logo-tag tag-ai">사운더블헬스코리아</span>
+            <span class="logo-tag tag-ai">아이픽셀</span>
+            <span class="logo-tag tag-ai">딥메트릭스 외</span>
+          </div>
+
+          <div style="height: 24px"></div>
+
+          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 0 12px">
+            실증 참여기관 (전국 단위)
+          </h4>
+          <div class="logos">
+            <span class="logo-tag tag-hospital">서울대학교병원</span>
+            <span class="logo-tag tag-hospital">고려대안암병원</span>
+            <span class="logo-tag tag-hospital">계명대동산병원</span>
+            <span class="logo-tag tag-hospital">인제대해운대백병원</span>
+            <span class="logo-tag tag-hospital">전남대학교병원</span>
+            <span class="logo-tag tag-hospital">충남대학교병원</span>
+            <span class="logo-tag tag-hospital">칠곡경북대병원 외 14개소</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer>
+      <p style="font-size: 13px; color: var(--text-dim)">
+        본 페이지는 내부 참고용으로 제작되었으며, 닥터앤서 3.0 공식
+        발표자료/운영 문서를 기반으로 구성되었습니다.
+      </p>
+      <p style="font-size: 12px; color: var(--text-dim); margin-top: 8px">
+        © 2025 닥터앤서 3.0 프로젝트. All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>

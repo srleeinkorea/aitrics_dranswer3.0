@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AITRICS 2026 Dr.Answer 3.0 | Weekly Master</title>
+  <style>
+    :root{
+      --bg:#05070c; --surface:#0b0f18; --surface2:#0f1522; --border:#1f2a3a;
+      --text-p:#f8fafc; --text-s:#a7b2c4;
+
+      --data:#00d1ff;
+      --ai:#a855f7;
+      --svc:#fb7185;
+      --reg:#fbbf24;
+
+      --ok:#10b981;
+      --bad:#fb7185;
+      --warn:#fbbf24;
+
+      --radius:16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+      --shadow: 0 12px 34px rgba(0,0,0,0.35);
+    }
+    html[data-theme="light"]{
+      color-scheme:light;
+      --bg:#f6f7fb; --surface:#ffffff; --surface2:#f2f4f8; --border:#d6deea;
+      --text-p:#0b1220; --text-s:#4b5563;
+      --shadow: 0 12px 34px rgba(2,6,23,0.10);
+    }
+    html[data-theme="dark"]{ color-scheme:dark; }
+
+    *{ box-sizing:border-box; }
+    body{font-family:var(--sans);background:var(--bg);color:var(--text-p);margin:0;padding:18px;-webkit-font-smoothing:antialiased;}
+    .container{max-width:1850px;margin:0 auto;}
+    header{display:flex;justify-content:space-between;gap:14px;align-items:flex-end;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:12px;}
+    h1{margin:0;font-size:22px;letter-spacing:-0.2px;}
+    .sub{margin:6px 0 0 0;color:var(--text-s);font-size:13px;line-height:1.35;}
+    .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
+    .btn{border:1px solid var(--border);background:var(--surface2);color:var(--text-p);border-radius:12px;padding:9px 12px;font-size:12px;font-weight:900;cursor:pointer;}
+    .btn:hover{filter:brightness(1.08);}
+    .badge{font-family:var(--mono);font-size:11px;font-weight:900;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);color:var(--text-s);}
+    html[data-theme="light"] .badge{border-color:rgba(15,23,42,0.12);}
+
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:12px;box-shadow:var(--shadow);}
+    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
+    .kpi{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:12px;}
+    .kpi .t{font-size:11.5px;font-weight:900;color:var(--text-s);letter-spacing:0.4px;}
+    .kpi .v{font-family:var(--mono);font-size:22px;font-weight:900;margin-top:7px;}
+    .kpi .s{font-size:11px;color:var(--text-s);margin-top:6px;line-height:1.35;}
+    .v.ok{color:var(--ok);}
+    .v.bad{color:var(--bad);}
+    .v.data{color:var(--data);}
+
+    .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+    .select,.input{border:1px solid var(--border);background:var(--surface2);color:var(--text-p);border-radius:12px;padding:10px 12px;font-size:12px;font-weight:900;outline:none;min-height:40px;}
+    .input{min-width:320px;}
+    .hint{color:var(--text-s);font-size:12px;line-height:1.5;margin-top:10px;}
+
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media (max-width:1100px){ .kpis{grid-template-columns:repeat(3,1fr);} .grid2{grid-template-columns:1fr;} }
+    @media (max-width:680px){ .kpis{grid-template-columns:repeat(2,1fr);} body{padding:14px;} .input{min-width:220px;} }
+
+    /* Workstream summary */
+    .wsTable{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    .wsTable th,.wsTable td{border-bottom:1px solid var(--border);padding:10px 12px;font-size:12.5px;vertical-align:middle;}
+    .wsTable tr:last-child td{border-bottom:0;}
+    .wsTable th{background:var(--surface2);color:var(--text-s);text-align:left;font-weight:900;font-size:11px;letter-spacing:.35px;}
+    .wsName{font-weight:900;}
+    .barWrap{height:10px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);}
+    html[data-theme="light"] .barWrap{background:rgba(15,23,42,0.06);border-color:rgba(15,23,42,0.08);}
+    .barFill{height:100%;}
+    .pill{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:900;padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);color:var(--text-s);}
+
+    /* Main table */
+    .wrap{overflow-x:auto;}
+    table.main{width:100%;min-width:2200px;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+    table.main th,table.main td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);padding:10px;vertical-align:top;font-size:13px;}
+    table.main th:last-child,table.main td:last-child{border-right:0;}
+    table.main tr:last-child td{border-bottom:0;}
+    table.main th{position:sticky;top:0;background:var(--surface2);color:var(--text-s);font-weight:900;font-size:11px;text-align:left;white-space:nowrap;z-index:2;}
+    tbody tr:hover td{background:rgba(0,209,255,0.06);}
+    .mono{font-family:var(--mono);}
+    .tag{display:inline-block;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.03);color:var(--text-s);font-size:11px;font-weight:900;padding:5px 8px;border-radius:10px;white-space:nowrap;}
+    a.link{color:var(--warn);text-decoration:none;font-weight:900;}
+    a.link:hover{text-decoration:underline;}
+    .status{font-family:var(--mono);font-weight:900;}
+    .status.done{color:var(--ok);}
+    .status.open{color:var(--text-p);}
+    .dday{font-family:var(--mono);font-weight:900;}
+    .dday.soon{color:var(--warn);}
+    .dday.over{color:var(--bad);}
+    .title{font-weight:900;line-height:1.25;}
+    .steps{color:var(--text-s);font-size:12px;line-height:1.55;}
+    .wsDot{display:inline-block;width:10px;height:10px;border-radius:99px;margin-right:8px;vertical-align:middle;}
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>AITRICS 2026 Dr.Answer 3.0 Weekly Master</h1>
+      <p class="sub">Google Sheets(WBS_MASTER/WBS_STEPS/LOOKUPS) 편집 내용 기준 자동 반영 · 주간 미팅용 “Overdue/Due Soon” 뷰 기본 제공</p>
+    </div>
+    <div class="right">
+      <button class="btn" id="themeBtn" title="라이트/다크 전환">🌙</button>
+      <span class="badge" id="syncBadge">SYNC: -</span>
+      <span class="badge" id="loadedBadge">LOADED: -</span>
+      <span class="badge" id="todayBadge">TODAY: -</span>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="kpis">
+      <div class="kpi">
+        <div class="t">TOTAL</div>
+        <div class="v data" id="kpiTotal">-</div>
+        <div class="s">현재 필터 적용 후 항목 수</div>
+      </div>
+      <div class="kpi">
+        <div class="t">DONE</div>
+        <div class="v ok" id="kpiDone">-</div>
+        <div class="s">status=DONE</div>
+      </div>
+      <div class="kpi">
+        <div class="t">OPEN</div>
+        <div class="v" id="kpiOpen">-</div>
+        <div class="s">미완료 합계</div>
+      </div>
+      <div class="kpi">
+        <div class="t">OVERDUE</div>
+        <div class="v bad" id="kpiOver">-</div>
+        <div class="s">미완료 + due_date 과거</div>
+      </div>
+      <div class="kpi">
+        <div class="t">DUE ≤ 7D</div>
+        <div class="v" id="kpiDue7">-</div>
+        <div class="s">미완료 + 7일 이내</div>
+      </div>
+      <div class="kpi">
+        <div class="t">PROGRESS</div>
+        <div class="v" id="kpiPct">-</div>
+        <div class="s">DONE / TOTAL</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="filters">
+      <select class="select" id="viewSelect" title="미팅 뷰">
+        <option value="MEETING">주간 미팅(Overdue + 14D)</option>
+        <option value="DUE7">DUE ≤ 7D</option>
+        <option value="DUE28">DUE ≤ 28D</option>
+        <option value="YEAR">2026 전체</option>
+        <option value="ALL">전체(연도 무시)</option>
+      </select>
+
+      <select class="select" id="workstreamSelect" title="영역"></select>
+      <select class="select" id="deptSelect" title="팀"></select>
+      <select class="select" id="ownerSelect" title="담당자"></select>
+      <select class="select" id="prioritySelect" title="우선순위"></select>
+      <select class="select" id="statusSelect" title="상태">
+        <option value="ALL">전체</option>
+        <option value="OPEN">미완료</option>
+        <option value="DONE">완료</option>
+      </select>
+
+      <input class="input" id="searchInput" placeholder="검색 (ID/업무/담당/산출물/문서/태그)" />
+      <span class="badge" id="countBadge">0 items</span>
+    </div>
+    <div class="hint">
+      ※ 주간 미팅 뷰 기본값: (미완료 + overdue) ∪ (미완료 + due_date 14일 이내) 표시함 · due_date 공란 항목은 “YEAR/ALL”에서 확인 권장함
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div style="font-weight:900;letter-spacing:0.2px;">WORKSTREAM SUMMARY</div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span class="pill">Overdue</span>
+        <span class="pill">Due≤7D</span>
+        <span class="pill">Progress</span>
+      </div>
+    </div>
+    <div style="margin-top:10px;" class="wrap">
+      <table class="wsTable">
+        <thead>
+          <tr>
+            <th style="width:280px;">영역</th>
+            <th style="width:110px;">TOTAL</th>
+            <th style="width:110px;">OPEN</th>
+            <th style="width:110px;">OVERDUE</th>
+            <th style="width:110px;">DUE≤7D</th>
+            <th>PROGRESS</th>
+          </tr>
+        </thead>
+        <tbody id="wsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card wrap">
+    <table class="main">
+      <thead>
+        <tr>
+          <th style="width:90px;">상태</th>
+          <th style="width:110px;">ID</th>
+          <th style="min-width:420px;">업무(1행)</th>
+          <th style="width:150px;">팀</th>
+          <th style="width:150px;">담당</th>
+          <th style="width:115px;">START</th>
+          <th style="width:115px;">DUE</th>
+          <th style="width:110px;">D-DAY</th>
+          <th style="width:170px;">산출물</th>
+          <th style="width:150px;">문서유형</th>
+          <th style="width:110px;">문서링크</th>
+          <th style="width:120px;">우선순위</th>
+          <th style="min-width:220px;">세부 실행 항목(Top 3)</th>
+          <th style="min-width:200px;">태그</th>
+          <th style="width:240px;">영역</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const UI_THEME_KEY = "aitrics_weekly_theme";
+
+let MASTER = [];
+let STEPS = [];
+let LOOKUPS = {};
+let META = {};
+
+const WS_COLOR = {
+  "[데이터 엔지니어링/연계]": "var(--data)",
+  "[AI 알고리즘/모델 개발]": "var(--ai)",
+  "[서비스 개발/구현]": "var(--svc)",
+  "[인허가]": "var(--reg)"
+};
+
+function pad2(n){ return String(n).padStart(2,"0"); }
+function fmtDate(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
+
+function parseYMD(s){
+  const str = String(s||"").trim();
+  if(!str) return null;
+
+  let m = str.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(m){
+    const d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    d.setHours(0,0,0,0);
+    return d;
+  }
+  m = str.match(/^(\d{4})[./](\d{1,2})[./](\d{1,2})$/);
+  if(m){
+    const d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+    d.setHours(0,0,0,0);
+    return d;
+  }
+  return null;
+}
+
+function daysDiffFromToday(due){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const d = new Date(due); d.setHours(0,0,0,0);
+  return Math.round((d - today)/86400000);
+}
+
+function escapeHtml(s){
+  return String(s ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function applyTheme(theme){
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem(UI_THEME_KEY, theme);
+  document.getElementById("themeBtn").textContent = theme === "light" ? "☀️" : "🌙";
+}
+document.getElementById("themeBtn").onclick = ()=>{
+  const cur = document.documentElement.getAttribute("data-theme") || "dark";
+  applyTheme(cur==="dark" ? "light" : "dark");
+};
+
+function stepsByTaskId(){
+  const map = new Map();
+  for(const s of (STEPS||[])){
+    const id = String(s.task_id||"").trim();
+    if(!id) continue;
+    const arr = map.get(id) || [];
+    arr.push({
+      order: Number(s.step_order||0)||0,
+      week: String(s.week||"").trim(),
+      text: String(s.step_text||"").trim()
+    });
+    map.set(id, arr);
+  }
+  for(const [k, arr] of map.entries()){
+    arr.sort((a,b)=>a.order-b.order);
+    map.set(k, arr);
+  }
+  return map;
+}
+
+function fillSelect(el, items, firstLabel){
+  el.innerHTML = "";
+  const opt0 = document.createElement("option");
+  opt0.value = "ALL";
+  opt0.textContent = firstLabel;
+  el.appendChild(opt0);
+
+  const uniq = [...new Set((items||[]).map(x=>String(x).trim()).filter(Boolean))];
+  uniq.sort((a,b)=>a.localeCompare(b));
+  for(const it of uniq){
+    const o=document.createElement("option");
+    o.value = it;
+    o.textContent = it;
+    el.appendChild(o);
+  }
+}
+
+function normalizeStatus(s){
+  const up = String(s||"").trim().toUpperCase();
+  return up === "DONE" ? "DONE" : "OPEN";
+}
+
+function inView(row, view){
+  const st = normalizeStatus(row.status);
+  const due = parseYMD(row.due_date);
+  const in2026 = (d)=> d && d.getFullYear() === 2026;
+
+  if(view === "ALL") return true;
+
+  if(view === "YEAR"){
+    // due_date 공란도 포함(업무 누락 방지). 다만 2026이 아닌 명확한 due_date는 제외
+    if(!due) return true;
+    return in2026(due);
+  }
+
+  // 아래 뷰는 due_date 기반 (공란은 제외)
+  if(!due) return false;
+
+  const dd = daysDiffFromToday(due);
+
+  if(view === "DUE7"){
+    return st !== "DONE" && dd >= 0 && dd <= 7;
+  }
+  if(view === "DUE28"){
+    return st !== "DONE" && dd >= 0 && dd <= 28;
+  }
+  if(view === "MEETING"){
+    // Overdue + due within 14 days (open only)
+    if(st === "DONE") return false;
+    if(dd < 0) return true;
+    return dd <= 14;
+  }
+  return true;
+}
+
+function applyFilters(rows){
+  const view = document.getElementById("viewSelect").value;
+  const ws = document.getElementById("workstreamSelect").value;
+  const dept = document.getElementById("deptSelect").value;
+  const owner = document.getElementById("ownerSelect").value;
+  const pr = document.getElementById("prioritySelect").value;
+  const st = document.getElementById("statusSelect").value;
+  const q = (document.getElementById("searchInput").value||"").toLowerCase();
+
+  let out = rows.filter(r=>inView(r, view));
+
+  if(ws!=="ALL") out = out.filter(r=>String(r.workstream_4||"")===ws);
+  if(dept!=="ALL") out = out.filter(r=>String(r.dept||"")===dept);
+  if(owner!=="ALL") out = out.filter(r=>String(r.owner||"")===owner);
+  if(pr!=="ALL") out = out.filter(r=>String(r.priority||"")===pr);
+  if(st!=="ALL") out = out.filter(r=>normalizeStatus(r.status)===st);
+
+  if(q){
+    out = out.filter(r=>{
+      const hay = `${r.task_id} ${r.task_title} ${r.owner} ${r.deliverable} ${r.doc_type} ${r.tags} ${r.dept} ${r.workstream_4}`.toLowerCase();
+      return hay.includes(q);
+    });
+  }
+
+  return out;
+}
+
+function sortRows(rows){
+  // 기본: Overdue 먼저, 그 다음 due_date 오름차순, due_date 공란은 맨 아래
+  return rows.slice().sort((a,b)=>{
+    const sa = normalizeStatus(a.status);
+    const sb = normalizeStatus(b.status);
+    const da = parseYMD(a.due_date);
+    const db = parseYMD(b.due_date);
+
+    const aOver = (sa!=="DONE" && da && daysDiffFromToday(da) < 0) ? 1 : 0;
+    const bOver = (sb!=="DONE" && db && daysDiffFromToday(db) < 0) ? 1 : 0;
+    if(aOver !== bOver) return bOver - aOver; // overdue=1 먼저
+
+    if(da && db) return da - db;
+    if(da && !db) return -1;
+    if(!da && db) return 1;
+
+    // due_date 둘 다 없으면 ID 기준
+    return String(a.task_id||"").localeCompare(String(b.task_id||""));
+  });
+}
+
+function computeKPIs(rows){
+  const total = rows.length;
+  const done = rows.filter(r=>normalizeStatus(r.status)==="DONE").length;
+  const open = total - done;
+
+  let overdue = 0;
+  let due7 = 0;
+  for(const r of rows){
+    if(normalizeStatus(r.status)==="DONE") continue;
+    const due = parseYMD(r.due_date);
+    if(!due) continue;
+    const dd = daysDiffFromToday(due);
+    if(dd < 0) overdue += 1;
+    if(dd >= 0 && dd <= 7) due7 += 1;
+  }
+
+  const pct = total ? Math.round((done/total)*100) : 0;
+
+  document.getElementById("kpiTotal").textContent = total;
+  document.getElementById("kpiDone").textContent = done;
+  document.getElementById("kpiOpen").textContent = open;
+  document.getElementById("kpiOver").textContent = overdue;
+  document.getElementById("kpiDue7").textContent = due7;
+  document.getElementById("kpiPct").textContent = pct + "%";
+}
+
+function renderWorkstreamSummary(rows){
+  const tbody = document.getElementById("wsBody");
+  tbody.innerHTML = "";
+
+  const wsList = (LOOKUPS.workstream_4 && LOOKUPS.workstream_4.length)
+    ? LOOKUPS.workstream_4
+    : [...new Set(MASTER.map(r=>String(r.workstream_4||"").trim()).filter(Boolean))];
+
+  const agg = new Map();
+  wsList.forEach(w=>agg.set(w, {total:0, done:0, overdue:0, due7:0}));
+
+  for(const r of rows){
+    const w = String(r.workstream_4||"").trim() || "(미지정)";
+    if(!agg.has(w)) agg.set(w, {total:0, done:0, overdue:0, due7:0});
+    const a = agg.get(w);
+    a.total += 1;
+
+    const st = normalizeStatus(r.status);
+    if(st==="DONE") a.done += 1;
+
+    const due = parseYMD(r.due_date);
+    if(st!=="DONE" && due){
+      const dd = daysDiffFromToday(due);
+      if(dd < 0) a.overdue += 1;
+      if(dd >= 0 && dd <= 7) a.due7 += 1;
+    }
+  }
+
+  const order = [
+    "[데이터 엔지니어링/연계]",
+    "[AI 알고리즘/모델 개발]",
+    "[서비스 개발/구현]",
+    "[인허가]"
+  ];
+
+  const keys = Array.from(agg.keys()).sort((a,b)=>{
+    const ai = order.indexOf(a); const bi = order.indexOf(b);
+    if(ai >= 0 || bi >= 0) return (ai<0?999:ai) - (bi<0?999:bi);
+    return a.localeCompare(b);
+  });
+
+  for(const w of keys){
+    const a = agg.get(w);
+    const open = a.total - a.done;
+    const pct = a.total ? Math.round((a.done / a.total) * 100) : 0;
+    const color = WS_COLOR[w] || "var(--data)";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="wsName">
+        <span class="wsDot" style="background:${color};"></span>${escapeHtml(w)}
+      </td>
+      <td class="mono">${a.total}</td>
+      <td class="mono">${open}</td>
+      <td class="mono" style="color:var(--bad);font-weight:900;">${a.overdue}</td>
+      <td class="mono" style="color:var(--warn);font-weight:900;">${a.due7}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="barWrap" style="flex:1;">
+            <div class="barFill" style="width:${pct}%;background:${color};"></div>
+          </div>
+          <span class="mono" style="min-width:62px;text-align:right;font-weight:900;">${pct}%</span>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  }
+}
+
+function renderTable(rows){
+  const stepMap = stepsByTaskId();
+  const tb = document.getElementById("tbody");
+  tb.innerHTML = "";
+
+  for(const r of rows){
+    const st = normalizeStatus(r.status);
+    const due = parseYMD(r.due_date);
+    const start = parseYMD(r.start_date);
+
+    const diff = due ? daysDiffFromToday(due) : null;
+    const dtag = (diff===null) ? "-" : (diff>=0 ? `D-${diff}` : `D+${Math.abs(diff)}`);
+    const dclass = (diff!==null && diff<0) ? "over" : (diff!==null && diff<=7) ? "soon" : "";
+
+    const dueStr = due ? fmtDate(due) : "-";
+    const startStr = start ? fmtDate(start) : "-";
+
+    const steps = (stepMap.get(String(r.task_id)) || [])
+      .slice(0, 3)
+      .map(s=>`• ${escapeHtml(s.week ? `[${s.week}] ` : "")}${escapeHtml(s.text)}`)
+      .join("<br/>") || `<span class="tag">-</span>`;
+
+    const link = String(r.doc_link||"").trim();
+    const linkHtml = link ? `<a class="link" href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">OPEN</a>` : `<span class="tag">-</span>`;
+
+    const ws = String(r.workstream_4||"").trim();
+    const color = WS_COLOR[ws] || "var(--data)";
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="status ${st==="DONE" ? "done" : "open"}">${st}</span></td>
+      <td class="mono">${escapeHtml(r.task_id||"")}</td>
+      <td>
+        <div class="title">${escapeHtml(r.task_title||"")}</div>
+      </td>
+      <td>${escapeHtml(r.dept||"")}</td>
+      <td>${escapeHtml(r.owner||"")}</td>
+      <td class="mono">${escapeHtml(startStr)}</td>
+      <td class="mono">${escapeHtml(dueStr)}</td>
+      <td class="dday ${dclass}">${escapeHtml(dtag)}</td>
+      <td><span class="tag">${escapeHtml(r.deliverable||"-")}</span></td>
+      <td><span class="tag">${escapeHtml(r.doc_type||"-")}</span></td>
+      <td>${linkHtml}</td>
+      <td><span class="tag">${escapeHtml(r.priority||"-")}</span></td>
+      <td class="steps">${steps}</td>
+      <td>${escapeHtml(r.tags||"")}</td>
+      <td>
+        <span class="wsDot" style="background:${color};"></span>
+        <span class="tag">${escapeHtml(ws||"-")}</span>
+      </td>
+    `;
+    tb.appendChild(tr);
+  }
+}
+
+function renderAll(){
+  const filtered = applyFilters(MASTER);
+  const sorted = sortRows(filtered);
+
+  document.getElementById("countBadge").textContent = `${sorted.length} items`;
+  computeKPIs(sorted);
+  renderWorkstreamSummary(sorted);
+  renderTable(sorted);
+}
+
+function boot(){
+  applyTheme(localStorage.getItem(UI_THEME_KEY) || "dark");
+  document.getElementById("todayBadge").textContent = "TODAY: " + fmtDate(new Date());
+
+  // init empty selects
+  fillSelect(document.getElementById("workstreamSelect"), [], "영역 전체");
+  fillSelect(document.getElementById("deptSelect"), [], "팀 전체");
+  fillSelect(document.getElementById("ownerSelect"), [], "담당자 전체");
+  fillSelect(document.getElementById("prioritySelect"), [], "우선순위 전체");
+
+  google.script.run
+    .withSuccessHandler((res)=>{
+      if(!res || !res.ok){
+        document.getElementById("syncBadge").textContent = "SYNC: FAIL";
+        return;
+      }
+      MASTER = res.master || [];
+      STEPS = res.steps || [];
+      LOOKUPS = res.lookups || {};
+      META = res.meta || {};
+
+      // Dropdowns: LOOKUPS 기반(없으면 데이터에서 추출)
+      fillSelect(document.getElementById("workstreamSelect"),
+        (LOOKUPS.workstream_4 && LOOKUPS.workstream_4.length) ? LOOKUPS.workstream_4 : [...new Set(MASTER.map(r=>r.workstream_4).filter(Boolean))],
+        "영역 전체"
+      );
+      fillSelect(document.getElementById("deptSelect"),
+        (LOOKUPS.dept && LOOKUPS.dept.length) ? LOOKUPS.dept : [...new Set(MASTER.map(r=>r.dept).filter(Boolean))],
+        "팀 전체"
+      );
+      fillSelect(document.getElementById("ownerSelect"),
+        (LOOKUPS.owner && LOOKUPS.owner.length) ? LOOKUPS.owner : [...new Set(MASTER.map(r=>r.owner).filter(Boolean))],
+        "담당자 전체"
+      );
+      fillSelect(document.getElementById("prioritySelect"),
+        (LOOKUPS.priority && LOOKUPS.priority.length) ? LOOKUPS.priority : [...new Set(MASTER.map(r=>r.priority).filter(Boolean))],
+        "우선순위 전체"
+      );
+
+      // bind events
+      ["viewSelect","workstreamSelect","deptSelect","ownerSelect","prioritySelect","statusSelect"].forEach(id=>{
+        document.getElementById(id).onchange = renderAll;
+      });
+      document.getElementById("searchInput").oninput = renderAll;
+
+      document.getElementById("syncBadge").textContent = "SYNC: OK";
+      const loadedAt = META.loadedAt ? new Date(META.loadedAt) : null;
+      document.getElementById("loadedBadge").textContent = "LOADED: " + (loadedAt ? loadedAt.toLocaleString() : "-");
+
+      // default view: meeting
+      document.getElementById("viewSelect").value = "MEETING";
+
+      renderAll();
+    })
+    .withFailureHandler(()=>{
+      document.getElementById("syncBadge").textContent = "SYNC: FAIL";
+    })
+    .loadAll();
+}
+boot();
+</script>
+</body>
+</html>

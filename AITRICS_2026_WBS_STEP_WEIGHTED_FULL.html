@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>AITRICS 2026 Dr.Answer 3.0 | Master Roadmap</title>
+    <title>
+      AITRICS 2026 | WBS & Step-based Gantt (Final + Cards + Export)
+    </title>
 
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&family=Pretendard:wght@400;600;800&display=swap");
-
       :root {
         --bg: #030406;
         --surface: #0b0d12;
@@ -19,56 +19,48 @@
         --svc: #f43f5e;
         --reg: #fbbf24;
         --done: #10b981;
-        --danger: #fb7185;
-        --radius: 16px;
+        --warn: #fb7185;
       }
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
       body {
-        font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", sans-serif;
+        margin: 0;
+        padding: 20px;
         background: var(--bg);
         color: var(--text-p);
-        margin: 0;
-        padding: 22px;
+        font-family:
+          Pretendard,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          "Noto Sans KR",
+          sans-serif;
       }
-      .container { max-width: 1760px; margin: 0 auto; }
-
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        gap: 14px;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 14px;
-        margin-bottom: 12px;
+      h2 {
+        margin: 0 0 12px 0;
       }
-      .h-title { margin: 0; font-size: 22px; letter-spacing: 0.2px; }
-      .h-sub { margin: 6px 0 0 0; color: var(--text-s); font-size: 13px; }
-      .right { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; min-width: 320px; }
-      .row { display: flex; gap: 8px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
-      .badge {
-        font-family: "JetBrains Mono";
-        font-size: 10px;
-        font-weight: 900;
-        padding: 3px 8px;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.14);
-        background: #161b22;
-        color: var(--text-s);
-        white-space: nowrap;
+      a {
+        color: inherit;
       }
-      .badge.on {
-        color: #001b12;
-        background: rgba(16,185,129,0.14);
-        border-color: rgba(16,185,129,0.35);
-      }
-      .badge.warn {
-        color: #2a1600;
-        background: rgba(251,191,36,0.12);
-        border-color: rgba(251,191,36,0.32);
-      }
-      .btn {
+      .card {
+        background: var(--surface);
         border: 1px solid var(--border);
-        background: rgba(255,255,255,0.02);
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 16px;
+        overflow-x: auto;
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 10px 0 14px 0;
+      }
+      .nav button {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.02);
         color: var(--text-p);
         border-radius: 10px;
         padding: 8px 10px;
@@ -76,1509 +68,1184 @@
         font-weight: 900;
         cursor: pointer;
       }
-      .btn:hover { background: rgba(255,255,255,0.04); }
-      .btn.primary { border-color: rgba(56,189,248,0.25); }
-      .btn.danger { border-color: rgba(251,113,133,0.35); }
-
-      .total-stat { text-align: right; }
-      .total-label {
-        font-size: 12px;
-        color: var(--text-s);
-        font-weight: 900;
-        letter-spacing: 1px;
+      .nav button:hover {
+        background: rgba(255, 255, 255, 0.04);
       }
-      .total-percent { font-family: "JetBrains Mono"; font-size: 40px; font-weight: 800; color: var(--data); }
-
-      /* ===== 4개 큰 탭 유지 ===== */
-      .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 14px 0; }
-      .nav a {
-        text-decoration: none;
+      .nav button.active {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.22);
+      }
+      .small {
+        font-size: 11px;
+        color: var(--text-s);
+      }
+      .badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 900;
+        padding: 3px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: #161b22;
+        color: var(--text-s);
+      }
+      .btn {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.02);
         color: var(--text-p);
-        border: 1px solid var(--border);
-        background: rgba(255,255,255,0.02);
-        padding: 8px 10px;
         border-radius: 10px;
+        padding: 8px 10px;
         font-size: 12px;
         font-weight: 900;
+        cursor: pointer;
       }
-      .nav a:hover { background: rgba(255,255,255,0.04); }
-
-      .section-title {
-        font-size: 14px;
-        font-weight: 900;
-        color: var(--text-s);
-        margin: 18px 0 10px 0;
-        letter-spacing: 1px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+      .btn:hover {
+        background: rgba(255, 255, 255, 0.04);
       }
-      .card {
-        background: var(--surface);
+      .btn.primary {
+        border-color: rgba(56, 189, 248, 0.25);
+      }
+      .btn.danger {
+        border-color: rgba(251, 113, 133, 0.35);
+      }
+      .input {
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 14px;
-        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text-p);
+        border-radius: 10px;
+        padding: 8px 10px;
+        font-size: 12px;
+        font-weight: 800;
+        outline: none;
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      @media (max-width: 1100px) {
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 900px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
       }
 
-      /* ===== 상단 4개 진행현황 고정 표시 ===== */
-      .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
       .p-card {
-        background: rgba(255,255,255,0.02);
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 12px;
       }
-      .p-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-      .p-name { font-size: 12.5px; font-weight: 900; }
-      .p-meta { font-family: "JetBrains Mono"; font-size: 11px; color: var(--text-s); text-align: right; white-space: nowrap; }
+      .p-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .p-name {
+        font-size: 12.5px;
+        font-weight: 900;
+      }
+      .p-meta {
+        font-family: ui-monospace, Menlo, Consolas, monospace;
+        font-size: 11px;
+        color: var(--text-s);
+        text-align: right;
+        white-space: nowrap;
+      }
       .p-bar {
         margin-top: 10px;
         height: 10px;
         border-radius: 999px;
         overflow: hidden;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.06);
       }
-      .p-fill { height: 100%; }
-      .p-foot { margin-top: 10px; display: flex; justify-content: space-between; gap: 10px; align-items: center; }
-      .pill {
-        font-family: "JetBrains Mono";
-        font-size: 10px;
-        font-weight: 900;
-        padding: 3px 7px;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: #161b22;
-        color: var(--text-s);
-        white-space: nowrap;
+      .p-fill {
+        height: 100%;
       }
-
-      @media (max-width: 1200px) {
-        .grid-4 { grid-template-columns: repeat(2, 1fr); }
-        .right { align-items: flex-start; }
-        .total-stat { text-align: left; }
-      }
-      @media (max-width: 760px) {
-        .grid-4 { grid-template-columns: 1fr; }
-        body { padding: 14px; }
-        header { align-items: flex-start; }
-      }
-
-      /* ===== KPI ===== */
-      .kpi-wrap { overflow-x: auto; }
-      table.kpi {
-        width: 100%;
-        min-width: 820px;
-        border-collapse: collapse;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        overflow: hidden;
-        background: rgba(255,255,255,0.01);
-      }
-      table.kpi th, table.kpi td {
-        border: 1px solid var(--border);
-        padding: 10px;
-        font-size: 12px;
-        vertical-align: top;
-      }
-      table.kpi th {
-        background: rgba(255,255,255,0.03);
-        color: var(--text-s);
-        font-weight: 900;
-        font-size: 11px;
-        letter-spacing: 0.4px;
-        text-align: left;
-        white-space: nowrap;
-      }
-
-      /* ===== Gantt (월/주 확장) ===== */
-      .timeline-card { overflow-x: auto; }
-      .gantt-wrap { overflow-x: auto; }
-      table.gantt {
-        width: 100%;
-        min-width: 1100px;
-        border-collapse: collapse;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        overflow: hidden;
-        background: rgba(255,255,255,0.01);
-      }
-      table.gantt th, table.gantt td {
-        border: 1px solid var(--border);
-        padding: 10px;
-        font-size: 11px;
-        vertical-align: middle;
-        white-space: nowrap;
-      }
-      table.gantt th {
-        background: rgba(255,255,255,0.03);
-        color: var(--text-s);
-        font-weight: 900;
-        font-size: 10px;
-        letter-spacing: 0.4px;
-        text-align: left;
-      }
-      .gantt-head-row th { text-align: center; }
-      .gantt-left { min-width: 240px; }
-      .g-cell { width: 64px; height: 42px; position: relative; }
-      .g-tick { color: var(--text-s); font-family: "JetBrains Mono"; font-size: 10px; }
-      .g-bar {
-        position: absolute;
-        left: 6px; right: 6px;
-        height: 18px;
-        top: 50%; transform: translateY(-50%);
-        border-radius: 8px;
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.08);
-        overflow: hidden;
-      }
-      .g-fill { height: 100%; width: 0%; }
-      .g-label {
+      .p-foot {
+        margin-top: 10px;
         display: flex;
-        align-items: center;
         justify-content: space-between;
         gap: 10px;
+        align-items: center;
       }
-      .g-title { font-weight: 900; }
-      .g-meta { font-family: "JetBrains Mono"; color: var(--text-s); font-size: 10px; }
-
-      /* ===== Filters ===== */
-      .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-      .seg { display: flex; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); }
-      .seg button { border: 0; background: transparent; color: var(--text-s); padding: 8px 10px; font-size: 12px; font-weight: 900; cursor: pointer; }
-      .seg button.active { color: var(--text-p); background: rgba(255,255,255,0.06); }
-      .select, .input { border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text-p); border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 800; outline: none; }
-      .chipbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
-      .chip { border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.02); color: var(--text-s); border-radius: 999px; padding: 6px 10px; font-size: 11px; font-weight: 900; cursor: pointer; user-select: none; }
-      .chip.on { color: var(--text-p); border-color: rgba(56,189,248,0.25); background: rgba(56,189,248,0.08); }
-
-      /* ===== WBS ===== */
-      .wbs-wrap { overflow-x: auto; }
-      table.wbs {
-        width: 100%;
-        min-width: 1480px;
-        border-collapse: collapse;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        overflow: hidden;
-        background: rgba(255,255,255,0.01);
-      }
-      table.wbs th, table.wbs td {
-        border: 1px solid var(--border);
-        padding: 10px;
-        font-size: 12px;
-        vertical-align: top;
-      }
-      table.wbs th {
-        background: rgba(255,255,255,0.03);
-        color: var(--text-s);
-        font-weight: 900;
-        font-size: 11px;
-        letter-spacing: 0.4px;
-        text-align: left;
-        white-space: nowrap;
-      }
-      .dept-row td { background: rgba(255,255,255,0.02); font-weight: 900; color: var(--text-p); font-size: 12px; }
-      .dept-tag { display: inline-block; font-size: 10px; font-weight: 900; color: #000; padding: 3px 8px; border-radius: 6px; margin-right: 8px; }
-      .cb { width: 18px; height: 18px; accent-color: var(--done); cursor: pointer; }
-      .mono { font-family: "JetBrains Mono"; }
-      .idcell { white-space: nowrap; }
-      .steps { color: var(--text-s); font-size: 11px; line-height: 1.45; }
-      .stepline { display: flex; gap: 8px; align-items: flex-start; margin: 3px 0; }
-      .wtag { font-family: "JetBrains Mono"; font-size: 10px; font-weight: 900; padding: 2px 7px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: var(--text-p); white-space: nowrap; flex-shrink: 0; }
-      .outtag { display: inline-block; border: 1px solid rgba(255,255,255,0.1); background: #161b22; color: var(--text-s); font-size: 10px; font-weight: 900; padding: 3px 7px; border-radius: 8px; white-space: nowrap; }
-      .duetag { display: block; font-family: "JetBrains Mono"; font-size: 12px; font-weight: 900; color: var(--reg); white-space: nowrap; }
-      .duemeta { display: block; margin-top: 4px; font-size: 10.5px; color: var(--text-s); white-space: nowrap; }
-      .doneRow { background: rgba(16,185,129,0.03); }
-      .doneText { color: var(--done); text-decoration: line-through; opacity: 0.78; }
-
-      /* Step UI */
-      .scb { width: 14px; height: 14px; margin-top: 1px; accent-color: var(--done); cursor: pointer; }
-      .wtpill {
-        font-family: "JetBrains Mono";
+      .pill {
+        font-family: ui-monospace, Menlo, Consolas, monospace;
         font-size: 10px;
         font-weight: 900;
-        padding: 2px 6px;
+        padding: 3px 7px;
         border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.12);
+        border: 1px solid rgba(255, 255, 255, 0.12);
         background: #161b22;
         color: var(--text-s);
         white-space: nowrap;
       }
-      .datepill {
-        font-family: "JetBrains Mono";
-        font-size: 10px;
-        font-weight: 900;
-        padding: 2px 6px;
-        border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.12);
-        background: rgba(255,255,255,0.02);
-        color: rgba(148,163,184,0.9);
-        white-space: nowrap;
-      }
 
-      /* 인라인 편집 */
-      .editable[contenteditable="true"] {
-        padding: 2px 4px;
-        border-radius: 6px;
-        border: 1px dashed rgba(56,189,248,0.4);
-        background: rgba(56,189,248,0.06);
-        outline: none;
-      }
-
-      /* Reg */
-      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      @media (max-width: 1200px) { .grid-2 { grid-template-columns: 1fr; } }
-      table.dark {
-        width: 100%;
+      table {
         border-collapse: collapse;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        overflow: hidden;
-        background: rgba(255,255,255,0.01);
+        width: 100%;
       }
-      table.dark th, table.dark td { border: 1px solid var(--border); padding: 10px; font-size: 12px; vertical-align: top; }
-      table.dark th { background: rgba(255,255,255,0.03); color: var(--text-s); font-weight: 900; font-size: 11px; letter-spacing: 0.4px; text-align: left; }
-
-      /* 연말(12월) 미완 Task 강조 */
-      .year-end-risk { background: rgba(251,113,133,0.1) !important; }
-      .year-end-risk td { border-color: rgba(251,113,133,0.35); }
-      .risk-badge {
-        display: inline-block;
-        margin-left: 8px;
-        padding: 3px 7px;
-        font-size: 10px;
-        font-weight: 900;
-        border-radius: 999px;
-        color: #3b0a0a;
-        background: rgba(251,113,133,0.25);
-        border: 1px solid rgba(251,113,133,0.45);
+      th,
+      td {
+        border: 1px solid var(--border);
+        padding: 6px 8px;
+        font-size: 12px;
+        vertical-align: top;
+      }
+      th {
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-s);
         white-space: nowrap;
+      }
+      .gantt-cell {
+        width: 56px;
+        position: relative;
+        min-width: 56px;
+      }
+      .bar {
+        position: absolute;
+        top: 6px;
+        left: 4px;
+        height: 18px;
+        border-radius: 6px;
+      }
+      .cb {
+        accent-color: var(--done);
+        cursor: pointer;
+      }
+      .stepline {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 12px;
+        margin: 2px 0;
+      }
+      .dept {
+        font-weight: 900;
+        margin-top: 10px;
+      }
+      .task {
+        margin-left: 12px;
+      }
+
+      .chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .chip {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text-s);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 11px;
+        font-weight: 900;
+        cursor: pointer;
+        user-select: none;
+      }
+      .chip.on {
+        color: var(--text-p);
+        border-color: rgba(56, 189, 248, 0.25);
+        background: rgba(56, 189, 248, 0.08);
+      }
+
+      .hr {
+        height: 1px;
+        background: var(--border);
+        margin: 12px 0;
+      }
+      .mono {
+        font-family: ui-monospace, Menlo, Consolas, monospace;
       }
     </style>
   </head>
 
   <body>
-    <div class="container">
-      <header>
-        <div>
-          <h1 class="h-title">
-            AITRICS <span style="font-weight: 300">2026 Dr.Answer 3.0 Master</span>
-          </h1>
-          <p class="h-sub">연간-반기-분기-월-주차 필터 기반 WBS 대시보드 (Step 가중치/완료일/Step 기반 Gantt)</p>
-        </div>
+    <h2>📅 AITRICS 2026 – Step 기반 WBS + 자동 Gantt + 제출용 표</h2>
 
-        <div class="right">
-          <div class="row">
-            <span class="badge" id="mode-badge">READ-ONLY</span>
-            <span class="badge warn" id="save-badge">NOT SAVED</span>
-            <button class="btn primary" id="edit-btn">편집</button>
-            <button class="btn" id="save-btn" style="display: none">저장</button>
-            <button class="btn danger" id="exit-btn" style="display: none">종료</button>
-          </div>
-
-          <div class="row" id="pw-row" style="display: none">
-            <input class="input" id="pw-input" type="password" placeholder="비밀번호(1234)" style="min-width: 160px" />
-            <button class="btn primary" id="pw-ok">확인</button>
-            <button class="btn" id="pw-cancel">취소</button>
-          </div>
-
-          <div class="total-stat">
-            <div class="total-label">TOTAL PROGRESS</div>
-            <div class="total-percent" id="total-val">0%</div>
-          </div>
-        </div>
-      </header>
-
-      <div class="nav">
-        <a href="#kpi">KPI 스냅샷</a>
-        <a href="#timeline">전략 타임라인</a>
-        <a href="#wbs">주차 WBS</a>
-        <a href="#reg">기능분리·인허가</a>
-      </div>
-
-      <div class="section-title"><span>📍</span> PROGRESS OVERVIEW (STEP-WEIGHTED)</div>
-      <div class="card">
-        <div class="grid-4" id="overview-grid"></div>
-      </div>
-
-      <div id="kpi" class="section-title"><span>📌</span> KPI 스냅샷</div>
-      <div class="card kpi-wrap">
-        <table class="kpi" id="kpi-table">
-          <thead>
-            <tr>
-              <th style="width: 38%">KPI</th>
-              <th style="width: 14%">진행(%)</th>
-              <th style="width: 18%">DUE</th>
-              <th style="width: 30%">담당/비고</th>
-            </tr>
-          </thead>
-          <tbody id="kpi-body"></tbody>
-        </table>
-      </div>
-
-      <div id="timeline" class="section-title"><span>🗓️</span> EXECUTION GANTT (MONTH / WEEK)</div>
-      <div class="card">
-        <div class="filters" style="justify-content: space-between; gap: 12px;">
-          <div class="seg" aria-label="gantt view">
-            <button class="active" data-gview="month">월</button>
-            <button data-gview="week">주</button>
-          </div>
-          <div class="row">
-            <span class="badge" id="gantt-hint">STEP 기반 진행률로 채워집니다</span>
-          </div>
-        </div>
-      </div>
-      <div class="card gantt-wrap">
-        <table class="gantt" id="gantt-table">
-          <thead id="gantt-head"></thead>
-          <tbody id="gantt-body"></tbody>
-        </table>
-      </div>
-
-      <div id="wbs" class="section-title"><span>🔍</span> MICRO-WBS: WEEKLY EXECUTION ITEMS</div>
-
-      <div class="card">
-        <div class="filters">
-          <div class="seg" aria-label="time lens">
-            <button class="active" data-lens="year">연차</button>
-            <button data-lens="half">반기</button>
-            <button data-lens="quarter">분기</button>
-            <button data-lens="month">월</button>
-            <button data-lens="week">주</button>
-          </div>
-
-          <select class="select" id="period-select" title="기간 선택"></select>
-
-          <select class="select" id="status-select" title="상태">
-            <option value="all">전체</option>
-            <option value="open">미완료</option>
-            <option value="done">완료</option>
-          </select>
-
-          <input class="input" id="search-input" placeholder="검색 (ID/업무/산출물/Step)" />
-          <span class="badge" id="count-badge">0 items</span>
-        </div>
-
-        <div class="chipbar" id="dept-chips"></div>
-      </div>
-
-      <div class="card wbs-wrap">
-        <table class="wbs">
-          <thead>
-            <tr>
-              <th style="width: 52px">DONE</th>
-              <th style="width: 92px">ID</th>
-              <th>업무(1행)</th>
-              <th style="width: 560px">주차별 세부 실행 항목 (Step 체크/가중치/완료일)</th>
-              <th style="width: 150px">DUE (D-○일)</th>
-              <th style="width: 120px">산출물</th>
-            </tr>
-          </thead>
-          <tbody id="wbs-body"></tbody>
-        </table>
-      </div>
-
-      <div id="reg" class="section-title"><span>🧾</span> 기능분리·인허가</div>
-      <div class="grid-2">
-        <div class="card">
-          <div style="font-weight: 900; font-size: 13px; margin-bottom: 10px">기능분리(초안)</div>
-          <table class="dark">
-            <thead>
-              <tr>
-                <th style="width: 18%">모듈</th>
-                <th style="width: 18%">사용자</th>
-                <th style="width: 22%">출력</th>
-                <th style="width: 22%">통제 포인트</th>
-                <th style="width: 20%">리스크</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>데이터 보기</b></td><td>의료진·보호자</td><td>원자료/요약</td><td>표시항목/임계치 설정</td><td>저위험 가능성</td></tr>
-              <tr><td><b>이상 탐지</b></td><td>의료진</td><td>score/flag</td><td>확정문구 금지/근거로그</td><td>상향 가능성</td></tr>
-              <tr><td><b>트리아제</b></td><td>보호자</td><td>행동권고</td><td>문구/기준 의료진 승인</td><td>상향 가능성↑</td></tr>
-              <tr><td><b>LLM 가이드</b></td><td>보호자</td><td>교육/FAQ</td><td>검수/금칙어/가드레일</td><td>오남용 방지</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="card">
-          <div style="font-weight: 900; font-size: 13px; margin-bottom: 10px">제출자료 차등(가정)</div>
-          <table class="dark">
-            <thead>
-              <tr>
-                <th style="width: 34%">항목</th>
-                <th style="width: 33%">Class I 가정</th>
-                <th style="width: 33%">Class II 가정</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><b>SW 설명/버전</b></td><td>기능목록/로그</td><td>아키텍처/추적성</td></tr>
-              <tr><td><b>위험관리</b></td><td>핵심 위험 중심</td><td>트리아제/알람 강화</td></tr>
-              <tr><td><b>성능/근거</b></td><td>내부+제한평가</td><td>외부/교차검증 강화</td></tr>
-              <tr><td><b>보안/SBOM</b></td><td>기본 통제</td><td>위협모델/취약점 강화</td></tr>
-              <tr><td><b>사용적합성</b></td><td>핵심 흐름</td><td>응급 분기 중심 강화</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="nav">
+      <button class="active" data-tab="dash">요약 카드</button>
+      <button data-tab="gantt">Gantt</button>
+      <button data-tab="wbs">WBS(체크)</button>
+      <button data-tab="export">기관 제출용 WBS 표</button>
     </div>
 
+    <!-- DASH -->
+    <div class="card" id="tab-dash"></div>
+
+    <!-- GANTT -->
+    <div class="card" id="tab-gantt" style="display: none"></div>
+
+    <!-- WBS -->
+    <div class="card" id="tab-wbs" style="display: none"></div>
+
+    <!-- EXPORT -->
+    <div class="card" id="tab-export" style="display: none"></div>
+
     <script>
-      /* =========================
-        CONFIG
-      ========================= */
-      const YEAR = 2026;
-      const STORAGE_KEY = "aitrics_2026_roadmap_step_weighted";
-      const EDIT_PASSWORD = "1234";
+      /* =====================
+   CONFIG
+===================== */
+      const MONTHS = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const fmt = (d) => d.toISOString().slice(0, 10);
 
-      /* =========================
-        Utilities
-      ========================= */
-      const MONTH_MAP = { Jan:1, Feb:2, Mar:3, Apr:4, May:5, Jun:6, Jul:7, Aug:8, Sep:9, Oct:10, Nov:11, Dec:12 };
-      const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
-      const pad2 = (n)=>String(n).padStart(2,"0");
-      const fmtDate = (d)=>`${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
-
-      function todayStr(){
-        const d = new Date();
-        d.setHours(0,0,0,0);
-        return fmtDate(d);
-      }
-      function firstMondayOfMonth(year, month) {
-        const d = new Date(year, month - 1, 1);
-        const day = d.getDay(); // 0 Sun ... 1 Mon ... 6 Sat
-        const diff = day === 0 ? 1 : day === 1 ? 0 : 8 - day;
-        d.setDate(d.getDate() + diff);
-        return d;
-      }
-      function dueLabelToDate(dueLabel) {
-        const m = dueLabel?.match(/^([A-Za-z]{3})\s+W(\d)$/);
-        if (!m) return null;
-        const mon = MONTH_MAP[m[1]];
-        const w = Number(m[2]);
-        if (!mon || !w) return null;
-        const startMon = firstMondayOfMonth(YEAR, mon);
-        const weekStart = new Date(startMon);
-        weekStart.setDate(startMon.getDate() + (w - 1) * 7);
-        const due = new Date(weekStart);
-        due.setDate(weekStart.getDate() + 4); // Friday
-        return due;
-      }
-      function dDayString(dueDate) {
-        if (!dueDate) return "D-?";
-        const today = new Date(); today.setHours(0,0,0,0);
-        const due = new Date(dueDate); due.setHours(0,0,0,0);
-        const diff = Math.round((due - today) / 86400000);
-        return diff >= 0 ? `D-${diff}일` : `D+${Math.abs(diff)}일`;
-      }
-      function quarterOfDate(d) {
-        const m = d.getMonth() + 1;
-        if (m <= 3) return "Q1";
-        if (m <= 6) return "Q2";
-        if (m <= 9) return "Q3";
-        return "Q4";
-      }
-      function halfOfDate(d) { return d.getMonth() + 1 <= 6 ? "H1" : "H2"; }
-      function monthKey(d) { return `${YEAR}-${pad2(d.getMonth() + 1)}`; }
-      function lensKey(lens, task) {
-        const due = task.dueDate;
-        if (!due) return "UNKNOWN";
-        if (lens === "year") return String(YEAR);
-        if (lens === "half") return halfOfDate(due);
-        if (lens === "quarter") return quarterOfDate(due);
-        if (lens === "month") return monthKey(due);
-        if (lens === "week") return task.dueLabel || "UNKNOWN";
-        return "ALL";
-      }
-      function lensLabel(lens, key) {
-        if (lens === "year") return `${key}년`;
-        if (lens === "half") return key === "H1" ? "상반기(H1)" : "하반기(H2)";
-        if (lens === "quarter") return `분기 ${key}`;
-        if (lens === "month") return `${key.split("-")[1]}월`;
-        if (lens === "week") return key;
-        return key;
-      }
-      function parseDueMonth(dueLabel){
-        const m = dueLabel?.match(/^([A-Za-z]{3})\s+W(\d)$/);
-        if (!m) return null;
-        return m[1]; // e.g. "Feb"
-      }
-      function stepKeyForTask(task, step){
-        const mon = parseDueMonth(task.dueLabel) || "UNK";
-        const wk = step.week || "W?";
-        return `${mon} ${wk}`; // "Feb W1"
-      }
-
-      /* =========================
-        Step weight rules (기본)
-        - 서버/인프라 계열: 50%
-        - 문서/가이드/스펙: 10%
-        - 나머지: 균등 분배
-      ========================= */
-      function defaultWeightForStepLabel(label){
-        const s = (label||"").toLowerCase();
-        // 서버 / 인프라
-        if (s.includes("서버") || s.includes("gpu") || s.includes("인프라") || s.includes("네트워크") || s.includes("방화벽") || s.includes("os") || s.includes("driver") || s.includes("드라이버")) return 50;
-        // 문서
-        if (s.includes("문서") || s.includes("가이드") || s.includes("spec") || s.includes("스펙") || s.includes("보고서") || s.includes("템플릿") || s.includes("절차") || s.includes("기록")) return 10;
-        return null;
-      }
-      function ensureSteps(task){
-        // steps 없으면 1개로 생성
-        if (!Array.isArray(task.steps) || task.steps.length === 0){
-          task.steps = [{ week: "W1", label: "세부 항목 정의 필요", weight: 100, done: !!task.checked, doneAt: task.checked ? todayStr() : null }];
-          return;
-        }
-        // step schema normalize
-        task.steps.forEach((st)=>{
-          if (typeof st.done !== "boolean") st.done = false;
-          if (!("doneAt" in st)) st.doneAt = null;
-          // weight set
-          const w = Number(st.weight);
-          if (!Number.isFinite(w) || w <= 0){
-            const dw = defaultWeightForStepLabel(st.label);
-            st.weight = dw != null ? dw : 0; // temporary, will normalize later
-          }
-        });
-
-        // normalize weights: if any 0 remain, distribute leftover or equalize
-        const fixed = task.steps.filter(s => Number(s.weight) > 0).reduce((a,s)=>a+Number(s.weight),0);
-        const zeros = task.steps.filter(s => !(Number(s.weight) > 0));
-        if (zeros.length > 0){
-          // target total 100
-          const remain = Math.max(0, 100 - fixed);
-          const each = zeros.length ? Math.floor(remain / zeros.length) : 0;
-          zeros.forEach((s, idx)=>{
-            s.weight = each;
-          });
-          // distribute remainder
-          let rem2 = remain - each*zeros.length;
-          let i=0;
-          while(rem2>0 && i<zeros.length){
-            zeros[i].weight += 1;
-            rem2 -= 1;
-            i++;
-          }
-        }
-
-        // if sum != 100, scale proportionally
-        const sum = task.steps.reduce((a,s)=>a+Number(s.weight||0),0);
-        if (sum > 0 && sum !== 100){
-          task.steps.forEach((s)=>{ s.weight = Math.round((Number(s.weight||0)/sum)*100); });
-          // fix rounding drift
-          let ssum = task.steps.reduce((a,s)=>a+Number(s.weight||0),0);
-          while (ssum !== 100){
-            // adjust largest step
-            const idx = task.steps.reduce((best,iStep,idx,arr)=>{
-              const w = Number(iStep.weight||0);
-              return w > Number(arr[best].weight||0) ? idx : best;
-            },0);
-            if (ssum > 100){ task.steps[idx].weight -= 1; ssum -= 1; }
-            else { task.steps[idx].weight += 1; ssum += 1; }
-          }
-        }
-
-        // if legacy task.checked true, mark all steps done (but keep doneAt if already set)
-        if (task.checked){
-          task.steps.forEach((s)=>{
-            if (!s.done){
-              s.done = true;
-              s.doneAt = s.doneAt || todayStr();
-            }
-          });
-        } else {
-          // if all steps done, sync checked
-          const allDone = task.steps.every(s=>!!s.done);
-          if (allDone) task.checked = true;
-        }
-      }
-
-      function taskProgress(task){
-        ensureSteps(task);
-        const totalW = task.steps.reduce((a,s)=>a+Number(s.weight||0),0) || 0;
-        if (totalW <= 0) return 0;
-        const doneW = task.steps.filter(s=>s.done).reduce((a,s)=>a+Number(s.weight||0),0);
-        return clamp(Math.round((doneW/totalW)*100),0,100);
-      }
-      function groupProgress(group){
-        let total=0, done=0;
-        group.tasks.forEach(t=>{
-          ensureSteps(t);
-          const tw = t.steps.reduce((a,s)=>a+Number(s.weight||0),0);
-          total += tw;
-          done += t.steps.filter(s=>s.done).reduce((a,s)=>a+Number(s.weight||0),0);
-        });
-        if (!total) return 0;
-        return clamp(Math.round((done/total)*100),0,100);
-      }
-
-      /* =========================
-        Default Data (사용자 기본자료 기반)
-      ========================= */
-      const DEFAULT_DATA = {
-        kpiSnapshot: [
-          { name: "Vent 데이터 이상치 검증", progress: 20, due: "May", owner: "세브란스", note: "목표: ~5월" },
-          { name: "PRO 설문 데이터 검증", progress: 10, due: "Jun", owner: "세브란스·AITRICS", note: "목표: ~6월" },
-          { name: "악화/이상 시그널 레이블링", progress: 0, due: "May", owner: "세브란스", note: "목표: ~5월" }
-        ],
+      /* =====================
+   DATA (기본자료 기반 + 합리적 가정 Step 분해/가중치)
+   - "서버=50%, 문서=10%" 같은 개념은 각 task 성격에 맞춰 반영(개발/구현/시험 비중 ↑, 문서 비중 10%대)
+===================== */
+      const DATA = {
         roadmap: [
           {
-            dept: "데이터/인프라 연계",
+            dept: "데이터 엔지니어링/연계",
             color: "var(--data)",
-            category: "DATA PIPELINE",
             tasks: [
               {
-                id: "D-1.1",
-                text: "GPU 서버 및 워크스테이션 인프라 구축",
-                out: "설치공문",
-                checked: true,
-                dueLabel: "Feb W1",
+                id: "DE-1",
+                text: "가정용 인공호흡기 신호 데이터 수집 및 전송, 분석 파이프라인 설계",
                 steps: [
-                  { week: "W1", label: "서버 입고 확인" },
-                  { week: "W1", label: "OS/드라이버 세팅" },
-                  { week: "W2", label: "원내 네트워크/방화벽 연계" }
-                ]
+                  {
+                    week: "Feb W1",
+                    label: "수집 신호/변수 범위 정의",
+                    weight: 15,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Feb W2",
+                    label: "데이터 전송 방식·주기 설계",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W1",
+                    label: "분석 파이프라인 아키텍처 설계",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W2",
+                    label: "장애/누락/재처리 시나리오 정의",
+                    weight: 25,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W3",
+                    label: "설계 문서 정리(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
               {
-                id: "D-1.2",
-                text: "EMR/MDIP 데이터 연계 확인",
-                out: "접근권한",
-                checked: true,
-                dueLabel: "Feb W2",
+                id: "DE-2",
+                text: "가정용 인공호흡기 데이터 결측값 및 이상치 처리",
                 steps: [
-                  { week: "W2", label: "EMR 테이블·변수 맵핑" },
-                  { week: "W3", label: "MDIP 연동 인터페이스 테스트" },
-                  { week: "W3", label: "추출 로그/에러코드 표준화" }
-                ]
+                  {
+                    week: "Mar W1",
+                    label: "결측/이상치 기준 정의",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W2",
+                    label: "처리 정책 설계",
+                    weight: 25,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W1",
+                    label: "처리 로직 파이프라인 반영(개발)",
+                    weight: 35,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W2",
+                    label: "샘플 검증 및 튜닝(시험)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W3",
+                    label: "처리 규칙 문서화(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
               {
-                id: "D-1.3",
-                text: "T-Bridge 데이터 인터페이스 설계",
-                out: "API_Spec",
-                checked: false,
-                dueLabel: "Mar W4",
+                id: "DE-3",
+                text: "PRO 설문 데이터 구조 설계 및 기획",
                 steps: [
-                  { week: "W1", label: "장비 신호 수집 규격 정의" },
-                  { week: "W3", label: "스트리밍/배치 API 설계" },
-                  { week: "W4", label: "에러·재전송·누락 처리 정의" }
-                ]
+                  {
+                    week: "Mar W1",
+                    label: "PRO 항목 후보 정의",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W2",
+                    label: "데이터 구조/스키마 설계",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W1",
+                    label: "수집 주기·연계 포인트 정의",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W2",
+                    label: "API/저장 구조 정리",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W3",
+                    label: "명세 문서화(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
               {
-                id: "D-1.4",
-                text: "이상치/결측 처리 및 수집 파이프라인 개발",
-                out: "Pipeline",
-                checked: false,
-                dueLabel: "May W4",
+                id: "DE-4",
+                text: "T-Bridge, MDIP 연계 모듈 데이터 송/수신 파이프라인 설계&개발",
                 steps: [
-                  { week: "W2", label: "결측치 처리 규칙/보간 정책" },
-                  { week: "W3", label: "이상치 정의·플래그 체계" },
-                  { week: "W4", label: "파이프라인 성능/재현성 최적화" }
-                ]
-              }
-            ]
+                  {
+                    week: "Feb W3",
+                    label: "외부 시스템 요구사항 정리",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W1",
+                    label: "송·수신 인터페이스 설계",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W2",
+                    label: "파이프라인 구현(개발)",
+                    weight: 40,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W1",
+                    label: "통합 테스트·예외 처리(시험)",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W2",
+                    label: "운영/명세 문서 정리(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
+              },
+            ],
           },
           {
-            dept: "AI 알고리즘 개발",
+            dept: "AI 알고리즘/모델 개발",
             color: "var(--ai)",
-            category: "AI MODELING",
             tasks: [
               {
-                id: "A-2.1",
-                text: "악화/이상 시그널 레이블링 기준 수립",
-                out: "Label_Guide",
-                checked: false,
-                dueLabel: "Mar W2",
+                id: "AI-1",
+                text: "가정용 인공호흡기 신호 모니터링 인공지능 알고리즘 설계",
                 steps: [
-                  { week: "W1", label: "의료진 합의 기준 초안" },
-                  { week: "W2", label: "레이블링 도구/워크플로우 결정" },
-                  { week: "W2", label: "일치도(IAA) 점검 설계" }
-                ]
+                  {
+                    week: "Mar W1",
+                    label: "문제 정의·평가지표 설정",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W2",
+                    label: "입력 피처/신호 표현 설계",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W1",
+                    label: "모델링 전략·구조 설계",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W2",
+                    label: "판단/알림 로직 설계",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W3",
+                    label: "설계 문서화(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
               {
-                id: "A-2.2",
-                text: "Vent 원천데이터 샘플 EDA 및 특징정의",
-                out: "EDA_Report",
-                checked: false,
-                dueLabel: "Mar W4",
+                id: "AI-2",
+                text: "알고리즘 성능 평가 및 재택 환경 적합성 확보를 위한 모델 성능 보정",
                 steps: [
-                  { week: "W2", label: "신호 품질 분포/결측 패턴 분석" },
-                  { week: "W3", label: "임상 이벤트 후보 피처 정의" },
-                  { week: "W4", label: "모델 입력 텐서 스펙 확정" }
-                ]
+                  {
+                    week: "May W1",
+                    label: "평가 시나리오·데이터셋 정의",
+                    weight: 15,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "May W2",
+                    label: "1차 성능 평가(시험)",
+                    weight: 25,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Jun W1",
+                    label: "재택 환경 반영 보정(개발)",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Jun W2",
+                    label: "성능 재평가·튜닝(시험)",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Jun W3",
+                    label: "평가 보고서(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
               {
-                id: "A-2.3",
-                text: "Transformer 기반 시계열 모델 + Agent 구조 설계",
-                out: "Arch_v1",
-                checked: false,
-                dueLabel: "May W2",
+                id: "AI-3",
+                text: "역할 분리형 다중 컴포넌트 구조 AI 시스템 설계",
                 steps: [
-                  { week: "W2", label: "시계열 모델 baseline 정의" },
-                  { week: "W3", label: "Agent I/O·로그 스키마" },
-                  { week: "W4", label: "임계치/불확실성 처리 룰" }
-                ]
-              }
-            ]
+                  {
+                    week: "Apr W1",
+                    label: "역할 분리 기준 정의",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W2",
+                    label: "컴포넌트 간 I/O 설계",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "May W1",
+                    label: "로그·추적성 설계",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "May W2",
+                    label: "안전·인허가 관점 검토",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "May W3",
+                    label: "아키텍처 문서(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
+              },
+            ],
           },
           {
             dept: "서비스 개발/구현",
             color: "var(--svc)",
-            category: "SERVICE/UX",
             tasks: [
               {
-                id: "P-3.1",
-                text: "보호자 인터뷰 및 니즈 분석(트리아제 3단계 포함)",
-                out: "FGI_Report",
-                checked: false,
-                dueLabel: "Mar W4",
+                id: "SV-1",
+                text: "소아호흡부전 특화 질의·응답 챗봇 모듈 개발 및 트리아제 모듈 개발 위한 전문가 자문 및 사용자 인터뷰",
                 steps: [
-                  { week: "W2", label: "대상자 선정/동의 절차 정리" },
-                  { week: "W4", label: "FGI 수행·페인포인트 도출" }
-                ]
+                  {
+                    week: "Mar W2",
+                    label: "대상자/전문가 선정",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W3",
+                    label: "인터뷰 가이드 설계",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W1",
+                    label: "인터뷰·자문 수행",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W2",
+                    label: "인사이트 정리·요구사항 반영",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Apr W3",
+                    label: "결과 문서(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
               {
-                id: "P-3.2",
-                text: "트리아제 3단계 UX 문구 설계",
-                out: "Flowchart",
-                checked: false,
-                dueLabel: "Apr W4",
+                id: "SV-2",
+                text: "모바일 앱 기능 개발",
                 steps: [
-                  { week: "W2", label: "분기 트리(보수적) 초안" },
-                  { week: "W3", label: "의료진 문구/금칙어 검수" },
-                  { week: "W4", label: "사용적합성 시나리오 작성" }
-                ]
+                  {
+                    week: "May W1",
+                    label: "기능 정의·백로그 확정",
+                    weight: 15,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "May W2",
+                    label: "핵심 기능 구현(개발)",
+                    weight: 40,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Jun W1",
+                    label: "데이터·AI 연계(개발)",
+                    weight: 25,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Jun W2",
+                    label: "QA·사용성 개선(시험)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Jun W3",
+                    label: "릴리즈/운영 문서(문서 10%)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
-              {
-                id: "P-3.3",
-                text: "UI 기획 및 PRO 항목/주기 설계",
-                out: "Figma",
-                checked: false,
-                dueLabel: "May W4",
-                steps: [
-                  { week: "W2", label: "화면 흐름도(Wireframe) 작성" },
-                  { week: "W3", label: "PRO 문항·입력주기 설계" },
-                  { week: "W4", label: "Figma 상세 프로토타입" }
-                ]
-              }
-            ]
+            ],
           },
           {
-            dept: "인허가/품질(RA/QA)",
+            dept: "인허가",
             color: "var(--reg)",
-            category: "REGULATORY",
             tasks: [
               {
-                id: "R-4.1",
-                text: "SaMD 사전상담 패키지(의도된 사용·등급·기능분리)",
-                out: "Q&A_Doc",
-                checked: false,
-                dueLabel: "Mar W4",
+                id: "RA-1",
+                text: "디지털 의료기기 인허가 사전상담",
                 steps: [
-                  { week: "W2", label: "의도된 사용/사용자/출력 문구 확정" },
-                  { week: "W3", label: "기능분리 시나리오·리스크 요약" },
-                  { week: "W4", label: "회의 수행·합의사항 기록" }
-                ]
+                  {
+                    week: "Mar W1",
+                    label: "의도된 사용·출력 정의",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W2",
+                    label: "기능분리·리스크 정리",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W3",
+                    label: "사전상담 자료 패키징",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Mar W4",
+                    label: "결과 정리 문서(문서)",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
               {
-                id: "R-4.2",
-                text: "SW 수명주기·추적성·시험전략 문서화",
-                out: "Dev_QMS",
-                checked: false,
-                dueLabel: "Jun W4",
+                id: "RA-2",
+                text: "디지털 의료기기 인허가 수행",
                 steps: [
-                  { week: "W2", label: "요구사항-설계-시험 추적성 템플릿" },
-                  { week: "W3", label: "V&V 계획" },
-                  { week: "W4", label: "릴리즈/변경관리 절차" }
-                ]
+                  {
+                    week: "Jul W1",
+                    label: "기술문서·QMS 확정",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Aug W1",
+                    label: "성능·위험관리 자료 작성(문서/근거)",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Sep W1",
+                    label: "제출본 QA·갭 클로징(검토)",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Oct W1",
+                    label: "제출·보완 대응",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    week: "Dec W2",
+                    label: "최종 문서 정리",
+                    weight: 10,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
               },
-              {
-                id: "R-4.3",
-                text: "기술문서 패키징(성능·위험관리·사용적합성) 초안",
-                out: "Tech_File",
-                checked: false,
-                dueLabel: "Dec W2",
-                steps: [
-                  { week: "W1", label: "성능평가 결과서 통합" },
-                  { week: "W2", label: "위험관리·가드레일 근거 정리" }
-                ]
-              }
-            ]
-          }
-        ]
+            ],
+          },
+        ],
       };
 
-      function loadData() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return structuredClone(DEFAULT_DATA);
-          return JSON.parse(raw);
-        } catch (e) {
-          return structuredClone(DEFAULT_DATA);
-        }
+      /* =====================
+   STATE
+===================== */
+      let viewDept = "ALL"; // 요약/표에서 Dept 필터
+
+      /* =====================
+   UTIL
+===================== */
+      function normalizeWeights(task) {
+        // 혹시 가중치 합이 100이 아닌 경우 대비(데이터 바꿔도 안전)
+        const sum = task.steps.reduce((s, x) => s + (Number(x.weight) || 0), 0);
+        if (sum === 100 || sum === 0) return;
+        // 비율 유지하며 100으로 스케일 후 반올림, 마지막 step 보정
+        const scaled = task.steps.map((s) =>
+          Math.round((s.weight / sum) * 100),
+        );
+        const diff = 100 - scaled.reduce((a, b) => a + b, 0);
+        scaled[scaled.length - 1] += diff;
+        task.steps.forEach((s, i) => (s.weight = scaled[i]));
       }
-      function saveLocal() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA));
-        markSaved();
+      function taskProgress(task) {
+        normalizeWeights(task);
+        const done = task.steps
+          .filter((s) => s.done)
+          .reduce((sum, s) => sum + s.weight, 0);
+        return Math.round(done);
       }
-
-      /* =========================
-        State
-      ========================= */
-      let DATA = loadData();
-      let editMode = false;
-
-      let lens = "year";
-      let periodKey = String(YEAR);
-      let statusFilter = "all";
-      let searchQuery = "";
-      let deptFilter = new Set();
-
-      let ganttView = "month"; // month|week
-
-      function hydrateDueDates(){
-        DATA.roadmap.forEach((g)=>{
-          g.tasks.forEach((t)=>{
-            t._dueObj = dueLabelToDate(t.dueLabel);
-            t._dueStr = t._dueObj ? fmtDate(t._dueObj) : null;
-            ensureSteps(t);
-          });
+      function deptProgress(group) {
+        const allSteps = group.tasks.flatMap((t) =>
+          t.steps.map((s) => ({ t, s })),
+        );
+        const total = allSteps.reduce((sum, x) => sum + (x.s.weight || 0), 0);
+        const done = allSteps
+          .filter((x) => x.s.done)
+          .reduce((sum, x) => sum + (x.s.weight || 0), 0);
+        // total은 task당 100씩이니 (task 수*100)으로 떨어짐
+        return Math.round(total ? (done / total) * 100 : 0);
+      }
+      function totalProgress() {
+        const groups = DATA.roadmap;
+        const totalTasks = groups.reduce((sum, g) => sum + g.tasks.length, 0);
+        const doneWeighted = groups.reduce(
+          (sum, g) => sum + g.tasks.reduce((s, t) => s + taskProgress(t), 0),
+          0,
+        );
+        return Math.round(
+          totalTasks ? (doneWeighted / (totalTasks * 100)) * 100 : 0,
+        );
+      }
+      function getWeeksTimeline() {
+        const weeks = [];
+        MONTHS.forEach((m) => {
+          for (let w = 1; w <= 4; w++) weeks.push(`${m} W${w}`);
         });
+        return weeks;
       }
-      hydrateDueDates();
-
-      /* =========================
-        Save badge
-      ========================= */
-      function markSaved() {
-        const b = document.getElementById("save-badge");
-        const now = new Date();
-        const hh = pad2(now.getHours()), mm = pad2(now.getMinutes());
-        b.textContent = `SAVED ${hh}:${mm}`;
-        b.classList.remove("warn");
-        b.classList.add("on");
-      }
-      function markDirty() {
-        const b = document.getElementById("save-badge");
-        b.textContent = "NOT SAVED";
-        b.classList.remove("on");
-        b.classList.add("warn");
+      function colorForDept(dept) {
+        const g = DATA.roadmap.find((x) => x.dept === dept);
+        return g ? g.color : "rgba(255,255,255,.2)";
       }
 
-      /* =========================
-        Overview / Total (step-weighted)
-      ========================= */
-      function renderOverview() {
-        const grid = document.getElementById("overview-grid");
-        grid.innerHTML = "";
-
-        const catOrder = ["DATA PIPELINE", "AI MODELING", "SERVICE/UX", "REGULATORY"];
-        const catColor = {
-          "DATA PIPELINE": "var(--data)",
-          "AI MODELING": "var(--ai)",
-          "SERVICE/UX": "var(--svc)",
-          "REGULATORY": "var(--reg)"
+      /* =====================
+   TABS
+===================== */
+      document.querySelectorAll(".nav button").forEach((btn) => {
+        btn.onclick = () => {
+          document
+            .querySelectorAll(".nav button")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const tab = btn.dataset.tab;
+          ["dash", "gantt", "wbs", "export"].forEach((k) => {
+            document.getElementById("tab-" + k).style.display =
+              k === tab ? "block" : "none";
+          });
+          renderAll();
         };
+      });
 
-        const cats = {};
-        catOrder.forEach((c)=>cats[c] = { doneW:0, totalW:0 });
+      /* =====================
+   DASH: Dept/Task 요약 카드
+===================== */
+      function renderDash() {
+        const el = document.getElementById("tab-dash");
+        const total = totalProgress();
+        const depts = DATA.roadmap.map((g) => ({
+          dept: g.dept,
+          pct: deptProgress(g),
+          color: g.color,
+          tasks: g.tasks.length,
+        }));
 
-        DATA.roadmap.forEach((g)=>{
-          g.tasks.forEach((t)=>{
-            ensureSteps(t);
-            const tw = t.steps.reduce((a,s)=>a+Number(s.weight||0),0);
-            const dw = t.steps.filter(s=>s.done).reduce((a,s)=>a+Number(s.weight||0),0);
-            if (!cats[g.category]) cats[g.category] = { doneW:0, totalW:0 };
-            cats[g.category].doneW += dw;
-            cats[g.category].totalW += tw;
-          });
-        });
+        // Dept chips
+        const chipHtml = `
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+      <div>
+        <span class="badge">TOTAL</span>
+        <span style="font-weight:900;font-size:22px;margin-left:8px">${total}%</span>
+        <span class="small" style="margin-left:8px">전체(Dept/Task/Step 가중치 기반)</span>
+      </div>
+      <div class="chips" id="dept-chips"></div>
+    </div>
+    <div class="hr"></div>
+  `;
 
-        catOrder.forEach((c)=>{
-          const totalW = cats[c].totalW;
-          const pct = totalW ? Math.round((cats[c].doneW/totalW)*100) : 0;
-          // done/total counts (tasks) for reference
-          const tasks = DATA.roadmap.filter(g=>g.category===c).flatMap(g=>g.tasks);
-          const doneTasks = tasks.filter(t=>taskProgress(t)===100).length;
-          const el = document.createElement("div");
-          el.className = "p-card";
-          el.innerHTML = `
+        const deptCards = `
+    <div class="grid-3" style="margin-bottom:10px">
+      ${depts
+        .map(
+          (d) => `
+        <div class="p-card" style="cursor:pointer" onclick="setDeptFilter('${escapeHtml(d.dept)}')">
+          <div class="p-top">
+            <div class="p-name">${escapeHtml(d.dept)}</div>
+            <div class="p-meta">${d.pct}%<br/><span>${d.tasks} tasks</span></div>
+          </div>
+          <div class="p-bar"><div class="p-fill" style="width:${d.pct}%;background:${d.color}"></div></div>
+          <div class="p-foot">
+            <span class="pill">SCOPE: 2026</span>
+            <span class="pill mono">${d.pct}%</span>
+          </div>
+        </div>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+
+        // Task cards (dept filter 적용)
+        const groups =
+          viewDept === "ALL"
+            ? DATA.roadmap
+            : DATA.roadmap.filter((g) => g.dept === viewDept);
+        const taskCards = `
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <div style="font-weight:900">Task 진행률 (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
+      <div class="small">* Task % = Step 가중치 합</div>
+    </div>
+    <div class="hr"></div>
+    <div class="grid-3">
+      ${groups
+        .flatMap((g) =>
+          g.tasks.map((t) => {
+            const pct = taskProgress(t);
+            return `
+          <div class="p-card">
             <div class="p-top">
-              <div class="p-name">${c}</div>
-              <div class="p-meta">${pct}%<br/><span>${doneTasks}/${tasks.length}</span></div>
+              <div class="p-name"><span class="mono" style="color:${g.color}">${t.id}</span> · ${escapeHtml(t.text)}</div>
+              <div class="p-meta">${pct}%</div>
             </div>
-            <div class="p-bar"><div class="p-fill" style="width:${pct}%; background:${catColor[c]};"></div></div>
+            <div class="p-bar"><div class="p-fill" style="width:${pct}%;background:${g.color}"></div></div>
             <div class="p-foot">
-              <span class="pill">SCOPE: 2026</span>
-              <span class="pill">${lensLabel(lens, periodKey)}</span>
+              <span class="pill">${escapeHtml(g.dept)}</span>
+              <span class="pill">${t.steps.filter((s) => s.done).length}/${t.steps.length} steps</span>
             </div>
-          `;
-          grid.appendChild(el);
+          </div>
+        `;
+          }),
+        )
+        .join("")}
+    </div>
+  `;
+
+        el.innerHTML = chipHtml + deptCards + taskCards;
+
+        // chips render
+        const chips = el.querySelector("#dept-chips");
+        chips.innerHTML = "";
+        const allChip = document.createElement("div");
+        allChip.className = "chip " + (viewDept === "ALL" ? "on" : "");
+        allChip.textContent = "전체";
+        allChip.onclick = () => setDeptFilter("ALL");
+        chips.appendChild(allChip);
+
+        DATA.roadmap.forEach((g) => {
+          const c = document.createElement("div");
+          c.className = "chip " + (viewDept === g.dept ? "on" : "");
+          c.textContent = g.dept;
+          c.onclick = () => setDeptFilter(g.dept);
+          chips.appendChild(c);
         });
       }
-
-      function renderTotal(){
-        let totalW=0, doneW=0;
-        DATA.roadmap.forEach((g)=>{
-          g.tasks.forEach((t)=>{
-            ensureSteps(t);
-            totalW += t.steps.reduce((a,s)=>a+Number(s.weight||0),0);
-            doneW += t.steps.filter(s=>s.done).reduce((a,s)=>a+Number(s.weight||0),0);
-          });
-        });
-        const pct = totalW ? Math.round((doneW/totalW)*100) : 0;
-        document.getElementById("total-val").innerText = `${pct}%`;
+      function setDeptFilter(dept) {
+        viewDept = dept;
+        renderAll();
       }
 
-      /* =========================
-        KPI table
-      ========================= */
-      function renderKPI(){
-        const body = document.getElementById("kpi-body");
-        body.innerHTML = "";
-        DATA.kpiSnapshot.forEach((k, idx)=>{
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><span class="${editMode ? "editable" : ""}" data-k="name" data-i="${idx}">${k.name}</span></td>
-            <td class="mono"><span class="${editMode ? "editable" : ""}" data-k="progress" data-i="${idx}">${clamp(Number(k.progress)||0,0,100)}</span>%</td>
-            <td><span class="${editMode ? "editable" : ""}" data-k="due" data-i="${idx}">${k.due}</span></td>
-            <td>
-              <span class="${editMode ? "editable" : ""}" data-k="owner" data-i="${idx}">${k.owner}</span>
-              <span style="color:var(--text-s)"> · </span>
-              <span class="${editMode ? "editable" : ""}" data-k="note" data-i="${idx}">${k.note}</span>
+      /* =====================
+   GANTT (월/주)
+   - bar는 step 단위 완료 여부로 채워짐(각 step이 해당 주 칸에 0% or 100%)
+===================== */
+      function renderGantt() {
+        const el = document.getElementById("tab-gantt");
+        const weeks = getWeeksTimeline();
+
+        const groups =
+          viewDept === "ALL"
+            ? DATA.roadmap
+            : DATA.roadmap.filter((g) => g.dept === viewDept);
+
+        let html = `
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <div style="font-weight:900">월/주 타임라인 Gantt (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
+      <div class="small">* 각 주 칸은 step이 있으면 0%/100%로 채움</div>
+    </div>
+    <div class="hr"></div>
+    <table>
+      <thead>
+        <tr><th style="min-width:90px">Task ID</th><th style="min-width:360px">Task</th>
+  `;
+        weeks.forEach((w) => (html += `<th>${w}</th>`));
+        html += `</tr></thead><tbody>`;
+
+        groups.forEach((g) => {
+          g.tasks.forEach((t) => {
+            html += `<tr>
+        <td class="mono" style="color:${g.color};font-weight:900">${t.id}</td>
+        <td>${escapeHtml(t.text)} <span class="badge" style="margin-left:6px">${taskProgress(t)}%</span></td>
+      `;
+            weeks.forEach((w) => {
+              const step = t.steps.find((s) => s.week === w);
+              if (step) {
+                html += `
+            <td class="gantt-cell">
+              <div class="bar" style="width:${step.done ? 100 : 0}%;background:${g.color}"></div>
             </td>
           `;
-          body.appendChild(tr);
-        });
-
-        body.querySelectorAll("[data-k]").forEach((el)=>{
-          el.contentEditable = editMode ? "true" : "false";
-          el.setAttribute("contenteditable", editMode ? "true" : "false");
-          if (editMode){
-            el.onblur = ()=>{
-              const i = Number(el.dataset.i);
-              const key = el.dataset.k;
-              const v = el.textContent.trim();
-              if (key === "progress"){
-                DATA.kpiSnapshot[i][key] = clamp(Number(v.replace(/[^0-9.]/g,""))||0,0,100);
-                el.textContent = DATA.kpiSnapshot[i][key];
               } else {
-                DATA.kpiSnapshot[i][key] = v || DATA.kpiSnapshot[i][key];
+                html += `<td class="gantt-cell"></td>`;
               }
-              markDirty();
-            };
-          } else {
-            el.onblur = null;
-          }
-        });
-      }
-
-      /* =========================
-        Filters
-      ========================= */
-      function getAllTasks(){
-        const list=[];
-        DATA.roadmap.forEach((g)=>g.tasks.forEach((t)=>list.push({t,g})));
-        return list;
-      }
-      function buildPeriods(){
-        const keys = new Set();
-        getAllTasks().forEach(({t})=>{
-          const key = lensKey(lens, { dueDate: t._dueObj, dueLabel: t.dueLabel });
-          keys.add(key);
-        });
-
-        let list = Array.from(keys);
-        if (lens === "year") list = [String(YEAR)];
-        else if (lens === "half") list = ["H1","H2"].filter(k=>keys.has(k));
-        else if (lens === "quarter") list = ["Q1","Q2","Q3","Q4"].filter(k=>keys.has(k));
-        else if (lens === "month") list.sort();
-        else if (lens === "week"){
-          list.sort((a,b)=>{
-            const da = dueLabelToDate(a), db = dueLabelToDate(b);
-            if (da && db) return da - db;
-            return String(a).localeCompare(String(b));
-          });
-        }
-
-        const sel = document.getElementById("period-select");
-        sel.innerHTML = "";
-        list.forEach((k)=>{
-          const opt = document.createElement("option");
-          opt.value = k;
-          opt.textContent = lensLabel(lens, k);
-          sel.appendChild(opt);
-        });
-
-        if (!list.includes(periodKey)) periodKey = list[0] || String(YEAR);
-        sel.value = periodKey;
-      }
-
-      function renderDeptChips(){
-        const wrap = document.getElementById("dept-chips");
-        wrap.innerHTML = "";
-
-        const all = document.createElement("div");
-        all.className = "chip " + (deptFilter.size===0 ? "on" : "");
-        all.textContent = "전체";
-        all.onclick = ()=>{ deptFilter.clear(); renderAll(); };
-        wrap.appendChild(all);
-
-        DATA.roadmap.forEach((g)=>{
-          const chip = document.createElement("div");
-          chip.className = "chip " + (deptFilter.has(g.dept) ? "on" : "");
-          chip.textContent = g.dept;
-          chip.onclick = ()=>{
-            if (deptFilter.has(g.dept)) deptFilter.delete(g.dept);
-            else deptFilter.add(g.dept);
-            renderAll();
-          };
-          wrap.appendChild(chip);
-        });
-      }
-
-      function passesFilters(t,g){
-        if (deptFilter.size>0 && !deptFilter.has(g.dept)) return false;
-
-        const tp = taskProgress(t);
-        if (statusFilter === "open" && tp === 100) return false;
-        if (statusFilter === "done" && tp !== 100) return false;
-
-        if (searchQuery){
-          const stepText = (t.steps||[]).map(s=>s.label).join(" ");
-          const hay = `${t.id} ${t.text} ${t.out} ${t.dueLabel} ${stepText}`.toLowerCase();
-          if (!hay.includes(searchQuery.toLowerCase())) return false;
-        }
-
-        const key = lensKey(lens, { dueDate: t._dueObj, dueLabel: t.dueLabel });
-        if (key !== periodKey) return false;
-
-        return true;
-      }
-
-      /* =========================
-        Year-end risk: 12월 due + 미완(100% 미만)
-      ========================= */
-      function isYearEndOverdue(task){
-        if (!task._dueObj) return false;
-        const month = task._dueObj.getMonth(); // 0=Jan ... 11=Dec
-        return month === 11 && taskProgress(task) < 100;
-      }
-
-      /* =========================
-        WBS render (step-based)
-      ========================= */
-      function renderWBS(){
-        const body = document.getElementById("wbs-body");
-        body.innerHTML = "";
-        let cnt=0;
-
-        DATA.roadmap.forEach((g,gIdx)=>{
-          const rows = g.tasks.filter(t=>passesFilters(t,g));
-          if (rows.length===0) return;
-
-          const trh = document.createElement("tr");
-          trh.className = "dept-row";
-          trh.innerHTML = `<td colspan="6"><span class="dept-tag" style="background:${g.color};">DEPT</span>${g.dept} <span class="mono" style="color:var(--text-s); font-size:11px;">· ${groupProgress(g)}%</span></td>`;
-          body.appendChild(trh);
-
-          rows.forEach((t)=>{
-            cnt++;
-            ensureSteps(t);
-            const dueObj = t._dueObj || dueLabelToDate(t.dueLabel);
-            const dday = dDayString(dueObj);
-            const dueDateStr = dueObj ? fmtDate(dueObj) : "UNKNOWN";
-            const tp = taskProgress(t);
-
-            const stepsHtml = (t.steps||[]).map((s,i)=>{
-              const doneAt = s.doneAt ? s.doneAt : "-";
-              return `
-                <div class="stepline">
-                  <input class="scb" type="checkbox" ${s.done ? "checked" : ""} data-role="stepDone" data-g="${gIdx}" data-id="${t.id}" data-si="${i}">
-                  <span class="wtag">${stepKeyForTask(t,s)}</span>
-                  <span class="${editMode ? "editable" : ""}" data-role="stepLabel" data-g="${gIdx}" data-id="${t.id}" data-si="${i}">${s.label}</span>
-                  <span class="${editMode ? "editable" : ""} wtpill" data-role="stepWeight" data-g="${gIdx}" data-id="${t.id}" data-si="${i}" style="margin-left:auto">${Number(s.weight||0)}%</span>
-                  <span class="datepill">${doneAt}</span>
-                </div>
-              `;
-            }).join("");
-
-            const tr = document.createElement("tr");
-            if (tp === 100) tr.classList.add("doneRow");
-            if (isYearEndOverdue(t)) tr.classList.add("year-end-risk");
-
-            tr.innerHTML = `
-              <td><input class="cb" type="checkbox" ${tp === 100 ? "checked" : ""} data-role="taskDone" data-g="${gIdx}" data-id="${t.id}"></td>
-              <td class="idcell mono" style="color:${g.color}; font-weight:900;">
-                <span class="${editMode ? "editable" : ""}" data-role="id" data-g="${gIdx}" data-id="${t.id}">${t.id}</span>
-              </td>
-              <td>
-                <div class="${tp===100 ? "doneText" : ""} ${editMode ? "editable" : ""}" data-role="text" data-g="${gIdx}" data-id="${t.id}" style="font-weight:900;">
-                  <span class="text-val">${t.text}</span>
-                  ${isYearEndOverdue(t) ? '<span class="risk-badge" contenteditable="false">⚠ 연말 미완</span>' : ""}
-                </div>
-                <div class="mono" style="margin-top:6px; color:var(--text-s); font-size:10px;">
-                  STEP PROGRESS: <b style="color:var(--text-p)">${tp}%</b>
-                </div>
-              </td>
-              <td class="steps">${stepsHtml || "-"}</td>
-              <td>
-                <span class="duetag">${dday}</span>
-                <span class="duemeta">
-                  <span class="${editMode ? "editable" : ""}" data-role="dueLabel" data-g="${gIdx}" data-id="${t.id}">${t.dueLabel}</span>
-                  · <span class="mono">${dueDateStr}</span>
-                </span>
-              </td>
-              <td><span class="outtag ${editMode ? "editable" : ""}" data-role="out" data-g="${gIdx}" data-id="${t.id}">${t.out}</span></td>
-            `;
-            body.appendChild(tr);
-          });
-        });
-
-        document.getElementById("count-badge").textContent = `${cnt} items`;
-
-        // Task checkbox: mark all steps
-        body.querySelectorAll('input[data-role="taskDone"]').forEach((cb)=>{
-          cb.onchange = ()=>{
-            const gIdx = Number(cb.dataset.g);
-            const id = cb.dataset.id;
-            const task = DATA.roadmap[gIdx].tasks.find(x=>x.id===id);
-            if (!task) return;
-            ensureSteps(task);
-
-            const now = todayStr();
-            if (cb.checked){
-              task.steps.forEach(s=>{ s.done = true; s.doneAt = s.doneAt || now; });
-              task.checked = true;
-            } else {
-              task.steps.forEach(s=>{ s.done = false; s.doneAt = null; });
-              task.checked = false;
-            }
-            hydrateDueDates();
-            markDirty();
-            renderAll(false);
-          };
-        });
-
-        // Step checkbox: update step + auto date
-        body.querySelectorAll('input[data-role="stepDone"]').forEach((cb)=>{
-          cb.onchange = ()=>{
-            const gIdx = Number(cb.dataset.g);
-            const id = cb.dataset.id;
-            const si = Number(cb.dataset.si);
-            const task = DATA.roadmap[gIdx].tasks.find(x=>x.id===id);
-            if (!task) return;
-            ensureSteps(task);
-            const step = task.steps[si];
-            if (!step) return;
-
-            if (cb.checked){
-              step.done = true;
-              step.doneAt = step.doneAt || todayStr();
-            } else {
-              step.done = false;
-              step.doneAt = null;
-            }
-
-            // sync task.checked
-            const allDone = task.steps.every(s=>s.done);
-            task.checked = allDone;
-
-            markDirty();
-            renderAll(false);
-          };
-        });
-
-        // Inline edits (text/out/due/id/stepLabel/stepWeight)
-        body.querySelectorAll("[data-role]").forEach((el)=>{
-          const role = el.dataset.role;
-          // checkboxes already handled
-          if (role === "taskDone" || role === "stepDone") return;
-
-          const editable = editMode && (role !== "stepDone") ? "true" : "false";
-          el.contentEditable = editable;
-          el.setAttribute("contenteditable", editable);
-
-          if (editMode){
-            el.onblur = ()=>applyEdit(el);
-          } else {
-            el.onblur = null;
-          }
-        });
-      }
-
-      function applyEdit(el){
-        const role = el.dataset.role;
-        const gIdx = Number(el.dataset.g);
-        const id = el.dataset.id;
-        const group = DATA.roadmap[gIdx];
-        if (!group) return;
-
-        const task = group.tasks.find(x=>x.id===id);
-        if (!task) return;
-
-        const v = el.textContent.trim();
-
-        if (role === "text"){
-          const tv = el.querySelector(".text-val");
-          const cleaned = (tv ? tv.textContent : el.textContent).trim();
-          task.text = cleaned || task.text;
-          markDirty();
-          return;
-        }
-        if (role === "out"){
-          task.out = v || task.out;
-          markDirty();
-          return;
-        }
-        if (role === "dueLabel"){
-          task.dueLabel = v || task.dueLabel;
-          hydrateDueDates();
-          markDirty();
-          return;
-        }
-        if (role === "id"){
-          if (v && v !== task.id){
-            const exists = group.tasks.some(x=>x.id===v);
-            if (!exists){
-              task.id = v;
-              markDirty();
-            } else {
-              el.textContent = task.id;
-            }
-          }
-          return;
-        }
-        if (role === "stepLabel"){
-          const si = Number(el.dataset.si);
-          ensureSteps(task);
-          if (task.steps[si]){
-            task.steps[si].label = v || task.steps[si].label;
-            // if weight was auto and still 0 or irrelevant, keep; else no change
-            markDirty();
-            renderAll(false);
-          }
-          return;
-        }
-        if (role === "stepWeight"){
-          const si = Number(el.dataset.si);
-          ensureSteps(task);
-          if (!task.steps[si]) return;
-          const n = clamp(Number(v.replace(/[^0-9.]/g,""))||0, 1, 100);
-          task.steps[si].weight = n;
-          // re-normalize to 100
-          const sum = task.steps.reduce((a,s)=>a+Number(s.weight||0),0);
-          if (sum !== 100 && sum > 0){
-            task.steps.forEach((s)=>{ s.weight = Math.round((Number(s.weight||0)/sum)*100); });
-            let ssum = task.steps.reduce((a,s)=>a+Number(s.weight||0),0);
-            while (ssum !== 100){
-              const idx = task.steps.reduce((best,cur,idx,arr)=> Number(cur.weight||0) > Number(arr[best].weight||0) ? idx : best, 0);
-              if (ssum > 100){ task.steps[idx].weight -= 1; ssum -= 1; }
-              else { task.steps[idx].weight += 1; ssum += 1; }
-            }
-          }
-          markDirty();
-          renderAll(false);
-          return;
-        }
-      }
-
-      /* =========================
-        Gantt (month/week) — step 기반 진행률 채움
-        - 한 줄 = Task
-        - 해당 월/주 칸에 바(배경) + 진행 fill을 표시
-          * month view: task due month 칸에 bar 표시 (progress fill)
-          * week view: task steps가 속한 "Mon Wk" 칸에 bar 표시 (해당 step이 done이면 fill 100%, 아니면 0%)
-      ========================= */
-      function getMonthColumns(){
-        // 2026-02 ~ 2026-12 (기존 타임라인 시작이 2월이었음)
-        const months = [];
-        for (let m=2; m<=12; m++){
-          months.push({ key: `${YEAR}-${pad2(m)}`, label: pad2(m) });
-        }
-        return months;
-      }
-      function getWeekColumns(){
-        // 모든 task의 due month 기반으로, W1~W4
-        const months = ["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-        const cols = [];
-        months.forEach(mon=>{
-          for (let w=1; w<=4; w++){
-            cols.push({ key: `${mon} W${w}`, label: `${mon} W${w}` });
-          }
-        });
-        return cols;
-      }
-
-      function renderGantt(){
-        const head = document.getElementById("gantt-head");
-        const body = document.getElementById("gantt-body");
-        head.innerHTML = "";
-        body.innerHTML = "";
-
-        const cols = ganttView === "month" ? getMonthColumns() : getWeekColumns();
-
-        // head
-        const tr1 = document.createElement("tr");
-        tr1.className = "gantt-head-row";
-        tr1.innerHTML = `<th class="gantt-left">TASK</th>` + cols.map(c=>`<th class="g-tick">${c.label}</th>`).join("");
-        head.appendChild(tr1);
-
-        // rows
-        DATA.roadmap.forEach((g)=>{
-          // dept separator
-          const sep = document.createElement("tr");
-          sep.innerHTML = `<td colspan="${cols.length+1}" style="background:rgba(255,255,255,0.02); font-weight:900; color:var(--text-p);">
-            <span class="dept-tag" style="background:${g.color};">DEPT</span>${g.dept}
-            <span class="mono" style="color:var(--text-s); font-size:11px;"> · ${groupProgress(g)}%</span>
-          </td>`;
-          body.appendChild(sep);
-
-          g.tasks.forEach((t)=>{
-            ensureSteps(t);
-            const tp = taskProgress(t);
-            const tr = document.createElement("tr");
-
-            const left = document.createElement("td");
-            left.className = "gantt-left";
-            left.innerHTML = `
-              <div class="g-label">
-                <div>
-                  <div class="g-title" style="color:${g.color}">${t.id}</div>
-                  <div style="font-weight:900;">${t.text}</div>
-                </div>
-                <div class="g-meta">${tp}%</div>
-              </div>
-            `;
-            tr.appendChild(left);
-
-            cols.forEach((c)=>{
-              const td = document.createElement("td");
-              td.className = "g-cell";
-
-              let showBar = false;
-              let fillPct = 0;
-              let barColor = g.color;
-
-              if (ganttView === "month"){
-                const due = t._dueObj || dueLabelToDate(t.dueLabel);
-                if (due){
-                  const key = monthKey(due);
-                  if (key === c.key){
-                    showBar = true;
-                    fillPct = tp;
-                  }
-                }
-              } else {
-                // week: show each step in its own cell (mon+wk)
-                const step = t.steps.find(s=>stepKeyForTask(t,s)===c.key);
-                if (step){
-                  showBar = true;
-                  fillPct = step.done ? 100 : 0;
-                }
-              }
-
-              if (showBar){
-                td.innerHTML = `<div class="g-bar"><div class="g-fill" style="width:${fillPct}%; background:${barColor};"></div></div>`;
-              } else {
-                td.innerHTML = "";
-              }
-              tr.appendChild(td);
             });
-
-            body.appendChild(tr);
+            html += `</tr>`;
           });
         });
+
+        html += `</tbody></table>`;
+        el.innerHTML = html;
       }
 
-      /* =========================
-        Controls: lens, filters, edit mode, gantt view
-      ========================= */
-      function initControls(){
-        // lens buttons
-        document.querySelectorAll('.seg[aria-label="time lens"] button').forEach((btn)=>{
-          btn.onclick = ()=>{
-            document.querySelectorAll('.seg[aria-label="time lens"] button').forEach(b=>b.classList.remove("active"));
-            btn.classList.add("active");
-            lens = btn.dataset.lens;
-            buildPeriods();
-            renderAll();
-          };
+      /* =====================
+   WBS (체크)
+   - step 체크 시 doneAt 자동 기록
+===================== */
+      function renderWBS() {
+        const el = document.getElementById("tab-wbs");
+        const groups =
+          viewDept === "ALL"
+            ? DATA.roadmap
+            : DATA.roadmap.filter((g) => g.dept === viewDept);
+
+        let html = `
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <div style="font-weight:900">WBS (Step 체크) (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
+      <div class="small">* step 완료 시 자동 완료일 기록(오늘)</div>
+    </div>
+    <div class="hr"></div>
+  `;
+
+        groups.forEach((g, gi) => {
+          html += `<div class="dept" style="color:${g.color}">${escapeHtml(g.dept)} <span class="badge">${deptProgress(g)}%</span></div>`;
+          g.tasks.forEach((t, ti) => {
+            html += `<div class="task small"><span class="mono" style="color:${g.color};font-weight:900">${t.id}</span> · ${escapeHtml(t.text)} <span class="badge">${taskProgress(t)}%</span></div>`;
+            t.steps.forEach((s, si) => {
+              html += `
+          <div class="stepline task">
+            <input type="checkbox" class="cb" ${s.done ? "checked" : ""}
+              onchange="toggleStep(${gi},${ti},${si},this.checked)">
+            <span class="mono">${s.week}</span>
+            <span>${escapeHtml(s.label)}</span>
+            <span class="small">(${s.weight}%)</span>
+            <span class="small mono">${s.doneAt || ""}</span>
+          </div>
+        `;
+            });
+          });
         });
 
-        document.getElementById("period-select").onchange = (e)=>{ periodKey = e.target.value; renderAll(); };
-        document.getElementById("status-select").onchange = (e)=>{ statusFilter = e.target.value; renderAll(); };
-        document.getElementById("search-input").oninput = (e)=>{ searchQuery = e.target.value || ""; renderAll(); };
-
-        // gantt view buttons
-        document.querySelectorAll('.seg[aria-label="gantt view"] button').forEach((btn)=>{
-          btn.onclick = ()=>{
-            document.querySelectorAll('.seg[aria-label="gantt view"] button').forEach(b=>b.classList.remove("active"));
-            btn.classList.add("active");
-            ganttView = btn.dataset.gview;
-            renderGantt();
-          };
-        });
-
-        // edit flow (no popup)
-        const editBtn = document.getElementById("edit-btn");
-        const saveBtn = document.getElementById("save-btn");
-        const exitBtn = document.getElementById("exit-btn");
-        const pwRow = document.getElementById("pw-row");
-        const pwInput = document.getElementById("pw-input");
-        const pwOk = document.getElementById("pw-ok");
-        const pwCancel = document.getElementById("pw-cancel");
-        const modeBadge = document.getElementById("mode-badge");
-
-        editBtn.onclick = ()=>{ pwRow.style.display="flex"; pwInput.value=""; pwInput.focus(); };
-        pwCancel.onclick = ()=>{ pwRow.style.display="none"; pwInput.value=""; pwInput.placeholder="비밀번호(1234)"; };
-        pwOk.onclick = ()=>{
-          if (pwInput.value !== EDIT_PASSWORD){
-            pwInput.value = "";
-            pwInput.placeholder = "비밀번호 불일치";
-            return;
-          }
-          pwRow.style.display = "none";
-          editMode = true;
-          modeBadge.textContent = "EDITING";
-          modeBadge.classList.add("on");
-          editBtn.style.display = "none";
-          saveBtn.style.display = "inline-block";
-          exitBtn.style.display = "inline-block";
-          renderAll(false);
-        };
-
-        saveBtn.onclick = ()=>{ saveLocal(); };
-        exitBtn.onclick = ()=>{
-          editMode = false;
-          modeBadge.textContent = "READ-ONLY";
-          modeBadge.classList.remove("on");
-          editBtn.style.display = "inline-block";
-          saveBtn.style.display = "none";
-          exitBtn.style.display = "none";
-          renderAll(false);
-        };
+        el.innerHTML = html;
       }
 
-      /* =========================
-        Render all
-      ========================= */
-      function renderAll(rebuildPeriods=true){
-        if (rebuildPeriods) buildPeriods();
-        renderDeptChips();
-        renderTotal();
-        renderOverview();
-        renderKPI();
-        renderWBS();
+      function toggleStep(gi, ti, si, val) {
+        const step = DATA.roadmap[gi].tasks[ti].steps[si];
+        step.done = val;
+        step.doneAt = val ? fmt(new Date()) : null;
+        renderAll();
+      }
+
+      /* =====================
+   EXPORT: 기관 제출용 WBS 표 변환
+   - flatten table: Dept / TaskID / Task명 / Step(주차) / Step명 / 가중치 / 완료여부 / 완료일
+   - CSV 다운로드 + 클립보드 복사
+===================== */
+      function renderExport() {
+        const el = document.getElementById("tab-export");
+        const groups =
+          viewDept === "ALL"
+            ? DATA.roadmap
+            : DATA.roadmap.filter((g) => g.dept === viewDept);
+
+        const rows = [];
+        groups.forEach((g) => {
+          g.tasks.forEach((t) => {
+            normalizeWeights(t);
+            t.steps.forEach((s, idx) => {
+              rows.push({
+                Dept: g.dept,
+                TaskID: t.id,
+                Task: t.text,
+                StepNo: idx + 1,
+                PlanWeek: s.week,
+                Step: s.label,
+                Weight: s.weight,
+                Status: s.done ? "DONE" : "OPEN",
+                DoneAt: s.doneAt || "",
+              });
+            });
+          });
+        });
+
+        // Controls
+        let html = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
+      <div>
+        <div style="font-weight:900">기관 제출용 WBS 표 (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
+        <div class="small">* Excel/공문 제출에 적합한 “평면(Flatten) 테이블”</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button class="btn primary" onclick="downloadCSV()">CSV 다운로드</button>
+        <button class="btn" onclick="copyCSV()">CSV 복사</button>
+        <span class="badge">${rows.length} rows</span>
+      </div>
+    </div>
+    <div class="hr"></div>
+  `;
+
+        // Table
+        html += `<table id="export-table">
+    <thead>
+      <tr>
+        <th>Dept</th><th>Task ID</th><th>Task</th><th>Step #</th><th>Plan(Week)</th>
+        <th>Step</th><th>Weight(%)</th><th>Status</th><th>DoneAt</th>
+      </tr>
+    </thead>
+    <tbody>
+  `;
+        rows.forEach((r) => {
+          html += `<tr>
+      <td>${escapeHtml(r.Dept)}</td>
+      <td class="mono">${escapeHtml(r.TaskID)}</td>
+      <td>${escapeHtml(r.Task)}</td>
+      <td class="mono">${r.StepNo}</td>
+      <td class="mono">${escapeHtml(r.PlanWeek)}</td>
+      <td>${escapeHtml(r.Step)}</td>
+      <td class="mono">${r.Weight}</td>
+      <td>${r.Status === "DONE" ? `<span style="color:var(--done);font-weight:900">DONE</span>` : `<span style="color:var(--text-s)">OPEN</span>`}</td>
+      <td class="mono">${escapeHtml(r.DoneAt)}</td>
+    </tr>`;
+        });
+        html += `</tbody></table>`;
+
+        // CSV textarea preview (optional)
+        html += `
+    <div class="hr"></div>
+    <div class="small" style="margin-bottom:6px">CSV 미리보기 (복사/검증용)</div>
+    <textarea class="input mono" id="csv-preview" style="width:100%;min-height:140px;resize:vertical"></textarea>
+  `;
+
+        el.innerHTML = html;
+
+        // fill preview
+        const csv = buildCSV(rows);
+        el.querySelector("#csv-preview").value = csv;
+
+        // expose to buttons
+        window.__EXPORT_ROWS__ = rows;
+        window.__EXPORT_CSV__ = csv;
+      }
+
+      function buildCSV(rows) {
+        const headers = [
+          "Dept",
+          "TaskID",
+          "Task",
+          "StepNo",
+          "PlanWeek",
+          "Step",
+          "Weight",
+          "Status",
+          "DoneAt",
+        ];
+        const esc = (v) => {
+          const s = String(v ?? "");
+          // CSV escape
+          if (/[",\n]/.test(s)) return `"${s.replaceAll('"', '""')}"`;
+          return s;
+        };
+        const lines = [];
+        lines.push(headers.join(","));
+        rows.forEach((r) => {
+          lines.push(headers.map((h) => esc(r[h])).join(","));
+        });
+        return lines.join("\n");
+      }
+      function downloadCSV() {
+        const csv = window.__EXPORT_CSV__ || "";
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `AITRICS_2026_WBS_${viewDept === "ALL" ? "ALL" : viewDept}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+      async function copyCSV() {
+        const csv = window.__EXPORT_CSV__ || "";
+        try {
+          await navigator.clipboard.writeText(csv);
+          alert("CSV가 클립보드에 복사되었습니다.");
+        } catch (e) {
+          // fallback: select textarea
+          const ta = document.getElementById("csv-preview");
+          ta.focus();
+          ta.select();
+          document.execCommand("copy");
+          alert("CSV 복사(호환 모드) 완료");
+        }
+      }
+
+      /* =====================
+   ESCAPE
+===================== */
+      function escapeHtml(s) {
+        return String(s ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      /* =====================
+   Render All
+===================== */
+      function renderAll() {
+        renderDash();
         renderGantt();
+        renderWBS();
+        renderExport();
       }
 
-      /* =========================
-        Boot
-      ========================= */
-      initControls();
-      buildPeriods();
+      /* =====================
+   BOOT
+===================== */
       renderAll();
     </script>
   </body>

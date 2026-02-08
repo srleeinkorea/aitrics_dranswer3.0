@@ -15,22 +15,22 @@
 
     <style>
       :root {
-        /* 배경색 - 더 밝고 부드러운 톤 */
-        --bg: #0a0e17;
-        --card: #131820;
-        --border: #2a3441;
-        --text: #f0f4f8;
-        --text-dim: #9ca3af;
+        /* 시니어 디자이너 컬러 리비전 */
+        --bg: #090c14; /* 더 짙은 네이비 블랙 */
+        --card: #141821; /* 카드 톤 약간 톤다운 */
+        --border: #2b3644; /* 보더 색온도 통일 */
+        --text: #f3f5f9; /* 가독성 향상 톤업 */
+        --text-dim: #a0acb9;
 
-        /* 메인 컬러 - 차분하고 프로페셔널한 톤 */
-        --cyan: #3b82f6; /* 차분한 블루 */
-        --violet: #7c3aed; /* 절제된 바이올렛 */
-        --emerald: #059669; /* 차분한 에메랄드 */
+        /* 메인 팔레트 업그레이드 */
+        --cyan: #4ea8ff; /* 주조 블루 - 명시성 향상 */
+        --violet: #8b5cf6; /* 보조 바이올렛 - 미래감 */
+        --emerald: #10b981; /* 안정 에메랄드 */
 
-        /* 기관별 색상 코딩 - 통일성 있는 팔레트 */
-        --org-lead: #3b82f6;
-        --org-hospital: #059669;
-        --org-ai: #7c3aed;
+        /* 기관별 색상 코딩 */
+        --org-lead: var(--cyan);
+        --org-hospital: var(--emerald);
+        --org-ai: var(--violet);
 
         --radius: 12px;
       }
@@ -41,19 +41,15 @@
       }
 
       body {
-        margin: 0;
+        margin: 2rem;
         padding: 0;
         background:
           radial-gradient(
-            at 0% 0%,
-            rgba(59, 130, 246, 0.06) 0,
-            transparent 60%
+            at 30% 40%,
+            rgba(78, 168, 255, 0.12),
+            transparent 70%
           ),
-          radial-gradient(
-            at 100% 100%,
-            rgba(124, 58, 237, 0.06) 0,
-            transparent 60%
-          ),
+          radial-gradient(at 80% 60%, rgba(139, 92, 246, 0.1), transparent 70%),
           var(--bg);
         color: var(--text);
         font-family:
@@ -65,46 +61,44 @@
         line-height: 1.6;
       }
 
+      /* 좌우 여백 최소화 */
       .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
       }
 
-      /* 헤더 - 더 밝은 배경 */
+      /* 헤더 */
       header {
         position: sticky;
         top: 0;
         z-index: 100;
-        background: rgba(10, 14, 23, 0.9);
+        background: rgba(9, 12, 20, 0.9);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border);
-        padding: 16px 0;
+        padding: 12px 0;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
-
       .header-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 24px;
+        width: 100%;
+        margin: 0;
+        padding: 0 8px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 16px;
+        gap: 8px;
       }
-
       .logo {
         font-size: 1.25rem;
         font-weight: 800;
         letter-spacing: -0.5px;
         color: var(--text);
       }
-
       .logo span {
         color: var(--cyan);
       }
-
       .header-sub {
         font-size: 12px;
         color: var(--text-dim);
@@ -112,37 +106,39 @@
         line-height: 1.3;
       }
 
-      /* 히어로 섹션 */
-      .hero {
-        padding: 80px 0;
+      /* 섹션 공통: 좌우 패딩 제거 */
+      section {
+        padding: 60px 0;
         border-bottom: 1px solid var(--border);
       }
 
+      /* 히어로 */
+      .hero {
+        padding: 60px 0;
+      }
       .badge {
         display: inline-block;
-        padding: 6px 14px;
+        padding: 6px 12px;
         border-radius: 6px;
         font-size: 12px;
         font-weight: 700;
-        margin-bottom: 16px;
-        background: rgba(59, 130, 246, 0.12);
-        color: #60a5fa;
-        border: 1px solid rgba(59, 130, 246, 0.25);
+        margin: 0 8px 16px;
+        background: rgba(78, 168, 255, 0.15);
+        color: #90cdfd;
+        border: 1px solid rgba(78, 168, 255, 0.25);
       }
-
       h1 {
         font-size: clamp(28px, 5vw, 48px);
         font-weight: 800;
-        margin: 0 0 24px;
+        margin: 0 8px 24px;
         line-height: 1.2;
         letter-spacing: -1.5px;
       }
-
       .hero-desc {
         font-size: clamp(15px, 2vw, 18px);
         color: #b8c5d0;
-        max-width: 880px;
-        margin-bottom: 40px;
+        max-width: none;
+        margin: 0 8px 40px;
         line-height: 1.7;
       }
 
@@ -152,30 +148,27 @@
         gap: 1px;
         background: var(--border);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
+        border-radius: 0;
         overflow: hidden;
+        margin: 0;
       }
-
       .info-item {
-        background: rgba(19, 24, 32, 0.6);
-        padding: 24px;
+        background: rgba(20, 24, 33, 0.7);
+        padding: 20px 12px;
         transition: background 0.2s ease;
       }
-
       .info-item:hover {
-        background: rgba(19, 24, 32, 0.8);
+        background: rgba(25, 30, 42, 0.9);
       }
-
       .info-item label {
         display: block;
         font-size: 12px;
-        color: #9ca3af;
+        color: var(--text-dim);
         margin-bottom: 8px;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
-
       .info-item p {
         margin: 0;
         font-size: 15px;
@@ -185,66 +178,62 @@
 
       /* 섹션 타이틀 */
       .section-title {
-        margin: 80px 0 32px;
+        margin: 0 8px 24px;
       }
-
       .section-title h2 {
         font-size: clamp(24px, 4vw, 32px);
         font-weight: 800;
         margin: 0;
         letter-spacing: -1px;
       }
-
       .section-title p {
         color: #9ca3af;
         margin-top: 8px;
         font-size: 15px;
       }
 
-      /* 아키텍처 카드 - 더 밝은 배경 */
+      /* 카드류: 내부 좌우 패딩 최소화 */
       .arch-card {
-        background: rgba(19, 24, 32, 0.85);
+        background: rgba(20, 24, 33, 0.85);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 40px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 0;
+        padding: 24px 12px;
+        box-shadow: none;
+        margin: 0;
       }
 
       .integration-box {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 24px;
+        gap: 16px;
         position: relative;
       }
-
       .integration-box::after {
         content: "";
         position: absolute;
         top: 40px;
-        left: 15%;
-        right: 15%;
+        left: 8px;
+        right: 8px;
         height: 2px;
         background: linear-gradient(
           90deg,
-          rgba(59, 130, 246, 0.3),
-          rgba(124, 58, 237, 0.3),
-          rgba(5, 150, 105, 0.3)
+          rgba(78, 168, 255, 0.35),
+          rgba(139, 92, 246, 0.35),
+          rgba(16, 185, 129, 0.35)
         );
         opacity: 0.5;
         z-index: 0;
       }
-
       .int-node {
         text-align: center;
         z-index: 1;
         position: relative;
       }
-
       .node-circle {
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        background: rgba(10, 14, 23, 0.9);
+        background: rgba(9, 12, 20, 0.9);
         border: 2px solid var(--cyan);
         margin: 0 auto 16px;
         display: grid;
@@ -252,106 +241,94 @@
         font-weight: 800;
         font-size: 14px;
         color: var(--cyan);
-        box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+        box-shadow: 0 0 20px rgba(78, 168, 255, 0.15);
       }
-
       .int-node h4 {
         margin: 0 0 8px;
         font-size: 16px;
       }
-
       .int-node p {
         font-size: 13px;
         color: #9ca3af;
         line-height: 1.5;
       }
 
-      /* 서비스 그리드 */
+      /* 서비스 */
       .svc-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 32px;
-        margin-top: 40px;
+        gap: 24px;
+        margin: 0;
       }
-
       .svc-card {
-        background: rgba(19, 24, 32, 0.85);
+        background: rgba(20, 24, 33, 0.85);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
+        border-radius: 0;
         overflow: hidden;
         display: flex;
         flex-direction: column;
         transition: all 0.2s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: none;
       }
-
       .svc-card:hover {
-        border-color: rgba(59, 130, 246, 0.4);
+        border-color: rgba(78, 168, 255, 0.5);
         transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 24px rgba(78, 168, 255, 0.12);
       }
-
       .svc-header {
-        padding: 24px;
+        padding: 16px 12px;
         border-bottom: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         gap: 12px;
         flex-wrap: wrap;
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba(0, 0, 0, 0.08);
       }
-
       .svc-title-wrap {
         display: grid;
         gap: 6px;
         flex: 1;
         min-width: 250px;
       }
-
       .svc-index {
         font-size: 11px;
         font-weight: 900;
         letter-spacing: 0.4px;
-        color: #60a5fa;
+        color: #90cdfd;
         opacity: 0.95;
       }
-
       .svc-header h3 {
         margin: 0;
         font-size: clamp(17px, 2.5vw, 20px);
         font-weight: 800;
         line-height: 1.3;
       }
-
       .svc-tag {
         font-size: 11px;
         font-weight: 800;
         padding: 6px 10px;
         border-radius: 6px;
-        background: rgba(42, 52, 65, 0.8);
-        color: #9ca3af;
+        background: rgba(42, 52, 65, 0.7);
+        color: #b8c5d0;
         border: 1px solid rgba(255, 255, 255, 0.08);
         white-space: nowrap;
         align-self: flex-start;
       }
-
       .svc-body {
-        padding: 24px;
+        padding: 16px 12px;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 24px;
+        gap: 16px;
       }
-
       .svc-body h4 {
         font-size: 14px;
         margin: 0 0 12px;
         color: var(--text);
       }
-
       .svc-footer {
-        padding: 20px 24px;
-        background: rgba(0, 0, 0, 0.2);
+        padding: 0 12px 16px;
+        background: rgba(0, 0, 0, 0.18);
         border-top: 1px solid rgba(255, 255, 255, 0.05);
       }
 
@@ -360,7 +337,6 @@
         padding: 0;
         margin: 0;
       }
-
       .mod-list li {
         font-size: 13px;
         color: #b8c5d0;
@@ -369,30 +345,27 @@
         position: relative;
         line-height: 1.5;
       }
-
       .mod-list li::before {
         content: "•";
         position: absolute;
         left: 0;
-        color: #60a5fa;
+        color: #90cdfd;
         font-weight: bold;
       }
 
       .as-is-to-be {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-top: 16px;
+        gap: 8px;
+        margin-top: 12px;
       }
-
       .box {
-        padding: 16px;
-        border-radius: 10px;
+        padding: 14px;
+        border-radius: 8px;
         font-size: 13px;
         border: 1px solid rgba(255, 255, 255, 0.08);
         line-height: 1.5;
       }
-
       .box b {
         display: block;
         margin-bottom: 6px;
@@ -400,72 +373,62 @@
         letter-spacing: 0.5px;
         font-weight: 700;
       }
-
       .box-as {
         background: rgba(220, 38, 38, 0.08);
         border-color: rgba(220, 38, 38, 0.2);
         color: #fca5a5;
       }
-
       .box-to {
-        background: rgba(5, 150, 105, 0.08);
-        border-color: rgba(5, 150, 105, 0.2);
+        background: rgba(16, 185, 129, 0.08);
+        border-color: rgba(16, 185, 129, 0.2);
         color: #6ee7b7;
       }
 
-      /* AITRICS 하이라이트 - 차분하고 프로페셔널하게 */
+      /* AITRICS 하이라이트 */
       .aitrics-highlight {
         position: relative;
         overflow: hidden;
         background: linear-gradient(
           180deg,
-          rgba(124, 58, 237, 0.06) 0%,
-          rgba(19, 24, 32, 0.85) 40%
+          rgba(139, 92, 246, 0.1) 0%,
+          rgba(20, 24, 33, 0.9) 40%
         );
-        border-color: rgba(124, 58, 237, 0.35);
-        box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.1);
+        border-color: rgba(139, 92, 246, 0.45);
+        box-shadow: none;
       }
-
       .aitrics-highlight .svc-header {
         background: linear-gradient(
           90deg,
-          rgba(124, 58, 237, 0.08),
-          rgba(124, 58, 237, 0.02)
+          rgba(139, 92, 246, 0.08),
+          rgba(139, 92, 246, 0.02)
         );
       }
-
       .aitrics-tag {
         background: linear-gradient(
           135deg,
-          #7c3aed 0%,
-          #6366f1 100%
+          #8b5cf6 0%,
+          #4ea8ff 100%
         ) !important;
         color: #fff !important;
-        border-color: rgba(124, 58, 237, 0.4) !important;
-        box-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+        border-color: transparent !important;
+        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
       }
-
       .aitrics-highlight::before {
         content: "";
         position: absolute;
         inset: 0;
         background: radial-gradient(
           circle at 30% 25%,
-          rgba(124, 58, 237, 0.1),
+          rgba(139, 92, 246, 0.12),
           transparent 60%
         );
         opacity: 0.5;
         pointer-events: none;
       }
-
       .aitrics-highlight:hover {
         transform: translateY(-2px);
-        border-color: rgba(124, 58, 237, 0.5);
-        box-shadow:
-          0 0 0 1px rgba(124, 58, 237, 0.25),
-          0 12px 24px rgba(124, 58, 237, 0.12);
+        border-color: rgba(139, 92, 246, 0.55);
       }
-
       .aitrics-highlight .svc-header h3::after {
         content: "aitrics";
         margin-left: 10px;
@@ -473,58 +436,52 @@
         font-weight: 800;
         letter-spacing: 0.5px;
         color: #fff;
-        background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+        background: linear-gradient(135deg, #8b5cf6 0%, #4ea8ff 100%);
         padding: 3px 8px;
         border-radius: 999px;
         vertical-align: middle;
-        box-shadow: 0 2px 6px rgba(124, 58, 237, 0.3);
       }
-
       .aitrics-highlight .mod-list li {
         color: #d1d5db;
       }
-
       .aitrics-highlight .mod-list li::before {
-        color: #a78bfa;
+        color: #c4b5fd;
       }
 
-      /* 기관별 색상 범례 */
+      /* 색상 범례 */
       .org-legend {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
-        padding: 20px;
+        gap: 12px;
+        padding: 12px 8px;
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        margin-bottom: 32px;
+        border-radius: 0;
+        margin: 0;
         font-size: 13px;
       }
-
       .legend-item {
         display: flex;
         align-items: center;
         gap: 8px;
       }
-
       .legend-dot {
         width: 10px;
         height: 10px;
         border-radius: 50%;
         flex-shrink: 0;
       }
-
       .legend-dot.lead {
-        background: #3b82f6;
-        box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+        background: var(--org-lead);
+        box-shadow: 0 0 8px rgba(78, 168, 255, 0.4);
       }
       .legend-dot.hospital {
-        background: #059669;
-        box-shadow: 0 0 8px rgba(5, 150, 105, 0.4);
+        background: var(--org-hospital);
+        box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
       }
       .legend-dot.ai {
-        background: #7c3aed;
-        box-shadow: 0 0 8px rgba(124, 58, 237, 0.4);
+        background: var(--org-ai);
+        box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
       }
 
       /* 역할 테이블 */
@@ -532,7 +489,6 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
-
       .role-table {
         width: 100%;
         border-collapse: collapse;
@@ -540,67 +496,56 @@
         text-align: left;
         min-width: 600px;
       }
-
       .role-table th {
-        background: rgba(59, 130, 246, 0.08);
-        color: #60a5fa;
-        padding: 16px;
+        background: rgba(78, 168, 255, 0.1);
+        color: #90cdfd;
+        padding: 12px 8px;
         font-weight: 700;
         border-bottom: 1px solid var(--border);
         position: sticky;
         top: 0;
         z-index: 10;
       }
-
       .role-table td {
-        padding: 16px;
+        padding: 12px 8px;
         border-bottom: 1px solid var(--border);
         vertical-align: middle;
       }
-
       .role-table tr:last-child td {
         border-bottom: none;
       }
-
       .role-table tr.role-lead {
-        border-left: 4px solid #3b82f6;
-        background: rgba(59, 130, 246, 0.04);
+        border-left: 4px solid var(--org-lead);
+        background: rgba(78, 168, 255, 0.05);
       }
-
       .role-table tr.role-hospital {
-        border-left: 4px solid #059669;
-        background: rgba(5, 150, 105, 0.04);
+        border-left: 4px solid var(--org-hospital);
+        background: rgba(16, 185, 129, 0.05);
       }
-
       .role-table tr.role-ai {
-        border-left: 4px solid #7c3aed;
-        background: rgba(124, 58, 237, 0.04);
+        border-left: 4px solid var(--org-ai);
+        background: rgba(139, 92, 246, 0.05);
       }
-
       .role-category {
         background: transparent;
         font-weight: 800;
         color: var(--text);
         min-width: 100px;
-        padding-left: 12px;
       }
-
       .inst-name {
         color: var(--text);
         font-weight: 700;
         min-width: 180px;
       }
-
       .inst-name.lead {
-        color: #60a5fa;
+        color: #bfe2ff;
       }
       .inst-name.hospital {
-        color: #34d399;
+        color: #9ff5d3;
       }
       .inst-name.ai {
-        color: #a78bfa;
+        color: #c4b5fd;
       }
-
       .role-desc {
         color: #b8c5d0;
         line-height: 1.6;
@@ -610,16 +555,16 @@
       .logos {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 14px;
+        gap: 8px;
+        margin-top: 12px;
+        padding: 0 8px 8px;
       }
-
       .logo-tag {
-        padding: 8px 14px;
+        padding: 8px 12px;
         background: rgba(42, 52, 65, 0.6);
         border-radius: 999px;
         font-size: 12px;
-        color: #9ca3af;
+        color: #a9b6c4;
         border: 1px solid rgba(255, 255, 255, 0.08);
         display: inline-flex;
         align-items: center;
@@ -627,29 +572,24 @@
         line-height: 1.2;
         transition: all 0.2s ease;
       }
-
       .logo-tag:hover {
         background: rgba(42, 52, 65, 0.9);
       }
-
       .logo-tag.tag-lead {
-        border-color: rgba(59, 130, 246, 0.35);
-        background: rgba(59, 130, 246, 0.1);
-        color: #60a5fa;
+        border-color: rgba(78, 168, 255, 0.35);
+        background: rgba(78, 168, 255, 0.1);
+        color: #bfe2ff;
       }
-
       .logo-tag.tag-hospital {
-        border-color: rgba(5, 150, 105, 0.35);
-        background: rgba(5, 150, 105, 0.1);
-        color: #34d399;
+        border-color: rgba(16, 185, 129, 0.35);
+        background: rgba(16, 185, 129, 0.1);
+        color: #9ff5d3;
       }
-
       .logo-tag.tag-ai {
-        border-color: rgba(124, 58, 237, 0.35);
-        background: rgba(124, 58, 237, 0.1);
-        color: #a78bfa;
+        border-color: rgba(139, 92, 246, 0.35);
+        background: rgba(139, 92, 246, 0.1);
+        color: #d6ccff;
       }
-
       .logo-tag::before {
         content: "";
         width: 6px;
@@ -658,7 +598,6 @@
         border-radius: 50%;
         flex-shrink: 0;
       }
-
       .pill {
         font-size: 10px;
         font-weight: 800;
@@ -669,122 +608,144 @@
         color: var(--text);
         white-space: nowrap;
       }
-
       .pill.cross {
-        border-color: rgba(59, 130, 246, 0.3);
-        color: #60a5fa;
-        background: rgba(59, 130, 246, 0.1);
+        border-color: rgba(78, 168, 255, 0.3);
+        color: #bfe2ff;
+        background: rgba(78, 168, 255, 0.1);
+      }
+      .pill.multi {
+        border-color: rgba(16, 185, 129, 0.3);
+        color: #9ff5d3;
+        background: rgba(16, 185, 129, 0.1);
       }
 
-      .pill.multi {
-        border-color: rgba(5, 150, 105, 0.3);
-        color: #34d399;
-        background: rgba(5, 150, 105, 0.1);
+      /* Roadmap */
+      .roadmap {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin: 0;
+      }
+      .phase {
+        background: rgba(20, 24, 33, 0.95);
+        border: 1px solid var(--border);
+        border-radius: 0;
+        padding: 16px 12px;
+      }
+      .phase-header {
+        font-size: 13px;
+        font-weight: 800;
+        color: #90cdfd;
+        margin-bottom: 10px;
+      }
+      .phase-title {
+        font-size: 16px;
+        font-weight: 800;
+        margin-bottom: 4px;
+      }
+      .phase-subtitle {
+        font-size: 12px;
+        color: var(--text-dim);
+        margin-bottom: 12px;
+      }
+      .phase ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .phase ul li {
+        font-size: 13px;
+        color: #b8c5d0;
+        margin-bottom: 10px;
+        padding-left: 14px;
+        position: relative;
+      }
+      .phase ul li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--cyan);
+        font-weight: 900;
+      }
+      .phase.year-2026 {
+        position: relative;
+        border-color: rgba(139, 92, 246, 0.6);
+        background: linear-gradient(
+          180deg,
+          rgba(139, 92, 246, 0.08) 0%,
+          rgba(20, 24, 33, 0.95) 45%
+        );
+      }
+      .phase.year-2026::before {
+        content: "CORE DEVELOPMENT YEAR";
+        position: absolute;
+        top: -12px;
+        right: 8px;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.6px;
+        color: #fff;
+        background: linear-gradient(135deg, #8b5cf6, #4ea8ff);
+        padding: 4px 10px;
+        border-radius: 999px;
+      }
+      .phase.year-2026 .phase-header {
+        color: #c4b5fd;
+      }
+      .phase.year-2026 .phase-title {
+        color: #ede9fe;
       }
 
       /* 푸터 */
       footer {
-        padding: 80px 0 40px;
+        padding: 40px 8px;
         text-align: center;
         border-top: 1px solid var(--border);
-        margin-top: 80px;
+        margin: 0;
       }
-
       footer p {
         margin: 8px 0;
       }
 
-      /* 반응형 디자인 개선 */
+      /* 반응형 */
       @media (max-width: 850px) {
         .svc-body,
         .as-is-to-be,
         .integration-box {
           grid-template-columns: 1fr;
         }
-
         .integration-box::after {
-          display: none;
+          left: 8px;
+          right: 8px;
         }
-
         h1 {
           font-size: 28px;
         }
-
-        .arch-card {
-          padding: 24px;
-        }
-
-        .org-legend {
-          gap: 12px;
-          font-size: 12px;
-        }
-
-        .role-table {
-          font-size: 13px;
-        }
-
-        .role-table td,
-        .role-table th {
-          padding: 12px 10px;
-        }
-
-        .svc-header {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .info-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .hero {
-          padding: 60px 0;
-        }
-
         .section-title {
-          margin: 60px 0 24px;
+          margin: 0 8px 20px;
         }
       }
-
       @media (max-width: 480px) {
-        .container {
-          padding: 0 16px;
-        }
-
-        .header-inner {
-          padding: 0 16px;
-        }
-
         .logo {
           font-size: 1.1rem;
         }
-
         .header-sub {
           font-size: 10px;
         }
-
         .badge {
           font-size: 11px;
-          padding: 5px 12px;
+          padding: 5px 10px;
         }
-
         .node-circle {
           width: 70px;
           height: 70px;
           font-size: 12px;
         }
-
-        .as-is-to-be {
-          gap: 8px;
-        }
-
         .box {
-          padding: 14px;
+          padding: 12px;
           font-size: 12px;
         }
       }
-
-      /* 접근성 개선 */
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -794,25 +755,19 @@
           transition-duration: 0.01ms !important;
         }
       }
-
-      /* 포커스 스타일 개선 */
       a:focus-visible,
       button:focus-visible {
         outline: 2px solid var(--cyan);
         outline-offset: 2px;
       }
-
-      /* 인쇄 스타일 */
       @media print {
         header {
           position: relative;
         }
-
         .aitrics-highlight::before,
         .integration-box::after {
           display: none;
         }
-
         .svc-card,
         .arch-card {
           break-inside: avoid;
@@ -825,10 +780,9 @@
     <!-- 헤더 섹션 -->
     <header>
       <div class="header-inner">
-        <div class="logo">닥터앤서 <span>3.0</span></div>
+        <div class="logo">DR.ANSWER <span>3.0</span></div>
         <div class="header-sub">
-          TRI-Agentic AI<br />
-          Technical Specification
+          TRI-Agentic AI<br />Technical Specification
         </div>
       </div>
     </header>
@@ -939,7 +893,7 @@
           </div>
         </div>
 
-        <div class="arch-card" style="padding: 0; overflow: hidden">
+        <div class="arch-card" style="padding: 0 0 16px; overflow: hidden">
           <div class="role-table-wrapper">
             <table class="role-table">
               <thead>
@@ -958,7 +912,11 @@
                   </td>
                 </tr>
                 <tr class="role-hospital">
-                  <td class="role-category" rowspan="5">의료기관</td>
+                  <td class="role-category" rowspan="6">의료기관</td>
+                  <td class="inst-name hospital">연세의료원</td>
+                  <td class="role-desc">산모 전주기 모니터링 주관기관</td>
+                </tr>
+                <tr class="role-hospital">
                   <td class="inst-name hospital">서울아산병원</td>
                   <td class="role-desc">소아 만성호흡부전 주관기관</td>
                 </tr>
@@ -1027,6 +985,61 @@
         </div>
       </section>
 
+      <section>
+        <div class="section-title">
+          <h2>Strategic Roadmap (2025–2028)</h2>
+          <p>과제 목적–기술 범위–연차별 도달 수준에 기반한 단계적 추진 계획</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="roadmap">
+            <div class="phase">
+              <div class="phase-header">2025 (Year 1)</div>
+              <div class="phase-title">Foundation</div>
+              <div class="phase-subtitle">기반 구축 단계</div>
+              <ul>
+                <li>IRB 승인 절차 수행 및 임상 데이터 정의 확정함</li>
+                <li>T-Bridge 기반 데이터 연계 구조 설계함</li>
+                <li>질환별 데이터 표준화 전략 수립함</li>
+              </ul>
+            </div>
+
+            <div class="phase year-2026">
+              <div class="phase-header">2026 (Year 2)</div>
+              <div class="phase-title">Development</div>
+              <div class="phase-subtitle">기술 개발 단계</div>
+              <ul>
+                <li>Agentic AI 핵심 기능 모듈 구현함</li>
+                <li>질환별 파일럿 테스트 수행함</li>
+                <li>의료기기 규제 대응 및 인허가 준비 착수함</li>
+              </ul>
+            </div>
+
+            <div class="phase">
+              <div class="phase-header">2027 (Year 3)</div>
+              <div class="phase-title">Validation</div>
+              <div class="phase-subtitle">실증 및 검증 단계</div>
+              <ul>
+                <li>다기관 기반 기술적 교차 검증 수행함</li>
+                <li>시스템 안정성 및 성능 고도화 진행함</li>
+                <li>임상 적용 가능성에 대한 기술적 검토 수행함</li>
+              </ul>
+            </div>
+
+            <div class="phase">
+              <div class="phase-header">2028 (Year 4)</div>
+              <div class="phase-title">Expansion</div>
+              <div class="phase-subtitle">확산 및 사업화 단계</div>
+              <ul>
+                <li>상용 서비스 전환을 위한 운영 모델 정립함</li>
+                <li>국내외 규제 환경 검토 및 확장 전략 수립함</li>
+                <li>다질환 기반 서비스 확산 가능성 검토함</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- 중점질환 예후관리 서비스 -->
       <section aria-labelledby="svc-spec">
         <div class="section-title">
@@ -1073,7 +1086,7 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <div class="svc-index" style="color: #a78bfa">SERVICE 02</div>
+                <div class="svc-index" style="color: #c4b5fd">SERVICE 02</div>
                 <h3>소아 만성호흡부전 환자 재택 모니터링</h3>
               </div>
               <span class="svc-tag aitrics-tag"
@@ -1092,7 +1105,7 @@
                 <p
                   style="
                     font-size: 11px;
-                    color: #a78bfa;
+                    color: #c4b5fd;
                     margin-top: 10px;
                     font-weight: 700;
                   "
@@ -1101,16 +1114,13 @@
                   인공호흡기 분석·위험도별 알람 시스템 앱 개발
                 </p>
               </div>
-
               <div>
                 <div class="as-is-to-be">
                   <div class="box box-as">
-                    <b>AS-IS</b>
-                    보호자의 조치 방법 미숙 및 불안
+                    <b>AS-IS</b>보호자의 조치 방법 미숙 및 불안
                   </div>
                   <div class="box box-to">
-                    <b>TO-BE</b>
-                    위험 징후 실시간 확인 및 트리아제
+                    <b>TO-BE</b>위험 징후 실시간 확인 및 트리아제
                   </div>
                 </div>
               </div>
@@ -1160,12 +1170,10 @@
               <div>
                 <div class="as-is-to-be">
                   <div class="box box-as">
-                    <b>AS-IS</b>
-                    혼자 할 때 자세가 틀릴까 봐 걱정
+                    <b>AS-IS</b>혼자 할 때 자세가 틀릴까 봐 걱정
                   </div>
                   <div class="box box-to">
-                    <b>TO-BE</b>
-                    실시간 AI 코칭으로 재활 회복 속도 향상
+                    <b>TO-BE</b>실시간 AI 코칭으로 재활 회복 속도 향상
                   </div>
                 </div>
               </div>
@@ -1194,12 +1202,10 @@
               <div>
                 <div class="as-is-to-be">
                   <div class="box box-as">
-                    <b>AS-IS</b>
-                    진료 대기 중 증상 악화 불안
+                    <b>AS-IS</b>진료 대기 중 증상 악화 불안
                   </div>
                   <div class="box box-to">
-                    <b>TO-BE</b>
-                    자동 배뇨 기록 및 선제적 조치 알림
+                    <b>TO-BE</b>자동 배뇨 기록 및 선제적 조치 알림
                   </div>
                 </div>
               </div>
@@ -1210,7 +1216,7 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <div class="svc-index" style="color: #a78bfa">SERVICE 05</div>
+                <div class="svc-index" style="color: #c4b5fd">SERVICE 05</div>
                 <h3>위암 환자 수술 후 합병증 관리</h3>
               </div>
               <span class="svc-tag aitrics-tag">분당차병원 (AITRICS 참여)</span>
@@ -1228,12 +1234,10 @@
               <div>
                 <div class="as-is-to-be">
                   <div class="box box-as">
-                    <b>AS-IS</b>
-                    퇴원 후 증상 발생 시 병원 방문 판단 어려움
+                    <b>AS-IS</b>퇴원 후 증상 발생 시 병원 방문 판단 어려움
                   </div>
                   <div class="box box-to">
-                    <b>TO-BE</b>
-                    실시간 데이터 기반 합병증 전조 증상 알림
+                    <b>TO-BE</b>실시간 데이터 기반 합병증 전조 증상 알림
                   </div>
                 </div>
               </div>
@@ -1244,7 +1248,7 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <div class="svc-index" style="color: #a78bfa">SERVICE 06</div>
+                <div class="svc-index" style="color: #c4b5fd">SERVICE 06</div>
                 <h3>대장암 항암 환자 생활 습관 관리</h3>
               </div>
               <span class="svc-tag aitrics-tag">길의료재단 (AITRICS 참여)</span>
@@ -1262,12 +1266,10 @@
               <div>
                 <div class="as-is-to-be">
                   <div class="box box-as">
-                    <b>AS-IS</b>
-                    재발 공포 및 정보 부족으로 인한 무리한 운동
+                    <b>AS-IS</b>재발 공포 및 정보 부족으로 인한 무리한 운동
                   </div>
                   <div class="box box-to">
-                    <b>TO-BE</b>
-                    믿을 수 있는 정보와 맞춤형 식단/운동 관리
+                    <b>TO-BE</b>믿을 수 있는 정보와 맞춤형 식단/운동 관리
                   </div>
                 </div>
               </div>
@@ -1284,7 +1286,7 @@
         </div>
 
         <div class="arch-card">
-          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 0 12px">
+          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 8px 12px">
             공동연구 개발기관 (의료/기업)
           </h4>
           <div class="logos">
@@ -1304,7 +1306,7 @@
 
           <div style="height: 24px"></div>
 
-          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 0 12px">
+          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 8px 12px">
             실증 참여기관 (전국 단위)
           </h4>
           <div class="logos">
@@ -1323,11 +1325,11 @@
     <!-- 푸터 -->
     <footer>
       <p style="font-size: 13px; color: var(--text-dim)">
-        본 페이지는 내부 참고용으로 제작되었으며, 닥터앤서 3.0 공식
-        발표자료/운영 문서를 기반으로 구성되었습니다.
+        본 페이지는 닥터앤서 3.0 공식 발표자료/운영 문서를 기반으로 aitrics가
+        재구성한 페이지입니다.
       </p>
       <p style="font-size: 12px; color: var(--text-dim); margin-top: 8px">
-        © 2025 닥터앤서 3.0 프로젝트. All rights reserved.
+        © 2025 닥터앤서 3.0 프로젝트_SRLEE. All rights reserved.
       </p>
     </footer>
   </body>

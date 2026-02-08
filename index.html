@@ -30,10 +30,11 @@
         --text-dim: rgba(226, 232, 240, 0.72);
         --text-muted: rgba(226, 232, 240, 0.58);
 
-        /* Accents (No sky-blue) */
+        /* Accents */
         --accent: #2dd4bf; /* Teal */
         --accent-2: #8b5cf6; /* Violet */
         --accent-3: #10b981; /* Emerald */
+        --accent-4: #b91010; /* red */
 
         /* Derived */
         --accent-soft: rgba(45, 212, 191, 0.14);
@@ -41,14 +42,9 @@
         --accent-border: rgba(45, 212, 191, 0.38);
         --accent-text: #99f6e4;
 
-        /* ✅ Violet highlight text tokens (기존 #c4b5fd / #ede9fe 하드코딩 제거) */
+        /* Violet highlight text tokens */
         --accent2-label: #c4b5fd;
         --accent2-title: #ede9fe;
-
-        /* ✅ Integration line gradient tokens (라이트/다크 자연스럽게) */
-        --g1: rgba(45, 212, 191, 0.4);
-        --g2: rgba(139, 92, 246, 0.34);
-        --g3: rgba(16, 185, 129, 0.32);
 
         --radius: 14px;
         --radius-sm: 10px;
@@ -59,6 +55,16 @@
 
         --header-h: 64px;
         --content-pad: clamp(12px, 3vw, 28px);
+
+        /* ✅ Gradient-free decorative tokens */
+        --line: rgba(226, 232, 240, 0.18);
+        --tint-violet: rgba(139, 92, 246, 0.06);
+        --tint-violet-strong: rgba(139, 92, 246, 0.08);
+
+        /* ✅ SVG ink */
+        --ink: rgba(226, 232, 240, 0.26);
+        --ink-strong: rgba(226, 232, 240, 0.46);
+        --ink-soft: rgba(226, 232, 240, 0.14);
       }
 
       /* =========================
@@ -75,7 +81,7 @@
         --text-dim: rgba(15, 23, 42, 0.72);
         --text-muted: rgba(15, 23, 42, 0.56);
 
-        --accent: #0f766e; /* Deeper teal for light mode */
+        --accent: #0f766e;
         --accent-2: #6d28d9;
         --accent-3: #047857;
 
@@ -84,31 +90,31 @@
         --accent-border: rgba(15, 118, 110, 0.22);
         --accent-text: #115e59;
 
-        /* ✅ light에서도 과도하게 튀지 않게 */
         --accent2-label: #5b21b6;
         --accent2-title: rgba(15, 23, 42, 0.92);
-
-        /* ✅ light용 그라데이션 */
-        --g1: rgba(15, 118, 110, 0.32);
-        --g2: rgba(109, 40, 217, 0.24);
-        --g3: rgba(4, 120, 87, 0.22);
 
         --shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.1);
         --shadow-md: 0 20px 48px rgba(15, 23, 42, 0.14);
         --ring: 0 0 0 3px rgba(15, 118, 110, 0.18);
+
+        --line: rgba(15, 23, 42, 0.14);
+        --tint-violet: rgba(109, 40, 217, 0.05);
+        --tint-violet-strong: rgba(109, 40, 217, 0.07);
+
+        --ink: rgba(15, 23, 42, 0.18);
+        --ink-strong: rgba(15, 23, 42, 0.34);
+        --ink-soft: rgba(15, 23, 42, 0.1);
       }
 
       * {
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
       }
-
       html,
       body {
         height: 100%;
       }
 
-      /* ✅ 밑줄 제거(전역) */
       a,
       a:visited,
       a:hover,
@@ -120,23 +126,7 @@
       body {
         margin: 0;
         padding: 0;
-        background:
-          radial-gradient(
-            900px 520px at 22% 18%,
-            rgba(45, 212, 191, 0.16),
-            transparent 62%
-          ),
-          radial-gradient(
-            860px 520px at 82% 44%,
-            rgba(139, 92, 246, 0.12),
-            transparent 64%
-          ),
-          radial-gradient(
-            760px 420px at 72% 88%,
-            rgba(16, 185, 129, 0.1),
-            transparent 60%
-          ),
-          var(--bg);
+        background: var(--bg);
         color: var(--text);
         font-family:
           "Pretendard",
@@ -145,26 +135,6 @@
           system-ui,
           sans-serif;
         line-height: 1.6;
-      }
-
-      html[data-theme="light"] body {
-        background:
-          radial-gradient(
-            900px 520px at 18% 12%,
-            rgba(15, 118, 110, 0.12),
-            transparent 62%
-          ),
-          radial-gradient(
-            860px 520px at 84% 38%,
-            rgba(109, 40, 217, 0.1),
-            transparent 66%
-          ),
-          radial-gradient(
-            760px 420px at 72% 86%,
-            rgba(4, 120, 87, 0.08),
-            transparent 62%
-          ),
-          var(--bg);
       }
 
       .container {
@@ -279,6 +249,50 @@
         border-bottom: 1px solid var(--border);
       }
 
+      /* =========================
+         ✅ Decorative SVG blocks
+      ========================= */
+      .hero-visual,
+      .arch-visual {
+        margin: 0 var(--content-pad) 28px;
+        border-radius: calc(var(--radius) + 2px);
+        border: 1px solid var(--border);
+        background: rgba(148, 163, 184, 0.04);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        position: relative;
+      }
+
+      html[data-theme="light"] .hero-visual,
+      html[data-theme="light"] .arch-visual {
+        background: rgba(15, 23, 42, 0.02);
+      }
+
+      .hero-visual svg,
+      .arch-visual svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .hero-visual-caption {
+        position: absolute;
+        right: 14px;
+        bottom: 12px;
+        font-size: 11px;
+        font-weight: 900;
+        color: var(--text-dim);
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(18, 24, 38, 0.35);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      html[data-theme="light"] .hero-visual-caption {
+        background: rgba(255, 255, 255, 0.7);
+      }
+
       .hero {
         padding: 54px 0 60px;
       }
@@ -295,7 +309,6 @@
         border: 1px solid var(--accent-border);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
       }
-
       html[data-theme="light"] .badge {
         box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
       }
@@ -312,7 +325,7 @@
         font-size: clamp(15px, 2vw, 18px);
         color: var(--text-dim);
         max-width: 1100px;
-        margin: 0 var(--content-pad) 38px;
+        margin: 0 var(--content-pad) 22px;
         line-height: 1.72;
       }
 
@@ -392,7 +405,7 @@
         position: relative;
       }
 
-      /* ✅ var 기반 그라데이션으로 교체 */
+      /* ✅ 연결 라인 단색 */
       .integration-box::after {
         content: "";
         position: absolute;
@@ -400,8 +413,7 @@
         left: 10px;
         right: 10px;
         height: 2px;
-        background: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
-        opacity: 0.62;
+        background: var(--line);
         z-index: 0;
         border-radius: 999px;
       }
@@ -425,6 +437,7 @@
         font-weight: 950;
         font-size: 14px;
         color: var(--accent);
+        position: relative; /* ✅ 아이콘 오버레이 */
         box-shadow:
           0 0 0 6px rgba(45, 212, 191, 0.08),
           0 18px 40px rgba(0, 0, 0, 0.18);
@@ -434,6 +447,47 @@
         box-shadow:
           0 0 0 6px rgba(15, 118, 110, 0.08),
           0 18px 40px rgba(15, 23, 42, 0.1);
+      }
+
+      /* ✅ 노드별 “그림 아이콘” 오버레이 (그라데이션 없음) */
+      .integration-box .int-node:nth-child(1) .node-circle::after,
+      .integration-box .int-node:nth-child(2) .node-circle::after,
+      .integration-box .int-node:nth-child(3) .node-circle::after {
+        content: "";
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        right: 8px;
+        top: 8px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(148, 163, 184, 0.08);
+        display: grid;
+        place-items: center;
+      }
+
+      /* EMR icon */
+      .integration-box .int-node:nth-child(1) .node-circle::after {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='%232dd4bf' stroke-width='2' stroke-linecap='round' d='M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z'/><path fill='none' stroke='%232dd4bf' stroke-width='2' stroke-linecap='round' d='M8 8h8M8 12h5M8 16h8'/></svg>");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 18px 18px;
+      }
+
+      /* AI icon */
+      .integration-box .int-node:nth-child(2) .node-circle::after {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='%238b5cf6' stroke-width='2' stroke-linecap='round' d='M9 4v3M15 4v3M9 17v3M15 17v3M4 9h3M17 9h3M4 15h3M17 15h3'/><rect x='8' y='8' width='8' height='8' rx='2' fill='none' stroke='%238b5cf6' stroke-width='2'/><path fill='none' stroke='%238b5cf6' stroke-width='2' stroke-linecap='round' d='M10 12h4'/></svg>");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 18px 18px;
+      }
+
+      /* DEVICE icon */
+      .integration-box .int-node:nth-child(3) .node-circle::after {
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' d='M7 7h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z'/><path fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' d='M9 11h6M12 11v4'/></svg>");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 18px 18px;
       }
 
       .int-node h4 {
@@ -476,6 +530,7 @@
         box-shadow: var(--shadow-md);
       }
 
+      /* ✅ 서비스 헤더: 단색 */
       .svc-header {
         padding: 16px 16px;
         border-bottom: 1px solid var(--border);
@@ -484,19 +539,11 @@
         align-items: flex-start;
         gap: 12px;
         flex-wrap: wrap;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.03),
-          rgba(255, 255, 255, 0)
-        );
+        background: rgba(255, 255, 255, 0.02);
       }
 
       html[data-theme="light"] .svc-header {
-        background: linear-gradient(
-          180deg,
-          rgba(15, 23, 42, 0.03),
-          rgba(15, 23, 42, 0)
-        );
+        background: rgba(15, 23, 42, 0.02);
       }
 
       .svc-title-wrap {
@@ -623,57 +670,37 @@
         color: inherit;
       }
 
+      /* ✅ AITRICS 강조 카드: 단색 */
       .aitrics-highlight {
         position: relative;
         overflow: hidden;
-        background: linear-gradient(
-          180deg,
-          rgba(139, 92, 246, 0.12) 0%,
-          rgba(18, 24, 38, 0.92) 40%
-        );
+        background: var(--tint-violet);
         border-color: rgba(139, 92, 246, 0.34);
       }
 
       html[data-theme="light"] .aitrics-highlight {
-        background: linear-gradient(
-          180deg,
-          rgba(109, 40, 217, 0.1) 0%,
-          rgba(255, 255, 255, 0.96) 46%
-        );
+        background: var(--tint-violet);
         border-color: rgba(109, 40, 217, 0.22);
       }
 
       .aitrics-highlight .svc-header {
-        background: linear-gradient(
-          90deg,
-          rgba(139, 92, 246, 0.1),
-          rgba(139, 92, 246, 0.02)
-        );
+        background: var(--tint-violet-strong);
       }
 
-      /* ✅ gradient 하드코딩 제거 */
+      .aitrics-highlight::before {
+        display: none;
+      }
+
+      /* ✅ AITRICS TAG: 단색 */
       .aitrics-tag {
-        background: linear-gradient(
-          135deg,
-          var(--accent-2) 0%,
-          var(--accent) 100%
-        ) !important;
+        background: var(--accent-2) !important;
         color: #fff !important;
         border-color: transparent !important;
         box-shadow: 0 10px 24px rgba(139, 92, 246, 0.18);
       }
 
-      .aitrics-highlight::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at 28% 22%,
-          rgba(139, 92, 246, 0.14),
-          transparent 60%
-        );
-        opacity: 0.55;
-        pointer-events: none;
+      html[data-theme="light"] .aitrics-tag {
+        box-shadow: 0 10px 24px rgba(109, 40, 217, 0.14);
       }
 
       .org-legend {
@@ -727,7 +754,7 @@
         border-collapse: collapse;
         font-size: 14px;
         text-align: left;
-        min-width: 640px;
+        min-width: 680px; /* ✅ Google Sites에서 header 깨짐 방지 */
       }
 
       .role-table th {
@@ -739,6 +766,13 @@
         top: var(--header-h);
         z-index: 10;
         backdrop-filter: blur(10px);
+        white-space: nowrap; /* ✅ "구분/기관명" 줄바꿈 방지 */
+        line-height: 1.25;
+      }
+
+      /* ✅ 세번째 헤더는 줄바꿈 허용(긴 문구 깨짐 방지) */
+      .role-table th:nth-child(3) {
+        white-space: normal;
       }
 
       html[data-theme="light"] .role-table th {
@@ -776,12 +810,14 @@
         font-weight: 950;
         color: var(--text);
         min-width: 100px;
+        white-space: nowrap;
       }
 
       .inst-name {
         color: var(--text);
         font-weight: 900;
         min-width: 180px;
+        white-space: nowrap;
       }
 
       .inst-name.lead {
@@ -843,7 +879,10 @@
         background: rgba(16, 185, 129, 0.08);
         color: var(--accent-3);
       }
-
+      .logo-tag.tag-hospital2 {
+        border-color: rgba(185, 16, 16, 0.26);
+        background: rgba(185, 16, 16, 0.08);
+      }
       .logo-tag.tag-ai {
         border-color: rgba(139, 92, 246, 0.26);
         background: rgba(139, 92, 246, 0.08);
@@ -877,9 +916,9 @@
       }
 
       .pill.multi {
-        border-color: rgba(16, 185, 129, 0.24);
-        color: var(--accent-3);
-        background: rgba(16, 185, 129, 0.08);
+        border-color: rgba(255, 0, 0, 0.4);
+        color: var(--accent-4);
+        background: rgba(255, 0, 0, 0.05);
       }
 
       .roadmap {
@@ -939,26 +978,18 @@
         font-weight: 950;
       }
 
+      /* ✅ 2026 강조 단색 */
       .phase.year-2026 {
         position: relative;
         border-color: rgba(139, 92, 246, 0.4);
-        background: linear-gradient(
-          180deg,
-          rgba(139, 92, 246, 0.12) 0%,
-          rgba(18, 24, 38, 0.96) 52%
-        );
+        background: var(--tint-violet);
       }
 
       html[data-theme="light"] .phase.year-2026 {
         border-color: rgba(109, 40, 217, 0.26);
-        background: linear-gradient(
-          180deg,
-          rgba(109, 40, 217, 0.1) 0%,
-          rgba(255, 255, 255, 0.98) 56%
-        );
+        background: var(--tint-violet);
       }
 
-      /* ✅ gradient 하드코딩 제거 */
       .phase.year-2026::before {
         content: "CORE DEVELOPMENT YEAR";
         position: absolute;
@@ -968,7 +999,7 @@
         font-weight: 950;
         letter-spacing: 0.6px;
         color: #fff;
-        background: linear-gradient(135deg, var(--accent-2), var(--accent));
+        background: var(--accent-2);
         padding: 4px 10px;
         border-radius: 999px;
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
@@ -978,7 +1009,6 @@
         box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
       }
 
-      /* ✅ 하드코딩 제거: violet 텍스트 토큰 사용 */
       .phase.year-2026 .phase-header {
         color: var(--accent2-label);
       }
@@ -1062,13 +1092,207 @@
         header {
           position: relative;
         }
-        .aitrics-highlight::before,
         .integration-box::after {
           display: none;
         }
         .svc-card,
         .arch-card {
           break-inside: avoid;
+        }
+      }
+      /* =========================
+   ✅ AITRICS "In-Progress" Motion (No gradient)
+   - applies to .aitrics-highlight cards (SERVICE 02/05/06)
+========================= */
+
+      /* 1) 카드 전체: 은은한 호흡 + 살짝 부유 */
+      @keyframes aitricsFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-2px);
+        }
+      }
+      @keyframes aitricsPulseBorder {
+        0%,
+        100% {
+          border-color: rgba(139, 92, 246, 0.26);
+        }
+        50% {
+          border-color: rgba(139, 92, 246, 0.55);
+        }
+      }
+      html[data-theme="light"] @keyframes aitricsPulseBorderLight {
+        0%,
+        100% {
+          border-color: rgba(109, 40, 217, 0.18);
+        }
+        50% {
+          border-color: rgba(109, 40, 217, 0.38);
+        }
+      }
+
+      .aitrics-highlight {
+        position: relative;
+      }
+
+      /* “모션 허용”일 때만 */
+      @media (prefers-reduced-motion: no-preference) {
+        .aitrics-highlight {
+          animation: aitricsFloat 3.6s ease-in-out infinite;
+        }
+        .aitrics-highlight {
+          animation:
+            aitricsFloat 3.6s ease-in-out infinite,
+            aitricsPulseBorder 2.8s ease-in-out infinite;
+        }
+        html[data-theme="light"] .aitrics-highlight {
+          animation:
+            aitricsFloat 3.8s ease-in-out infinite,
+            aitricsPulseBorder 3s ease-in-out infinite;
+        }
+      }
+
+      /* 2) 헤더 스캔 라인: 진행/가동 느낌 (단색) */
+      @keyframes scanLine {
+        0% {
+          transform: translateX(-120%);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 0.35;
+        }
+        90% {
+          opacity: 0.55;
+        }
+        100% {
+          transform: translateX(120%);
+          opacity: 0;
+        }
+      }
+
+      .aitrics-highlight .svc-header {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .aitrics-highlight .svc-header::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -40%;
+        width: 40%;
+        height: 100%;
+        background: rgba(139, 92, 246, 0.12); /* 단색 */
+        border-left: 1px solid rgba(139, 92, 246, 0.25);
+        border-right: 1px solid rgba(139, 92, 246, 0.25);
+        transform: translateX(-120%);
+        pointer-events: none;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .aitrics-highlight .svc-header::after {
+          animation: scanLine 4.6s ease-in-out infinite;
+        }
+      }
+
+      html[data-theme="light"] .aitrics-highlight .svc-header::after {
+        background: rgba(109, 40, 217, 0.08);
+        border-left: 1px solid rgba(109, 40, 217, 0.18);
+        border-right: 1px solid rgba(109, 40, 217, 0.18);
+      }
+
+      /* 3) 핵심 모듈 bullet: 순차 등장 (읽기 흐름 + 진행 느낌) */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .aitrics-highlight .mod-list li {
+        opacity: 1;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .aitrics-highlight .mod-list li {
+          opacity: 0;
+          animation: fadeUp 0.55s ease forwards;
+        }
+
+        /* 4개 항목 기준: 필요시 숫자 늘리면 됨 */
+        .aitrics-highlight .mod-list li:nth-child(1) {
+          animation-delay: 0.1s;
+        }
+        .aitrics-highlight .mod-list li:nth-child(2) {
+          animation-delay: 0.22s;
+        }
+        .aitrics-highlight .mod-list li:nth-child(3) {
+          animation-delay: 0.34s;
+        }
+        .aitrics-highlight .mod-list li:nth-child(4) {
+          animation-delay: 0.46s;
+        }
+      }
+
+      /* 4) AITRICS 배지: 상태 LED 점멸 (단색) */
+      @keyframes ledBlink {
+        0% {
+          opacity: 0.1;
+          transform: scale(0.5);
+        }
+        100% {
+          opacity: 0.35;
+          transform: scale(0.95);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .aitrics-tag {
+        position: relative;
+        padding-left: 26px !important; /* LED 공간 확보 */
+      }
+      .aitrics-tag::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #fff; /* dark에서도 선명 */
+        opacity: 0.6;
+        transform: translateY(-50%);
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .aitrics-tag::before {
+          animation: ledBlink 1.25s ease-in-out infinite;
+        }
+      }
+
+      /* 인쇄/감속 모드에서는 모션 제거 */
+      @media print, (prefers-reduced-motion: reduce) {
+        .aitrics-highlight,
+        .aitrics-highlight .svc-header::after,
+        .aitrics-highlight .mod-list li,
+        .aitrics-tag::before {
+          animation: none !important;
+        }
+        .aitrics-highlight .mod-list li {
+          opacity: 1 !important;
+          transform: none !important;
         }
       }
     </style>
@@ -1120,6 +1344,462 @@
           개발·실증하여, 치료 이후까지 책임지는 국가 차원의 차세대 의료 AI 표준
           모델을 구축하는 사업입니다.
         </p>
+
+        <!-- ✅ A 스타일(기술 도식/와이어프레임) SVG : 그라데이션 없음 -->
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- blueprint grid (no gradient) -->
+              <pattern
+                id="gridSm"
+                width="16"
+                height="16"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M16 0H0V16"
+                  fill="none"
+                  stroke="var(--ink-soft)"
+                  stroke-width="1"
+                />
+              </pattern>
+              <pattern
+                id="gridLg"
+                width="80"
+                height="80"
+                patternUnits="userSpaceOnUse"
+              >
+                <rect width="80" height="80" fill="url(#gridSm)" />
+                <path
+                  d="M80 0H0V80"
+                  fill="none"
+                  stroke="var(--ink)"
+                  stroke-width="1"
+                />
+              </pattern>
+
+              <filter
+                id="softShadow"
+                x="-20%"
+                y="-20%"
+                width="140%"
+                height="140%"
+              >
+                <feDropShadow
+                  dx="0"
+                  dy="10"
+                  stdDeviation="12"
+                  flood-color="rgba(0,0,0,0.25)"
+                />
+              </filter>
+            </defs>
+
+            <!-- background -->
+            <rect x="0" y="0" width="1200" height="360" fill="url(#gridLg)" />
+            <rect
+              x="24"
+              y="24"
+              width="1152"
+              height="312"
+              rx="18"
+              fill="rgba(148,163,184,0.03)"
+              stroke="var(--border)"
+            />
+
+            <!-- left lane: intake -->
+            <g filter="url(#softShadow)">
+              <rect
+                x="72"
+                y="78"
+                width="260"
+                height="204"
+                rx="18"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <rect
+                x="72"
+                y="78"
+                width="260"
+                height="36"
+                rx="18"
+                fill="rgba(148,163,184,0.06)"
+              />
+              <text
+                x="92"
+                y="102"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                DATA INTAKE
+              </text>
+
+              <!-- modules -->
+              <g>
+                <rect
+                  x="92"
+                  y="132"
+                  width="220"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="110"
+                  y="161"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  EMR / OCS / PACS
+                </text>
+                <circle cx="304" cy="156" r="6" fill="var(--accent)" />
+              </g>
+
+              <g>
+                <rect
+                  x="92"
+                  y="192"
+                  width="220"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="110"
+                  y="221"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  PHR / PRO
+                </text>
+                <circle cx="304" cy="216" r="6" fill="var(--accent-3)" />
+              </g>
+
+              <g>
+                <rect
+                  x="92"
+                  y="252"
+                  width="220"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="110"
+                  y="281"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  IoT / Wearable
+                </text>
+                <circle cx="304" cy="276" r="6" fill="var(--accent-2)" />
+              </g>
+            </g>
+
+            <!-- center: orchestration -->
+            <g filter="url(#softShadow)">
+              <rect
+                x="388"
+                y="62"
+                width="420"
+                height="236"
+                rx="18"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <rect
+                x="388"
+                y="62"
+                width="420"
+                height="36"
+                rx="18"
+                fill="rgba(148,163,184,0.06)"
+              />
+              <text
+                x="408"
+                y="86"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                AGENTIC ORCHESTRATION LAYER
+              </text>
+
+              <rect
+                x="412"
+                y="114"
+                width="372"
+                height="86"
+                rx="16"
+                fill="rgba(18,24,38,0.25)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="432"
+                y="144"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                TRI-Agentic Core
+              </text>
+              <text
+                x="432"
+                y="168"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                Self-Triage · Prognosis · Individualized Care
+              </text>
+
+              <!-- chips -->
+              <g>
+                <rect
+                  x="432"
+                  y="214"
+                  width="112"
+                  height="38"
+                  rx="999"
+                  fill="rgba(45,212,191,0.10)"
+                  stroke="var(--accent-border)"
+                />
+                <text
+                  x="460"
+                  y="238"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--accent-text)"
+                >
+                  Triage
+                </text>
+              </g>
+              <g>
+                <rect
+                  x="552"
+                  y="214"
+                  width="124"
+                  height="38"
+                  rx="999"
+                  fill="rgba(139,92,246,0.10)"
+                  stroke="rgba(139,92,246,0.28)"
+                />
+                <text
+                  x="580"
+                  y="238"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--accent2-label)"
+                >
+                  Prognosis
+                </text>
+              </g>
+              <g>
+                <rect
+                  x="684"
+                  y="214"
+                  width="100"
+                  height="38"
+                  rx="999"
+                  fill="rgba(16,185,129,0.10)"
+                  stroke="rgba(16,185,129,0.28)"
+                />
+                <text
+                  x="712"
+                  y="238"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--accent-3)"
+                >
+                  Care
+                </text>
+              </g>
+
+              <!-- ports -->
+              <circle cx="388" cy="156" r="7" fill="var(--accent)" />
+              <circle cx="388" cy="216" r="7" fill="var(--accent-3)" />
+              <circle cx="388" cy="276" r="7" fill="var(--accent-2)" />
+
+              <circle cx="808" cy="140" r="7" fill="var(--accent)" />
+              <circle cx="808" cy="180" r="7" fill="var(--accent-2)" />
+              <circle cx="808" cy="220" r="7" fill="var(--accent-3)" />
+              <circle cx="808" cy="260" r="7" fill="var(--accent)" />
+            </g>
+
+            <!-- right lane: actions -->
+            <g filter="url(#softShadow)">
+              <rect
+                x="864"
+                y="78"
+                width="264"
+                height="204"
+                rx="18"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <rect
+                x="864"
+                y="78"
+                width="264"
+                height="36"
+                rx="18"
+                fill="rgba(148,163,184,0.06)"
+              />
+              <text
+                x="884"
+                y="102"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                CARE ACTIONS
+              </text>
+
+              <g>
+                <rect
+                  x="884"
+                  y="132"
+                  width="224"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="902"
+                  y="161"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  Alert / Guidance
+                </text>
+                <circle cx="884" cy="156" r="6" fill="var(--accent)" />
+              </g>
+
+              <g>
+                <rect
+                  x="884"
+                  y="192"
+                  width="224"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="902"
+                  y="221"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  Clinician Link
+                </text>
+                <circle cx="884" cy="216" r="6" fill="var(--accent-2)" />
+              </g>
+
+              <g>
+                <rect
+                  x="884"
+                  y="252"
+                  width="224"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="902"
+                  y="281"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  Longitudinal Follow-up
+                </text>
+                <circle cx="884" cy="276" r="6" fill="var(--accent-3)" />
+              </g>
+            </g>
+
+            <!-- wiring / flows (wireframe, dashed) -->
+            <g fill="none" stroke-linecap="round" stroke-width="2">
+              <!-- EMR -> core -->
+              <path d="M332 156H372" stroke="var(--ink-strong)" opacity="0.6" />
+              <path
+                d="M332 156C350 156 354 156 372 156"
+                stroke="var(--ink-strong)"
+                opacity="0.6"
+                stroke-dasharray="6 6"
+              />
+              <path d="M372 156H388" stroke="var(--ink-strong)" opacity="0.6" />
+
+              <!-- PHR -> core -->
+              <path
+                d="M332 216H388"
+                stroke="var(--ink-strong)"
+                opacity="0.55"
+                stroke-dasharray="6 6"
+              />
+
+              <!-- IoT -> core -->
+              <path
+                d="M332 276H388"
+                stroke="var(--ink-strong)"
+                opacity="0.55"
+                stroke-dasharray="6 6"
+              />
+
+              <!-- core -> actions (key path highlights) -->
+              <path
+                d="M808 140H864"
+                stroke="var(--accent)"
+                opacity="0.55"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M808 180H864"
+                stroke="var(--accent-2)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M808 220H864"
+                stroke="var(--accent-3)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M808 260H864"
+                stroke="var(--accent)"
+                opacity="0.35"
+                stroke-dasharray="7 6"
+              />
+            </g>
+
+            <!-- subtle callouts -->
+            <g
+              font-family="Pretendard, system-ui, sans-serif"
+              font-size="11"
+              font-weight="900"
+              fill="var(--text-dim)"
+              opacity="0.9"
+            >
+              <text x="92" y="56">SYSTEM OVERVIEW (wireframe)</text>
+              <text x="884" y="56">OUTPUTS & WORKFLOWS</text>
+            </g>
+          </svg>
+          <div class="hero-visual-caption">
+            Blueprint: TRI-Agentic Architecture
+          </div>
+        </div>
 
         <div class="info-grid">
           <div class="info-item">
@@ -1184,6 +1864,242 @@
               </p>
             </div>
           </div>
+        </div>
+
+        <!-- ✅ A 스타일(기술 도식) 보조 SVG(그림) -->
+        <div class="arch-visual" aria-hidden="true">
+          <svg viewBox="0 0 1200 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="gridSm2"
+                width="14"
+                height="14"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M14 0H0V14"
+                  fill="none"
+                  stroke="var(--ink-soft)"
+                  stroke-width="1"
+                />
+              </pattern>
+              <pattern
+                id="gridLg2"
+                width="70"
+                height="70"
+                patternUnits="userSpaceOnUse"
+              >
+                <rect width="70" height="70" fill="url(#gridSm2)" />
+                <path
+                  d="M70 0H0V70"
+                  fill="none"
+                  stroke="var(--ink)"
+                  stroke-width="1"
+                />
+              </pattern>
+            </defs>
+
+            <rect x="0" y="0" width="1200" height="240" fill="url(#gridLg2)" />
+            <rect
+              x="24"
+              y="24"
+              width="1152"
+              height="192"
+              rx="18"
+              fill="rgba(148,163,184,0.03)"
+              stroke="var(--border)"
+            />
+
+            <!-- pipeline boxes -->
+            <g>
+              <rect
+                x="72"
+                y="70"
+                width="270"
+                height="120"
+                rx="16"
+                fill="rgba(18,24,38,0.20)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="92"
+                y="98"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                Ingestion
+              </text>
+              <text
+                x="92"
+                y="122"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                EMR/PHR/Device
+              </text>
+              <circle cx="342" cy="130" r="6" fill="var(--accent)" />
+              <circle cx="342" cy="150" r="6" fill="var(--accent-3)" />
+              <circle cx="342" cy="170" r="6" fill="var(--accent-2)" />
+            </g>
+
+            <g>
+              <rect
+                x="420"
+                y="56"
+                width="360"
+                height="148"
+                rx="18"
+                fill="rgba(18,24,38,0.20)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="440"
+                y="86"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                Orchestration
+              </text>
+              <text
+                x="440"
+                y="110"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                Routing · Guardrails · Personalization
+              </text>
+
+              <rect
+                x="440"
+                y="128"
+                width="320"
+                height="56"
+                rx="14"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <text
+                x="460"
+                y="162"
+                font-size="12"
+                font-weight="900"
+                fill="var(--text-dim)"
+              >
+                Agentic Core (TRI)
+              </text>
+
+              <circle cx="780" cy="96" r="6" fill="var(--accent-2)" />
+              <circle cx="780" cy="116" r="6" fill="var(--accent)" />
+              <circle cx="780" cy="136" r="6" fill="var(--accent-3)" />
+            </g>
+
+            <g>
+              <rect
+                x="858"
+                y="70"
+                width="270"
+                height="120"
+                rx="16"
+                fill="rgba(18,24,38,0.20)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="878"
+                y="98"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                Actions
+              </text>
+              <text
+                x="878"
+                y="122"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                Alert · Guidance · Link
+              </text>
+              <circle cx="858" cy="130" r="6" fill="var(--accent)" />
+              <circle cx="858" cy="150" r="6" fill="var(--accent-2)" />
+              <circle cx="858" cy="170" r="6" fill="var(--accent-3)" />
+            </g>
+
+            <!-- arrows (wireframe dashed) -->
+            <g fill="none" stroke-linecap="round" stroke-width="2">
+              <path
+                d="M342 130H404"
+                stroke="var(--ink-strong)"
+                opacity="0.55"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M342 150H404"
+                stroke="var(--ink-strong)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M342 170H404"
+                stroke="var(--ink-strong)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+
+              <path
+                d="M780 96H842"
+                stroke="var(--accent-2)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M780 116H842"
+                stroke="var(--accent)"
+                opacity="0.50"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M780 136H842"
+                stroke="var(--accent-3)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+            </g>
+
+            <!-- arrow tips -->
+            <g
+              fill="none"
+              stroke="var(--ink-strong)"
+              opacity="0.55"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M404 130l-10-6m10 6l-10 6" />
+              <path d="M404 150l-10-6m10 6l-10 6" opacity="0.45" />
+              <path d="M404 170l-10-6m10 6l-10 6" opacity="0.45" />
+
+              <path d="M842 96l-10-6m10 6l-10 6" opacity="0.45" />
+              <path d="M842 116l-10-6m10 6l-10 6" opacity="0.50" />
+              <path d="M842 136l-10-6m10 6l-10 6" opacity="0.45" />
+            </g>
+
+            <!-- title -->
+            <text
+              x="72"
+              y="44"
+              font-size="11"
+              font-weight="950"
+              fill="var(--text-dim)"
+            >
+              PIPELINE VIEW (wireframe)
+            </text>
+          </svg>
         </div>
       </section>
 
@@ -1400,10 +2316,9 @@
           </article>
 
           <!-- SERVICE 02 - AITRICS -->
-          <article class="svc-card aitrics-highlight">
+          <article class="svc-card aitrics-highlight aitrics-primary">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <!-- ✅ 하드코딩(#c4b5fd) 제거 -->
                 <div class="svc-index" style="color: var(--accent2-label)">
                   SERVICE 02
                 </div>
@@ -1457,12 +2372,13 @@
                 <span class="logo-tag tag-hospital"
                   >서울아산병원 <span class="pill cross">교차검증</span></span
                 >
-                <span class="logo-tag tag-hospital"
+                <span class="logo-tag tag-hospital2"
                   >서울대학교병원
                   <span class="pill multi">다기관실증</span></span
                 >
-                <span class="logo-tag tag-hospital"
-                  >전남대병원 <span class="pill multi">다기관실증</span></span
+                <span class="logo-tag tag-hospital2"
+                  >전남대학교병원
+                  <span class="pill multi">다기관실증</span></span
                 >
               </div>
             </div>
@@ -1536,7 +2452,6 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <!-- ✅ 하드코딩(#c4b5fd) 제거 -->
                 <div class="svc-index" style="color: var(--accent2-label)">
                   SERVICE 05
                 </div>
@@ -1571,7 +2486,6 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <!-- ✅ 하드코딩(#c4b5fd) 제거 -->
                 <div class="svc-index" style="color: var(--accent2-label)">
                   SERVICE 06
                 </div>
@@ -1612,8 +2526,8 @@
         </div>
 
         <div class="arch-card">
-          <h4 style="font-size: 15px; color: var(--accent); margin: 0 0 12px">
-            공동연구 개발기관 (의료/기업)
+          <h4 style="font-size: 15px; margin: 0 0 12px">
+            공동연구 개발기관 (의료기관/기업)
           </h4>
           <div class="logos">
             <span class="logo-tag tag-hospital">서울아산병원</span>
@@ -1621,6 +2535,8 @@
             <span class="logo-tag tag-hospital">삼성서울병원</span>
             <span class="logo-tag tag-hospital">분당차병원</span>
             <span class="logo-tag tag-hospital">길의료재단</span>
+          </div>
+          <div class="logos">
             <span class="logo-tag tag-ai">에이아이트릭스 (AITRICS)</span>
             <span class="logo-tag tag-ai">파이디지털헬스케어</span>
             <span class="logo-tag tag-ai">아크릴</span>
@@ -1632,7 +2548,7 @@
 
           <div style="height: 24px"></div>
 
-          <h4 style="font-size: 15px; color: var(--accent); margin: 0 0 12px">
+          <h4 style="font-size: 15px; margin: 0 0 12px">
             실증 참여기관 (전국 단위)
           </h4>
           <div class="logos">
@@ -1659,7 +2575,7 @@
       </p>
     </footer>
 
-    <!-- ✅ 테마 스크립트: 1개만 유지 -->
+    <!-- ✅ 테마 스크립트 -->
     <script>
       (function () {
         const KEY = "theme";

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AITRICS 2026 Dr.Answer 3.0 | Step-based Gantt</title>
+
+    <style>
+      :root {
+        --bg: #030406;
+        --surface: #0b0d12;
+        --border: #1e222d;
+        --text-p: #f8fafc;
+        --text-s: #94a3b8;
+        --data: #00d1ff;
+        --ai: #a855f7;
+        --svc: #f43f5e;
+        --reg: #fbbf24;
+        --done: #10b981;
+        --danger: #fb7185;
+      }
+      body {
+        margin: 0;
+        padding: 20px;
+        background: var(--bg);
+        color: var(--text-p);
+        font-family: Pretendard, system-ui;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 14px;
+      }
+      .bar-wrap {
+        height: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        transition: width 0.3s;
+      }
+      .stepline {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 12px;
+      }
+      .cb {
+        accent-color: var(--done);
+      }
+      .small {
+        font-size: 11px;
+        color: var(--text-s);
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>📊 Step 기반 Gantt + WBS (통합본)</h2>
+
+    <div class="card" id="gantt"></div>
+    <div class="card" id="wbs"></div>
+
+    <script>
+      const YEAR = 2026;
+      const fmt = (d) => d.toISOString().slice(0, 10);
+
+      /* ===== DATA ===== */
+      const DATA = {
+        roadmap: [
+          {
+            dept: "데이터/인프라 연계",
+            color: "var(--data)",
+            tasks: [
+              {
+                id: "D-1.1",
+                text: "GPU 서버 및 워크스테이션 인프라 구축",
+                steps: [
+                  {
+                    label: "서버 입고 확인",
+                    weight: 50,
+                    done: true,
+                    doneAt: "2026-02-03",
+                  },
+                  {
+                    label: "OS/드라이버 세팅",
+                    weight: 30,
+                    done: false,
+                    doneAt: null,
+                  },
+                  {
+                    label: "원내 네트워크/방화벽 연계",
+                    weight: 20,
+                    done: false,
+                    doneAt: null,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      };
+
+      /* ===== LOGIC ===== */
+      function taskProgress(t) {
+        const total = t.steps.reduce((s, x) => s + x.weight, 0);
+        const done = t.steps
+          .filter((s) => s.done)
+          .reduce((s, x) => s + x.weight, 0);
+        return Math.round((done / total) * 100);
+      }
+
+      /* ===== GANTT ===== */
+      function renderGantt() {
+        const el = document.getElementById("gantt");
+        el.innerHTML = "<h3>Gantt (Step 기반)</h3>";
+        DATA.roadmap.forEach((g) => {
+          g.tasks.forEach((t) => {
+            const pct = taskProgress(t);
+            el.innerHTML += `
+<div class="small">${t.id} · ${t.text} (${pct}%)</div>
+<div class="bar-wrap">
+<div class="bar-fill" style="width:${pct}%;background:${g.color}"></div>
+</div>
+`;
+          });
+        });
+      }
+
+      /* ===== WBS ===== */
+      function renderWBS() {
+        const el = document.getElementById("wbs");
+        el.innerHTML = "<h3>WBS</h3>";
+        DATA.roadmap.forEach((g, gi) => {
+          el.innerHTML += `<b>${g.dept}</b>`;
+          g.tasks.forEach((t, ti) => {
+            el.innerHTML += `<div class="small">${t.text}</div>`;
+            t.steps.forEach((s, si) => {
+              el.innerHTML += `
+<div class="stepline">
+<input type="checkbox" class="cb" ${s.done ? "checked" : ""}
+onchange="toggle(${gi},${ti},${si},this.checked)">
+<span>${s.label}</span>
+<span class="small">(${s.weight}%)</span>
+<span class="small">${s.doneAt || ""}</span>
+</div>`;
+            });
+          });
+        });
+      }
+
+      function toggle(gi, ti, si, val) {
+        const step = DATA.roadmap[gi].tasks[ti].steps[si];
+        step.done = val;
+        step.doneAt = val ? fmt(new Date()) : null;
+        renderGantt();
+        renderWBS();
+      }
+
+      renderGantt();
+      renderWBS();
+    </script>
+  </body>
+</html>

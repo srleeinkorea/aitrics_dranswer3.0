@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,39 +8,91 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&family=Pretendard:wght@400;600;800&display=swap");
 
+      /* =========================================================
+       VISIBILITY REVISION (가시성 개선)
+       - 타이포/간격/대비 개선
+       - 테이블 헤더 sticky + 좌측 컬럼 sticky
+       - 줄무늬(zebra) + Hover 강조
+       - DUE 임박/지연 색상 강조
+       - 라이트/다크 + 밀도(Comfort/Compact) 토글
+    ========================================================= */
+
       :root {
-        --bg: #030406;
-        --surface: #0b0d12;
-        --border: #1e222d;
+        /* Dark */
+        --bg: #05070c;
+        --surface: #0b0f18;
+        --surface2: #0f1522;
+        --border: #1f2a3a;
+        --border2: rgba(255, 255, 255, 0.08);
+
         --text-p: #f8fafc;
-        --text-s: #94a3b8;
+        --text-s: #a7b2c4;
+
         --data: #00d1ff;
         --ai: #a855f7;
         --svc: #f43f5e;
         --reg: #fbbf24;
+
         --done: #10b981;
         --danger: #fb7185;
-        --radius: 16px;
+
+        --radius: 18px;
+
+        --shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+
+        --fs-12: 12px;
+        --fs-13: 13px;
+        --fs-14: 14px;
+        --fs-16: 16px;
+
+        --lh: 1.55;
+        --mono:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+          Consolas, "Liberation Mono", "Courier New", monospace;
+        --sans:
+          "Pretendard", system-ui, -apple-system, Segoe UI, Roboto,
+          "Noto Sans KR", sans-serif;
       }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+      }
+      html[data-theme="light"] {
+        color-scheme: light;
+        --bg: #f6f7fb;
+        --surface: #ffffff;
+        --surface2: #f2f4f8;
+        --border: #d6deea;
+        --border2: rgba(15, 23, 42, 0.12);
+
+        --text-p: #0b1220;
+        --text-s: #4b5563;
+
+        --shadow: 0 14px 40px rgba(2, 6, 23, 0.1);
+      }
+
       * {
         box-sizing: border-box;
       }
       body {
-        font-family:
-          "Pretendard",
-          system-ui,
-          -apple-system,
-          Segoe UI,
-          Roboto,
-          "Noto Sans KR",
-          sans-serif;
+        font-family: var(--sans);
         background: var(--bg);
         color: var(--text-p);
         margin: 0;
-        padding: 26px;
+        padding: 28px;
+        line-height: var(--lh);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
       }
+
+      :focus-visible {
+        outline: 2px solid rgba(0, 209, 255, 0.55);
+        outline-offset: 2px;
+        border-radius: 10px;
+      }
+
       .container {
-        max-width: 1760px;
+        max-width: 1780px;
         margin: 0 auto;
       }
       header {
@@ -56,25 +108,27 @@
         margin: 0;
         font-size: 22px;
         letter-spacing: 0.2px;
+        line-height: 1.25;
       }
       .h-sub {
         margin: 6px 0 0 0;
         color: var(--text-s);
-        font-size: 13px;
+        font-size: var(--fs-13);
       }
       .right-stack {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         gap: 10px;
+        min-width: 260px;
       }
       .total-stat {
         text-align: right;
       }
       .total-label {
-        font-size: 12px;
+        font-size: var(--fs-12);
         color: var(--text-s);
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 1px;
         display: flex;
         align-items: center;
@@ -82,52 +136,78 @@
         justify-content: flex-end;
       }
       .total-percent {
-        font-family: "JetBrains Mono";
-        font-size: 40px;
+        font-family: var(--mono);
+        font-size: 42px;
         font-weight: 800;
         color: var(--data);
+        letter-spacing: -0.5px;
       }
+
       .top-actions {
         display: flex;
         gap: 8px;
         align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
       .btn {
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
+        background: rgba(255, 255, 255, 0.03);
         color: var(--text-p);
-        border-radius: 10px;
-        padding: 8px 10px;
-        font-size: 12px;
+        border-radius: 12px;
+        padding: 9px 12px;
+        font-size: var(--fs-12);
         font-weight: 900;
         cursor: pointer;
+        box-shadow: none;
+        transition:
+          transform 0.08s ease,
+          background 0.12s ease,
+          border-color 0.12s ease;
+      }
+      html[data-theme="light"] .btn {
+        background: rgba(15, 23, 42, 0.03);
       }
       .btn:hover {
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .btn:active {
+        transform: translateY(1px);
       }
       .btn.primary {
-        border-color: rgba(56, 189, 248, 0.25);
+        border-color: rgba(0, 209, 255, 0.32);
       }
       .btn.danger {
-        border-color: rgba(251, 113, 133, 0.35);
+        border-color: rgba(251, 113, 133, 0.4);
+      }
+      .btn.ghost {
+        background: transparent;
+      }
+      .btn.small {
+        padding: 8px 10px;
+        border-radius: 10px;
       }
       .badge {
-        font-family: "JetBrains Mono";
+        font-family: var(--mono);
         font-size: 10px;
         font-weight: 900;
-        padding: 3px 7px;
+        padding: 4px 8px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: #161b22;
+        border: 1px solid var(--border2);
+        background: rgba(255, 255, 255, 0.03);
         color: var(--text-s);
+        white-space: nowrap;
+      }
+      html[data-theme="light"] .badge {
+        background: rgba(15, 23, 42, 0.03);
       }
       .badge.on {
         color: #001b12;
-        background: rgba(16, 185, 129, 0.12);
-        border-color: rgba(16, 185, 129, 0.35);
+        background: rgba(16, 185, 129, 0.14);
+        border-color: rgba(16, 185, 129, 0.38);
       }
 
-      /* Big tabs (요청대로 4개 유지) */
+      /* Anchor Nav (섹션 이동용) */
       .nav {
         display: flex;
         flex-wrap: wrap;
@@ -138,18 +218,22 @@
         text-decoration: none;
         color: var(--text-p);
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
-        padding: 8px 10px;
-        border-radius: 10px;
-        font-size: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 9px 12px;
+        border-radius: 12px;
+        font-size: var(--fs-12);
         font-weight: 900;
+        transition: background 0.12s ease;
+      }
+      html[data-theme="light"] .nav a {
+        background: rgba(15, 23, 42, 0.03);
       }
       .nav a:hover {
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255, 255, 255, 0.06);
       }
 
       .section-title {
-        font-size: 14px;
+        font-size: var(--fs-13);
         font-weight: 900;
         color: var(--text-s);
         margin: 18px 0 10px 0;
@@ -165,64 +249,82 @@
         border-radius: var(--radius);
         padding: 16px;
         margin-bottom: 14px;
+        box-shadow: var(--shadow);
+      }
+      html[data-theme="light"] .card {
+        box-shadow: var(--shadow);
       }
 
-      /* ===== 4 Category Progress Overview (상단 고정 진행현황) ===== */
+      .note {
+        font-size: var(--fs-12);
+        color: var(--text-s);
+        line-height: 1.55;
+      }
+
+      /* ===== 4 Category Progress Overview ===== */
       .grid-4 {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
+        gap: 12px;
       }
       .p-card {
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--surface2);
         border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 12px;
+        border-radius: 16px;
+        padding: 14px;
       }
       .p-top {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 10px;
+        gap: 12px;
       }
       .p-name {
-        font-size: 12.5px;
+        font-size: var(--fs-13);
         font-weight: 900;
       }
       .p-meta {
-        font-family: "JetBrains Mono";
+        font-family: var(--mono);
         font-size: 11px;
         color: var(--text-s);
         text-align: right;
         white-space: nowrap;
       }
       .p-bar {
-        margin-top: 10px;
-        height: 10px;
+        margin-top: 12px;
+        height: 12px;
         border-radius: 999px;
         overflow: hidden;
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.07);
         border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      html[data-theme="light"] .p-bar {
+        background: rgba(15, 23, 42, 0.06);
+        border-color: rgba(15, 23, 42, 0.08);
       }
       .p-fill {
         height: 100%;
       }
       .p-foot {
-        margin-top: 10px;
+        margin-top: 12px;
         display: flex;
         justify-content: space-between;
         gap: 10px;
         align-items: center;
       }
       .pill {
-        font-family: "JetBrains Mono";
+        font-family: var(--mono);
         font-size: 10px;
         font-weight: 900;
-        padding: 3px 7px;
+        padding: 4px 8px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: #161b22;
+        border: 1px solid var(--border2);
+        background: rgba(255, 255, 255, 0.03);
         color: var(--text-s);
+        white-space: nowrap;
+      }
+      html[data-theme="light"] .pill {
+        background: rgba(15, 23, 42, 0.03);
       }
 
       @media (max-width: 1200px) {
@@ -251,77 +353,6 @@
         }
       }
 
-      /* ===== KPI Snapshot ===== */
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-      .kpi {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 12px;
-      }
-      .kpi .k-top {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        align-items: flex-start;
-      }
-      .kpi .k-name {
-        font-size: 12.5px;
-        font-weight: 900;
-      }
-      .kpi .k-meta {
-        font-family: "JetBrains Mono";
-        font-size: 11px;
-        color: var(--text-s);
-        text-align: right;
-      }
-      .kpi .k-bar {
-        margin-top: 10px;
-        height: 10px;
-        border-radius: 999px;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .kpi .k-fill {
-        height: 100%;
-      }
-      .kpi .k-foot {
-        margin-top: 10px;
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        align-items: center;
-      }
-      @media (max-width: 1200px) {
-        .grid-3 {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .warn {
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
-        border: 1px solid rgba(251, 191, 36, 0.25);
-        background: rgba(251, 191, 36, 0.06);
-        padding: 12px;
-        border-radius: 12px;
-        margin-top: 12px;
-      }
-      .warn b {
-        color: var(--reg);
-      }
-      .note {
-        font-size: 11.5px;
-        color: var(--text-s);
-        line-height: 1.55;
-      }
-
       /* ===== Timeline ===== */
       .timeline-card {
         overflow-x: auto;
@@ -329,274 +360,420 @@
       .gantt-table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 1050px;
+        min-width: 980px;
       }
       .gantt-table th {
-        padding: 10px;
-        font-size: 10px;
+        padding: 10px 10px;
+        font-size: 10.5px;
         color: var(--text-s);
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--surface2);
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        white-space: nowrap;
       }
       .gantt-table td {
-        height: 48px;
+        height: 54px;
         border: 1px solid var(--border);
         position: relative;
+        background: rgba(255, 255, 255, 0.01);
+      }
+      html[data-theme="light"] .gantt-table td {
+        background: rgba(15, 23, 42, 0.01);
       }
       .quarter-label {
         background: rgba(255, 255, 255, 0.05);
         font-weight: 900;
-        font-size: 10px;
+        font-size: 10.5px;
         color: var(--text-p);
         text-align: center;
       }
+
       .bar {
         position: absolute;
-        height: 24px;
-        border-radius: 6px;
+        height: 28px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
-        padding: 0 10px;
-        font-size: 10px;
+        padding: 0 12px;
+        font-size: 11px;
         font-weight: 900;
         color: #000;
         top: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
       }
       .milestone {
         position: absolute;
         top: -10px;
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 900;
         color: var(--reg);
         border-left: 2px dashed var(--reg);
-        padding-left: 6px;
-        height: 64px;
+        padding-left: 8px;
+        height: 74px;
         z-index: 5;
         white-space: nowrap;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
       }
 
       /* ===== Filters / Lens ===== */
       .filters {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 10px;
         align-items: center;
         margin: 8px 0 10px 0;
       }
       .seg {
         display: flex;
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 14px;
         overflow: hidden;
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--surface2);
       }
       .seg button {
         border: 0;
         background: transparent;
         color: var(--text-s);
-        padding: 8px 10px;
-        font-size: 12px;
+        padding: 10px 12px;
+        font-size: var(--fs-12);
         font-weight: 900;
         cursor: pointer;
+        transition:
+          background 0.12s ease,
+          color 0.12s ease;
       }
       .seg button.active {
         color: var(--text-p);
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(0, 209, 255, 0.1);
       }
+      html[data-theme="light"] .seg button.active {
+        background: rgba(0, 209, 255, 0.12);
+      }
+
       .select,
       .input {
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--surface2);
         color: var(--text-p);
-        border-radius: 10px;
-        padding: 8px 10px;
-        font-size: 12px;
-        font-weight: 800;
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: var(--fs-12);
+        font-weight: 900;
         outline: none;
+        min-height: 40px;
+      }
+      .input {
+        min-width: 280px;
       }
       .chipbar {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
+        gap: 8px;
         align-items: center;
       }
       .chip {
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border2);
+        background: var(--surface2);
         color: var(--text-s);
         border-radius: 999px;
-        padding: 6px 10px;
-        font-size: 11px;
+        padding: 9px 12px;
+        font-size: 11.5px;
         font-weight: 900;
         cursor: pointer;
         user-select: none;
+        transition:
+          background 0.12s ease,
+          border-color 0.12s ease,
+          color 0.12s ease;
       }
       .chip.on {
         color: var(--text-p);
-        border-color: rgba(56, 189, 248, 0.25);
-        background: rgba(56, 189, 248, 0.08);
+        border-color: rgba(0, 209, 255, 0.35);
+        background: rgba(0, 209, 255, 0.12);
       }
 
-      /* ===== WBS Table (한 행에 최대 표시) ===== */
+      /* ===== WBS Table ===== */
       .wbs-wrap {
         overflow-x: auto;
       }
       table.wbs {
         width: 100%;
-        min-width: 1320px;
-        border-collapse: collapse;
+        min-width: 1400px;
+        border-collapse: separate;
+        border-spacing: 0;
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 16px;
         overflow: hidden;
         background: rgba(255, 255, 255, 0.01);
       }
+      html[data-theme="light"] table.wbs {
+        background: rgba(15, 23, 42, 0.01);
+      }
       table.wbs th,
       table.wbs td {
-        border: 1px solid var(--border);
-        padding: 10px;
-        font-size: 12px;
+        border-bottom: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        padding: 12px 12px;
+        font-size: var(--fs-13);
         vertical-align: top;
+        background-clip: padding-box;
       }
+      table.wbs th:last-child,
+      table.wbs td:last-child {
+        border-right: 0;
+      }
+      table.wbs tr:last-child td {
+        border-bottom: 0;
+      }
+
       table.wbs th {
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--surface2);
         color: var(--text-s);
         font-weight: 900;
-        font-size: 11px;
+        font-size: 11.5px;
         letter-spacing: 0.4px;
         text-align: left;
         white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 5;
       }
-      .dept-row td {
+
+      /* Sticky first columns */
+      .sticky-1 {
+        position: sticky;
+        left: 0;
+        z-index: 6;
+        background: var(--surface2);
+      }
+      .sticky-2 {
+        position: sticky;
+        left: 68px;
+        z-index: 6;
+        background: var(--surface2);
+      }
+      .sticky-3 {
+        position: sticky;
+        left: 170px;
+        z-index: 6;
+        background: var(--surface2);
+      }
+      /* body cells background for sticky cols */
+      td.sticky-1,
+      td.sticky-2,
+      td.sticky-3 {
         background: rgba(255, 255, 255, 0.02);
+      }
+      html[data-theme="light"] td.sticky-1,
+      html[data-theme="light"] td.sticky-2,
+      html[data-theme="light"] td.sticky-3 {
+        background: rgba(15, 23, 42, 0.02);
+      }
+
+      .dept-row td {
+        background: rgba(255, 255, 255, 0.03);
         font-weight: 900;
         color: var(--text-p);
-        font-size: 12px;
+        font-size: var(--fs-13);
+        position: sticky;
+        top: 44px; /* header 높이 근사 */
+        z-index: 4;
       }
+      html[data-theme="light"] .dept-row td {
+        background: rgba(15, 23, 42, 0.03);
+      }
+
+      /* Zebra for readability */
+      tbody tr.task-row:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.015);
+      }
+      html[data-theme="light"] tbody tr.task-row:nth-child(even) td {
+        background: rgba(15, 23, 42, 0.012);
+      }
+
+      tbody tr.task-row:hover td {
+        background: rgba(0, 209, 255, 0.06);
+      }
+      html[data-theme="light"] tbody tr.task-row:hover td {
+        background: rgba(0, 209, 255, 0.08);
+      }
+
       .dept-tag {
         display: inline-block;
         font-size: 10px;
         font-weight: 900;
         color: #000;
-        padding: 3px 8px;
-        border-radius: 6px;
-        margin-right: 8px;
+        padding: 4px 10px;
+        border-radius: 8px;
+        margin-right: 10px;
       }
       .cb {
         width: 18px;
         height: 18px;
         accent-color: var(--done);
         cursor: pointer;
+        margin-top: 2px;
       }
       .mono {
-        font-family: "JetBrains Mono";
+        font-family: var(--mono);
       }
       .idcell {
         white-space: nowrap;
       }
       .steps {
         color: var(--text-s);
-        font-size: 11px;
-        line-height: 1.45;
+        font-size: 12px;
+        line-height: 1.55;
       }
       .stepline {
         display: flex;
         gap: 8px;
         align-items: flex-start;
-        margin: 2px 0;
+        margin: 3px 0;
       }
       .wtag {
-        font-family: "JetBrains Mono";
+        font-family: var(--mono);
         font-size: 10px;
         font-weight: 900;
-        padding: 2px 7px;
+        padding: 3px 8px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--border2);
         background: rgba(255, 255, 255, 0.03);
         color: var(--text-p);
         white-space: nowrap;
         flex-shrink: 0;
+        min-width: 38px;
+        text-align: center;
       }
+      html[data-theme="light"] .wtag {
+        background: rgba(15, 23, 42, 0.03);
+      }
+
       .outtag {
         display: inline-block;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: #161b22;
+        border: 1px solid var(--border2);
+        background: rgba(255, 255, 255, 0.03);
         color: var(--text-s);
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 900;
-        padding: 3px 7px;
-        border-radius: 8px;
+        padding: 5px 9px;
+        border-radius: 10px;
         white-space: nowrap;
       }
+      html[data-theme="light"] .outtag {
+        background: rgba(15, 23, 42, 0.03);
+      }
+
       .duetag {
-        display: block;
-        font-family: "JetBrains Mono";
+        display: inline-block;
+        font-family: var(--mono);
         font-size: 12px;
         font-weight: 900;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(251, 191, 36, 0.4);
         color: var(--reg);
+        background: rgba(251, 191, 36, 0.1);
         white-space: nowrap;
+      }
+      .duetag.soon {
+        border-color: rgba(251, 113, 133, 0.55);
+        color: var(--danger);
+        background: rgba(251, 113, 133, 0.1);
+      }
+      .duetag.over {
+        border-color: rgba(251, 113, 133, 0.85);
+        color: var(--danger);
+        background: rgba(251, 113, 133, 0.16);
+      }
+      .duetag.mid {
+        border-color: rgba(251, 191, 36, 0.55);
+        background: rgba(251, 191, 36, 0.14);
       }
       .duemeta {
         display: block;
-        margin-top: 4px;
-        font-size: 10.5px;
+        margin-top: 8px;
+        font-size: 11.5px;
         color: var(--text-s);
         white-space: nowrap;
       }
-      .doneRow {
-        background: rgba(16, 185, 129, 0.03);
+
+      .doneRow td {
+        background: rgba(16, 185, 129, 0.06) !important;
+      }
+      html[data-theme="light"] .doneRow td {
+        background: rgba(16, 185, 129, 0.08) !important;
       }
       .doneText {
         color: var(--done);
         text-decoration: line-through;
-        opacity: 0.78;
+        opacity: 0.82;
       }
+
       .editHint {
         display: none;
-        margin-top: 6px;
-        font-size: 10.5px;
+        margin-top: 8px;
+        font-size: 11.5px;
         color: var(--text-s);
       }
       .editable {
-        border-radius: 6px;
+        border-radius: 8px;
         outline: none;
       }
       .editable[contenteditable="true"] {
-        padding: 2px 4px;
-        border: 1px dashed rgba(56, 189, 248, 0.4);
-        background: rgba(56, 189, 248, 0.06);
+        padding: 4px 6px;
+        border: 1px dashed rgba(0, 209, 255, 0.55);
+        background: rgba(0, 209, 255, 0.1);
       }
 
-      /* ===== Reg tables (기존 유지) ===== */
+      /* ===== Reg tables ===== */
       table.dark {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 16px;
         overflow: hidden;
         background: rgba(255, 255, 255, 0.01);
       }
+      html[data-theme="light"] table.dark {
+        background: rgba(15, 23, 42, 0.01);
+      }
+
       table.dark th,
       table.dark td {
-        border: 1px solid var(--border);
-        padding: 10px;
-        font-size: 12px;
+        border-bottom: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        padding: 12px;
+        font-size: var(--fs-13);
         vertical-align: top;
       }
+      table.dark th:last-child,
+      table.dark td:last-child {
+        border-right: 0;
+      }
+      table.dark tr:last-child td {
+        border-bottom: 0;
+      }
       table.dark th {
-        background: rgba(255, 255, 255, 0.03);
+        background: var(--surface2);
         color: var(--text-s);
         font-weight: 900;
-        font-size: 11px;
+        font-size: 11.5px;
         letter-spacing: 0.4px;
         text-align: left;
+        white-space: nowrap;
       }
+
       .grid-2 {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 12px;
       }
       @media (max-width: 1200px) {
         .grid-2 {
@@ -604,7 +781,7 @@
         }
       }
 
-      /* ===== Minimal modal + toast (팝업 최소화) ===== */
+      /* ===== Minimal modal + toast ===== */
       .modal-backdrop {
         display: none;
         position: fixed;
@@ -616,41 +793,41 @@
         padding: 18px;
       }
       .modal {
-        width: min(420px, 100%);
-        border-radius: 14px;
+        width: min(460px, 100%);
+        border-radius: 16px;
         border: 1px solid var(--border);
-        background: rgba(11, 13, 18, 0.98);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
-        padding: 14px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+        padding: 16px;
       }
       .modal h3 {
-        margin: 0 0 8px 0;
-        font-size: 13px;
+        margin: 0 0 10px 0;
+        font-size: 14px;
         font-weight: 900;
         color: var(--text-p);
       }
       .modal p {
-        margin: 0 0 10px 0;
-        font-size: 11.5px;
+        margin: 0 0 12px 0;
+        font-size: 12.5px;
         color: var(--text-s);
         line-height: 1.55;
       }
       .modal .row {
         display: flex;
-        gap: 8px;
+        gap: 10px;
         align-items: center;
       }
       .modal .pw {
         flex: 1;
         border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--surface2);
         color: var(--text-p);
-        border-radius: 10px;
-        padding: 9px 10px;
-        font-size: 12px;
+        border-radius: 12px;
+        padding: 11px 12px;
+        font-size: 13px;
         font-weight: 900;
         outline: none;
-        font-family: "JetBrains Mono";
+        font-family: var(--mono);
       }
       .toast-wrap {
         position: fixed;
@@ -662,29 +839,52 @@
         z-index: 10000;
       }
       .toast {
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(22, 27, 34, 0.92);
+        border: 1px solid var(--border2);
+        background: var(--surface);
         color: var(--text-p);
         padding: 10px 12px;
-        border-radius: 12px;
-        font-size: 12px;
+        border-radius: 14px;
+        font-size: 12.5px;
         font-weight: 900;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-        max-width: 420px;
+        box-shadow: var(--shadow);
+        max-width: 460px;
       }
       .toast.good {
-        border-color: rgba(16, 185, 129, 0.35);
-        background: rgba(16, 185, 129, 0.1);
+        border-color: rgba(16, 185, 129, 0.45);
+        background: rgba(16, 185, 129, 0.12);
       }
       .toast.bad {
-        border-color: rgba(251, 113, 133, 0.4);
-        background: rgba(251, 113, 133, 0.1);
+        border-color: rgba(251, 113, 133, 0.55);
+        background: rgba(251, 113, 133, 0.12);
+      }
+
+      /* Density toggle */
+      body.compact .card {
+        padding: 14px;
+      }
+      body.compact .btn {
+        padding: 8px 10px;
+      }
+      body.compact .select,
+      body.compact .input {
+        padding: 9px 10px;
+        min-height: 38px;
+      }
+      body.compact table.wbs th,
+      body.compact table.wbs td {
+        padding: 10px;
+      }
+      body.compact .p-card {
+        padding: 12px;
+      }
+      body.compact .p-bar {
+        height: 10px;
       }
     </style>
   </head>
 
   <body>
-    <div class="container">
+    <div class="container" id="app">
       <header>
         <div>
           <h1 class="h-title">
@@ -699,6 +899,21 @@
 
         <div class="right-stack">
           <div class="top-actions">
+            <button
+              class="btn ghost small"
+              id="theme-btn"
+              title="라이트/다크 전환"
+            >
+              🌙
+            </button>
+            <button
+              class="btn ghost small"
+              id="density-btn"
+              title="표 밀도 전환"
+            >
+              가독성: 편안
+            </button>
+
             <span class="badge" id="edit-badge">READ-ONLY</span>
             <button class="btn primary" id="edit-btn">🔒 편집</button>
             <button class="btn" id="save-btn" style="display: none">
@@ -719,48 +934,28 @@
         </div>
       </header>
 
-      <!-- 4가지 큰 탭 유지 -->
       <div class="nav">
-        <a href="#kpi">KPI 스냅샷</a>
         <a href="#timeline">전략 타임라인</a>
         <a href="#wbs">주차 WBS</a>
         <a href="#reg">기능분리·인허가</a>
+        <a href="#top">상단</a>
       </div>
 
-      <!-- 상단 4개 항목 진행현황 항상 표시 -->
-      <div class="section-title">
+      <div id="top" class="section-title">
         <span>📍</span> PROGRESS OVERVIEW (4 CATEGORIES)
       </div>
       <div class="card">
         <div class="grid-4" id="overview-grid"></div>
         <div class="note" style="margin-top: 10px">
           상단 4개 항목은 “현재 선택된 기간(렌즈/기간)” 기준으로 WBS 체크 상태를
-          자동 집계하여 표시함. 편집 모드에서는 텍스트/마감주차 수정 가능함.
+          자동 집계하여 표시함.
         </div>
       </div>
 
-      <!-- KPI Snapshot -->
-      <div id="kpi" class="section-title">
-        <span>📌</span> KPI SNAPSHOT (Documented Inputs)
-      </div>
-      <div class="card">
-        <div class="grid-3" id="kpi-grid"></div>
-        <div class="warn">
-          <div>⚠️</div>
-          <div class="note">
-            <b>주의 사항</b><br />
-            본 KPI 수치는 “입력값(보고/업데이트 문서 기준)”으로 표시함.<br />
-            KPI 정의(분모/분자/판정기준) 및 증빙 경로(파일/버전) 연결 필요함.
-          </div>
-        </div>
-      </div>
-
-      <!-- Timeline -->
       <div id="timeline" class="section-title">
         <span>🗓️</span> STRATEGIC TIMELINE (Q1–Q4 2026)
       </div>
 
-      <!-- ✅ Macro Timeline Filter (위 버전 아이디어 결합: ALL/H1/H2/Q1~Q4, WBS 렌즈 자동 동기화) -->
       <div class="card" style="padding: 12px 16px">
         <div class="filters" style="margin: 0">
           <div class="chipbar" id="macro-chips">
@@ -780,16 +975,13 @@
       </div>
 
       <div class="card timeline-card">
-        <!-- 기존 정적 테이블 → 동적 렌더링으로 교체 -->
         <div id="macro-timeline"></div>
       </div>
 
-      <!-- WBS -->
       <div id="wbs" class="section-title">
         <span>🔍</span> MICRO-WBS: WEEKLY EXECUTION ITEMS (한 행 표시 중심)
       </div>
 
-      <!-- Lens / Filter controls -->
       <div class="card">
         <div class="filters">
           <div class="seg" aria-label="time lens">
@@ -830,25 +1022,24 @@
         <table class="wbs" id="wbs-table">
           <thead>
             <tr>
-              <th style="width: 52px">DONE</th>
-              <th style="width: 90px">ID</th>
-              <th>업무(1행)</th>
-              <th style="width: 430px">주차별 세부 실행 항목</th>
-              <th style="width: 150px">DUE (D-○일)</th>
-              <th style="width: 120px">산출물</th>
+              <th class="sticky-1" style="width: 68px">DONE</th>
+              <th class="sticky-2" style="width: 102px">ID</th>
+              <th class="sticky-3" style="min-width: 360px">업무(1행)</th>
+              <th style="width: 460px">주차별 세부 실행 항목</th>
+              <th style="width: 190px">DUE (D-○일)</th>
+              <th style="width: 140px">산출물</th>
             </tr>
           </thead>
           <tbody id="wbs-body"></tbody>
         </table>
       </div>
 
-      <!-- Regulatory / Function split -->
       <div id="reg" class="section-title">
         <span>🧾</span> FUNCTION SPLIT · CLASS(1/2) SUBMISSION FRAME
       </div>
       <div class="grid-2">
         <div class="card">
-          <div style="font-weight: 900; font-size: 13px; margin-bottom: 10px">
+          <div style="font-weight: 900; font-size: 14px; margin-bottom: 10px">
             A. 기능분리(의도된 사용/사용자/통제포인트) 초안
           </div>
           <table class="dark">
@@ -892,7 +1083,7 @@
               </tr>
             </tbody>
           </table>
-          <div class="note">
+          <div class="note" style="margin-top: 10px">
             등급 확정은 “의도된 사용(Indications for Use)·사용자·위험도”에 의해
             결정됨. 트리아제/권고 포함 시 Class II 상향 가능성 전제를 기본값으로
             두는 편이 방어적임.
@@ -900,7 +1091,7 @@
         </div>
 
         <div class="card">
-          <div style="font-weight: 900; font-size: 13px; margin-bottom: 10px">
+          <div style="font-weight: 900; font-size: 14px; margin-bottom: 10px">
             B. 제출자료 차등(가정: Class I vs II) 체크리스트
           </div>
           <table class="dark">
@@ -939,20 +1130,15 @@
               </tr>
             </tbody>
           </table>
-          <div class="warn">
-            <div>⚠️</div>
-            <div class="note">
-              “Class I로 단정”은 위험함. 트리아제(행동권고) 포함 시 Class II
-              상향 가능성 전제 필요함.<br />
-              환자용 트리아제와 의료진용 판단지원의 문구/권한/로그 설계로
-              기능분리 방어 논리 구축 필요함.
-            </div>
+          <div class="note" style="margin-top: 10px">
+            “Class I로 단정”은 위험함. 트리아제(행동권고) 포함 시 Class II 상향
+            가능성 전제 필요함.
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ✅ password modal (prompt 대체) -->
+    <!-- password modal -->
     <div
       class="modal-backdrop"
       id="pw-backdrop"
@@ -962,10 +1148,7 @@
     >
       <div class="modal">
         <h3 id="pw-title">편집 모드 진입</h3>
-        <p>
-          비밀번호(1234) 입력 시 인라인 편집이 활성화됩니다. (불필요한 팝업
-          최소화를 위해 이 모달만 사용)
-        </p>
+        <p>비밀번호(1234) 입력 시 인라인 편집이 활성화됩니다.</p>
         <div class="row">
           <input
             class="pw"
@@ -980,7 +1163,7 @@
       </div>
     </div>
 
-    <!-- ✅ toast -->
+    <!-- toast -->
     <div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
 
     <script>
@@ -988,9 +1171,15 @@
    0) Utilities
 ========================================================= */
       const YEAR = 2026;
-      const STORAGE_KEY = "aitrics_2026_roadmap_v2";
-      const EDIT_PASSWORD = "1234";
+      const EDIT_PASSWORD = "1234"; // UI 편집 진입용(저장 시 서버에서도 동일 PIN 검증 필요)
 
+      // UI preference는 로컬에 유지(저장소/업무데이터는 구글시트)
+      const UI_THEME_KEY = "aitrics_2026_theme";
+      const UI_DENSITY_KEY = "aitrics_2026_density";
+
+      function deepClone(o) {
+        return JSON.parse(JSON.stringify(o));
+      }
       function clamp(n, a, b) {
         return Math.max(a, Math.min(b, n));
       }
@@ -1015,10 +1204,24 @@
         return d;
       }
 
-      /* 월-주차(Feb W1) → 날짜(금요일 마감) 환산 규칙
-   - 해당 월의 첫 번째 월요일을 W1 시작으로 가정
-   - Wn의 금요일을 마감일로 가정 (D-day 계산용)
-*/
+      /* ===== Google Apps Script bridge ===== */
+      const IS_GAS =
+        typeof google !== "undefined" && google.script && google.script.run;
+
+      function gsRun(fnName, ...args) {
+        return new Promise((resolve, reject) => {
+          if (!IS_GAS) {
+            reject(new Error("google.script.run not available"));
+            return;
+          }
+          google.script.run
+            .withSuccessHandler(resolve)
+            .withFailureHandler(reject)
+            [fnName](...args);
+        });
+      }
+
+      /* 월-주차(Feb W1) → 날짜(금요일 마감) 환산 규칙 */
       const MONTH_MAP = {
         Jan: 1,
         Feb: 2,
@@ -1037,13 +1240,12 @@
       function firstMondayOfMonth(year, month) {
         const d = new Date(year, month - 1, 1);
         const day = d.getDay(); // 0 Sun ... 1 Mon ... 6 Sat
-        const diff = day === 0 ? 1 : day === 1 ? 0 : 8 - day; // days to next Monday
+        const diff = day === 0 ? 1 : day === 1 ? 0 : 8 - day;
         d.setDate(d.getDate() + diff);
         d.setHours(0, 0, 0, 0);
         return d;
       }
       function dueLabelToDate(dueLabel) {
-        // "Feb W1" 형태만 처리. 실패 시 null 반환.
         const m = dueLabel?.match(/^([A-Za-z]{3})\s+W(\d)$/);
         if (!m) return null;
         const mon = MONTH_MAP[m[1]];
@@ -1055,40 +1257,44 @@
         weekStart.setDate(startMon.getDate() + (w - 1) * 7);
 
         const due = new Date(weekStart);
-        due.setDate(weekStart.getDate() + 4); // Friday
+        due.setDate(weekStart.getDate() + 4); // Fri
         due.setHours(0, 0, 0, 0);
         return due;
       }
-      function dDayString(dueDate) {
-        if (!dueDate) return "D-?";
+      function dDayDiff(dueDate) {
+        if (!dueDate) return null;
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const due = new Date(dueDate);
         due.setHours(0, 0, 0, 0);
-        const diff = Math.round((due - today) / 86400000);
+        return Math.round((due - today) / 86400000);
+      }
+      function dDayString(dueDate) {
+        if (!dueDate) return "D-?";
+        const diff = dDayDiff(dueDate);
+        if (diff === null) return "D-?";
         if (diff >= 0) return `D-${diff}일`;
         return `D+${Math.abs(diff)}일`;
       }
 
-      /* ✅ 프로젝트 타임라인 기준(02~12)으로 반기/분기 정의 (기존 표와 정합) */
+      /* 프로젝트 타임라인 기준(02~12)으로 반기/분기 정의 */
       function quarterOfDate(d) {
         const m = d.getMonth() + 1;
-        if (m >= 2 && m <= 4) return "Q1"; // 02-04
-        if (m >= 5 && m <= 7) return "Q2"; // 05-07
-        if (m >= 8 && m <= 10) return "Q3"; // 08-10
-        return "Q4"; // 11-12 (및 기타)
+        if (m >= 2 && m <= 4) return "Q1";
+        if (m >= 5 && m <= 7) return "Q2";
+        if (m >= 8 && m <= 10) return "Q3";
+        return "Q4";
       }
       function halfOfDate(d) {
         const m = d.getMonth() + 1;
-        if (m >= 2 && m <= 7) return "H1"; // 02-07
-        return "H2"; // 08-12
+        if (m >= 2 && m <= 7) return "H1";
+        return "H2";
       }
       function monthKey(d) {
         const m = pad2(d.getMonth() + 1);
         return `${YEAR}-${m}`;
       }
       function isoWeek(d) {
-        // ISO week number
         const date = new Date(
           Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()),
         );
@@ -1104,10 +1310,7 @@
         if (lens === "half") return halfOfDate(due);
         if (lens === "quarter") return quarterOfDate(due);
         if (lens === "month") return monthKey(due);
-        if (lens === "week") {
-          // 월-주차 기반 가독성 우선: "Feb W2" 그대로 사용
-          return task.dueLabel || `W${isoWeek(due)}`;
-        }
+        if (lens === "week") return task.dueLabel || `W${isoWeek(due)}`;
         return "ALL";
       }
       function lensLabel(lens, key) {
@@ -1122,7 +1325,7 @@
         return key;
       }
 
-      /* ===== Toast / Modal (팝업 최소화) ===== */
+      /* Toast / Modal */
       function toast(msg, type = "") {
         const wrap = document.getElementById("toast-wrap");
         const el = document.createElement("div");
@@ -1180,35 +1383,9 @@
       }
 
       /* =========================================================
-   1) Data (default) + persistence
+   1) Data (default)
 ========================================================= */
       const DEFAULT_DATA = {
-        kpiSnapshot: [
-          {
-            name: "Vent 데이터 이상치 검증",
-            progress: 20,
-            due: "May",
-            owner: "세브란스",
-            color: "var(--data)",
-            note: "목표: ~5월",
-          },
-          {
-            name: "PRO 설문 데이터 검증",
-            progress: 10,
-            due: "Jun",
-            owner: "세브란스·AITRICS",
-            color: "var(--svc)",
-            note: "목표: ~6월",
-          },
-          {
-            name: "악화/이상 시그널 레이블링",
-            progress: 0,
-            due: "May",
-            owner: "세브란스",
-            color: "var(--ai)",
-            note: "목표: ~5월",
-          },
-        ],
         roadmap: [
           {
             dept: "데이터/인프라 연계",
@@ -1395,37 +1572,39 @@
         ],
       };
 
-      function loadData() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return structuredClone(DEFAULT_DATA);
-          const parsed = JSON.parse(raw);
-          return parsed;
-        } catch (e) {
-          return structuredClone(DEFAULT_DATA);
+      /* =========================================================
+   1.1) Persistence: Google Sheet (Apps Script)
+========================================================= */
+      let DATA = deepClone(DEFAULT_DATA);
+      let EDIT_PIN_SESSION = null; // 편집 진입 성공 시 PIN 저장(저장 호출 때 서버에 전달)
+      let editMode = false;
+
+      async function loadFromGoogle() {
+        const res = await gsRun("loadData"); // Code.gs의 loadData()
+        if (res && res.ok && res.data && typeof res.data === "object") {
+          DATA = res.data;
+        } else {
+          DATA = deepClone(DEFAULT_DATA);
         }
       }
-      function saveData() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA));
+
+      async function saveToGoogle() {
+        const res = await gsRun("saveData", DATA, EDIT_PIN_SESSION); // Code.gs의 saveData(payload, pin)
+        return res;
       }
 
       /* =========================================================
-   2) State
+   2) State (filters)
 ========================================================= */
-      let DATA = loadData();
-      let editMode = false;
-
-      let lens = "year"; // year | half | quarter | month | week
+      let lens = "year";
       let periodKey = String(YEAR);
-      let statusFilter = "all"; // all | open | done
+      let statusFilter = "all";
       let searchQuery = "";
-      let deptFilter = new Set(); // empty means all
-
-      /* ✅ Macro timeline view state (ALL/H1/H2/Q1~Q4) */
+      let deptFilter = new Set();
       let macroView = "ALL";
 
       /* =========================================================
-   2.1) Macro Timeline Model (위 코드 아이디어 결합)
+   2.1) Macro Timeline Model
 ========================================================= */
       const macroMonths = [
         "02",
@@ -1439,17 +1618,17 @@
         "10",
         "11",
         "12",
-      ]; // 11 slots
+      ];
       const macroMeta = {
         fullUnits: macroMonths.length,
         ranges: {
           ALL: { start: 0, end: 11, label: "ALL" },
-          H1: { start: 0, end: 6, label: "H1" }, // 02-07
-          H2: { start: 6, end: 11, label: "H2" }, // 08-12
-          Q1: { start: 0, end: 3, label: "Q1" }, // 02-04
-          Q2: { start: 3, end: 6, label: "Q2" }, // 05-07
-          Q3: { start: 6, end: 9, label: "Q3" }, // 08-10
-          Q4: { start: 9, end: 11, label: "Q4" }, // 11-12
+          H1: { start: 0, end: 6, label: "H1" },
+          H2: { start: 6, end: 11, label: "H2" },
+          Q1: { start: 0, end: 3, label: "Q1" },
+          Q2: { start: 3, end: 6, label: "Q2" },
+          Q3: { start: 6, end: 9, label: "Q3" },
+          Q4: { start: 9, end: 11, label: "Q4" },
         },
       };
 
@@ -1575,7 +1754,6 @@
         <th colspan="2" class="quarter-label">Q4</th>
       </tr>`;
           }
-          // quarter view
           return `<tr>
       <th rowspan="2" style="width:160px;">KPI CATEGORY</th>
       <th colspan="${c}" class="quarter-label">${macroView}</th>
@@ -1604,7 +1782,7 @@
               .join("");
 
             return `<tr>
-      <td style="font-size:11px;font-weight:900;padding-left:14px;color:${row.color};">${row.key}</td>
+      <td style="font-size:12px;font-weight:900;padding-left:14px;color:${row.color};">${row.key}</td>
       <td colspan="${c}">
         ${barsHtml}
         ${msHtml}
@@ -1613,15 +1791,15 @@
           })
           .join("");
 
-        const table = `<table class="gantt-table">
-    <thead>
-      ${headerQuarterRow}
-      ${headerMonthRow}
-    </thead>
-    <tbody>${body}</tbody>
-  </table>`;
-
-        document.getElementById("macro-timeline").innerHTML = table;
+        document.getElementById("macro-timeline").innerHTML = `
+    <table class="gantt-table">
+      <thead>
+        ${headerQuarterRow}
+        ${headerMonthRow}
+      </thead>
+      <tbody>${body}</tbody>
+    </table>
+  `;
         document.getElementById("macro-view-badge").textContent =
           `TIMELINE: ${r.label}`;
       }
@@ -1637,10 +1815,9 @@
           });
         });
       }
-      hydrateDueDates();
 
       /* =========================================================
-   4) Time scope helpers (현재 선택 렌즈/기간 기준)
+   4) Scope helpers
 ========================================================= */
       function taskInCurrentScope(task) {
         const d = task.dueDate
@@ -1654,40 +1831,8 @@
       }
 
       /* =========================================================
-   5) Rendering: KPI / Overview / Total
+   5) Rendering: Overview / Total
 ========================================================= */
-      function renderKPI() {
-        const wrap = document.getElementById("kpi-grid");
-        wrap.innerHTML = "";
-        DATA.kpiSnapshot.forEach((k) => {
-          const el = document.createElement("div");
-          el.className = "kpi";
-          const p = clamp(Number(k.progress) || 0, 0, 100);
-          el.innerHTML = `
-      <div class="k-top">
-        <div class="k-name ${editMode ? "editable" : ""}" data-edit="kpi-name">${k.name}</div>
-        <div class="k-meta">
-          <span class="${editMode ? "editable" : ""}" data-edit="kpi-progress">${p}%</span><br/>
-          <span style="color:var(--text-s)" class="${editMode ? "editable" : ""}" data-edit="kpi-owner">${k.owner}</span>
-        </div>
-      </div>
-      <div class="k-bar"><div class="k-fill" style="width:${p}%; background:${k.color};"></div></div>
-      <div class="k-foot">
-        <span class="pill">DUE: <span class="${editMode ? "editable" : ""}" data-edit="kpi-due">${k.due}</span></span>
-        <span class="pill ${editMode ? "editable" : ""}" data-edit="kpi-note">${k.note}</span>
-      </div>
-    `;
-          wrap.appendChild(el);
-        });
-
-        if (editMode) {
-          wrap.querySelectorAll("[data-edit]").forEach((node) => {
-            node.contentEditable = "true";
-            node.setAttribute("contenteditable", "true");
-          });
-        }
-      }
-
       function renderOverview() {
         const grid = document.getElementById("overview-grid");
         grid.innerHTML = "";
@@ -1707,11 +1852,10 @@
         const cats = {};
         catOrder.forEach((c) => (cats[c] = { done: 0, total: 0 }));
 
-        // ✅ 현재 선택된 기간(렌즈/기간) 범위로 집계
         DATA.roadmap.forEach((g) => {
           g.tasks.forEach((t) => {
             if (!taskInCurrentScope(t)) return;
-            if (!cats[g.category]) cats[g.category] = { done: 0, total: 0 };
+            if (!cats[g.category]) return;
             cats[g.category].total += 1;
             if (t.checked) cats[g.category].done += 1;
           });
@@ -1756,7 +1900,7 @@
       }
 
       /* =========================================================
-   6) Filters: lens/period/dept/status/search
+   6) Filters
 ========================================================= */
       function getAllTasksFlat() {
         const list = [];
@@ -1774,21 +1918,21 @@
       }
 
       function buildPeriods() {
-        // period options depend on lens
         const tasks = getAllTasksFlat();
         const keys = new Set();
+
         tasks.forEach((t) => {
-          const d = t.dueDate ? parseYMD(t.dueDate) : null;
-          t._dueObj = d;
-          const key = lensKey(lens, {
-            dueDate: d,
-            dueLabel: t.dueLabel,
-          });
-          keys.add(key);
+          const d = t.dueDate
+            ? parseYMD(t.dueDate)
+            : t.dueLabel
+              ? dueLabelToDate(t.dueLabel)
+              : null;
+          if (!d) return;
+          const key = lensKey(lens, { dueDate: d, dueLabel: t.dueLabel });
+          if (key && key !== "UNKNOWN") keys.add(key);
         });
 
         let list = Array.from(keys);
-        // normalize order
         if (lens === "year") {
           list = [String(YEAR)];
         } else if (lens === "half") {
@@ -1796,16 +1940,18 @@
         } else if (lens === "quarter") {
           list = ["Q1", "Q2", "Q3", "Q4"].filter((k) => keys.has(k));
         } else if (lens === "month") {
-          list.sort(); // YYYY-MM ascending
+          list.sort();
         } else if (lens === "week") {
-          // sort by dueDate if possible, fallback label
           list.sort((a, b) => {
             const da = dueLabelToDate(a);
             const db = dueLabelToDate(b);
             if (da && db) return da - db;
+            if (da) return -1;
+            if (db) return 1;
             return String(a).localeCompare(String(b));
           });
         }
+
         const sel = document.getElementById("period-select");
         sel.innerHTML = "";
         list.forEach((k) => {
@@ -1815,13 +1961,11 @@
           sel.appendChild(opt);
         });
 
-        // keep current periodKey if valid else set first
         if (!list.includes(periodKey)) periodKey = list[0] || String(YEAR);
         sel.value = periodKey;
 
-        // date badge
-        const badge = document.getElementById("date-badge");
-        badge.textContent = `TODAY: ${fmtDate(new Date())}`;
+        document.getElementById("date-badge").textContent =
+          `TODAY: ${fmtDate(new Date())}`;
       }
 
       function renderDeptChips() {
@@ -1829,7 +1973,6 @@
         wrap.innerHTML = "";
         const depts = DATA.roadmap.map((g) => g.dept);
 
-        // "전체" chip
         const allChip = document.createElement("div");
         allChip.className = "chip " + (deptFilter.size === 0 ? "on" : "");
         allChip.textContent = "전체";
@@ -1853,26 +1996,24 @@
       }
 
       function passesFilters(task, group) {
-        // dept
         if (deptFilter.size > 0 && !deptFilter.has(group.dept)) return false;
 
-        // status
         if (statusFilter === "open" && task.checked) return false;
         if (statusFilter === "done" && !task.checked) return false;
 
-        // search
         if (searchQuery) {
           const hay =
             `${task.id} ${task.text} ${task.out} ${task.dueLabel}`.toLowerCase();
           if (!hay.includes(searchQuery.toLowerCase())) return false;
         }
 
-        // lens period
         const d = task.dueDate
           ? parseYMD(task.dueDate)
           : task.dueLabel
             ? dueLabelToDate(task.dueLabel)
             : null;
+        if (!d) return false;
+
         const key = lensKey(lens, { dueDate: d, dueLabel: task.dueLabel });
         if (key !== periodKey) return false;
 
@@ -1880,7 +2021,7 @@
       }
 
       /* =========================================================
-   7) Render WBS table (one row per task)
+   7) Render WBS table
 ========================================================= */
       function renderWBS() {
         const body = document.getElementById("wbs-body");
@@ -1892,14 +2033,13 @@
           const filteredTasks = g.tasks.filter((t) => passesFilters(t, g));
           if (filteredTasks.length === 0) return;
 
-          // dept header row
           const trh = document.createElement("tr");
           trh.className = "dept-row";
           trh.innerHTML = `
       <td colspan="6">
         <span class="dept-tag" style="background:${g.color};">DEPT</span>
         ${g.dept}
-        <span class="badge" style="margin-left:8px;">${g.category}</span>
+        <span class="badge" style="margin-left:10px;">${g.category}</span>
       </td>
     `;
           body.appendChild(trh);
@@ -1912,48 +2052,49 @@
               : t.dueLabel
                 ? dueLabelToDate(t.dueLabel)
                 : null;
+            const diff = dueObj ? dDayDiff(dueObj) : null;
+
             const dday = dDayString(dueObj);
             const dueDateStr = dueObj ? fmtDate(dueObj) : "UNKNOWN";
 
+            let dueClass = "";
+            if (diff !== null) {
+              if (diff < 0) dueClass = "over";
+              else if (diff <= 7) dueClass = "soon";
+              else if (diff <= 30) dueClass = "mid";
+            }
+
             const tr = document.createElement("tr");
+            tr.className = "task-row";
             if (t.checked) tr.classList.add("doneRow");
 
-            // steps lines (✅ index 부여: 동일 week 다중 step도 정확히 편집)
             const stepsHtml = (t.steps || [])
               .map(
                 (s, sIdx) => `
         <div class="stepline">
           <span class="wtag">${s.week}</span>
-          <span class="${editMode ? "editable" : ""}"
-                data-role="step"
-                data-g="${gIdx}"
-                data-id="${t.id}"
-                data-step-idx="${sIdx}">${s.label}</span>
+          <span class="${editMode ? "editable" : ""}" data-role="step" data-g="${gIdx}" data-id="${t.id}" data-step-idx="${sIdx}">${s.label}</span>
         </div>
       `,
               )
               .join("");
 
             tr.innerHTML = `
-        <td>
-          <input class="cb" type="checkbox" ${t.checked ? "checked" : ""} data-g="${gIdx}" data-tid="${t.id}">
+        <td class="sticky-1">
+          <input class="cb" type="checkbox" ${t.checked ? "checked" : ""} ${editMode ? "" : "disabled"} data-g="${gIdx}" data-tid="${t.id}">
         </td>
-        <td class="idcell mono" style="color:${g.color}; font-weight:900;">
+        <td class="sticky-2 idcell mono" style="color:${g.color}; font-weight:900;">
           <span class="${editMode ? "editable" : ""}" data-role="id" data-g="${gIdx}" data-id="${t.id}">${t.id}</span>
         </td>
-        <td>
-          <div class="${t.checked ? "doneText" : ""} ${editMode ? "editable" : ""}"
-               data-role="text"
-               data-g="${gIdx}"
-               data-id="${t.id}"
-               style="font-weight:900;">${t.text}</div>
+        <td class="sticky-3">
+          <div class="${t.checked ? "doneText" : ""} ${editMode ? "editable" : ""}" data-role="text" data-g="${gIdx}" data-id="${t.id}" style="font-weight:900;">
+            ${t.text}
+          </div>
           <div class="editHint">편집 모드: 텍스트 클릭 후 수정 가능</div>
         </td>
-        <td class="steps">
-          ${stepsHtml || `<span style="color:var(--text-s)">-</span>`}
-        </td>
+        <td class="steps">${stepsHtml || `<span style="color:var(--text-s)">-</span>`}</td>
         <td>
-          <span class="duetag">${dday}</span>
+          <span class="duetag ${dueClass}">${dday}</span>
           <span class="duemeta">
             <span class="${editMode ? "editable" : ""}" data-role="dueLabel" data-g="${gIdx}" data-id="${t.id}">${t.dueLabel || "-"}</span>
             · <span class="mono">${dueDateStr}</span>
@@ -1967,23 +2108,27 @@
           });
         });
 
-        const countBadge = document.getElementById("count-badge");
-        countBadge.textContent = `${visibleCount} items`;
+        document.getElementById("count-badge").textContent =
+          `${visibleCount} items`;
 
-        // bind checkbox changes (row click 토글 제거: 클릭 최소/오동작 방지)
+        // checkbox
         body.querySelectorAll("input.cb").forEach((cb) => {
           cb.onchange = () => {
+            if (!editMode) {
+              cb.checked = !cb.checked;
+              return;
+            }
             const gIdx = Number(cb.dataset.g);
             const id = cb.dataset.tid;
             const task = DATA.roadmap[gIdx].tasks.find((x) => x.id === id);
             if (!task) return;
             task.checked = cb.checked;
             hydrateDueDates();
-            renderAll();
+            renderAll(false);
           };
         });
 
-        // edit mode binding
+        // editable nodes
         body.querySelectorAll("[data-role]").forEach((node) => {
           const role = node.dataset.role;
           node.contentEditable = editMode ? "true" : "false";
@@ -1997,7 +2142,6 @@
           }
         });
 
-        // show edit hints only in edit mode
         body.querySelectorAll(".editHint").forEach((n) => {
           n.style.display = editMode ? "block" : "none";
         });
@@ -2020,15 +2164,11 @@
         } else if (role === "dueLabel") {
           task.dueLabel = val || task.dueLabel;
         } else if (role === "step") {
-          const idx = Number(node.dataset.stepIdx ?? node.dataset["step-idx"]);
-          const sIdx = Number.isFinite(idx)
-            ? idx
-            : Number(node.dataset.stepIdx);
+          const sIdx = Number(node.dataset.stepIdx);
           if (Number.isFinite(sIdx) && task.steps && task.steps[sIdx]) {
             task.steps[sIdx].label = val || task.steps[sIdx].label;
           }
         } else if (role === "id") {
-          // ID 변경은 참조 깨질 수 있어 제한: 편집은 가능하되 중복/빈값이면 반영 안함
           if (val && val !== task.id) {
             const exists = group.tasks.some((x) => x.id === val);
             if (!exists) task.id = val;
@@ -2037,7 +2177,7 @@
         }
 
         hydrateDueDates();
-        renderAll(false); // no scroll jump
+        renderAll(false);
       }
 
       /* =========================================================
@@ -2053,9 +2193,7 @@
           ch.classList.toggle("on", ch.dataset.macro === macroView);
         });
       }
-
       function syncMacroFromLens() {
-        // lens가 year/half/quarter일 때만 자동 동기화
         if (lens === "year") {
           macroView = "ALL";
         } else if (lens === "half") {
@@ -2066,12 +2204,10 @@
         }
         setMacroChipsActive();
       }
-
       function applyMacroView(view) {
         macroView = view;
         setMacroChipsActive();
 
-        // ✅ Macro 선택 시 WBS 렌즈/기간도 자동 동기화
         if (view === "ALL") {
           lens = "year";
           periodKey = String(YEAR);
@@ -2091,10 +2227,43 @@
       }
 
       /* =========================================================
-   9) Controls
+   9) Theme / Density
 ========================================================= */
+      function applyTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem(UI_THEME_KEY, theme);
+        const btn = document.getElementById("theme-btn");
+        btn.textContent = theme === "light" ? "☀️" : "🌙";
+      }
+      function toggleTheme() {
+        const current =
+          document.documentElement.getAttribute("data-theme") || "dark";
+        applyTheme(current === "dark" ? "light" : "dark");
+      }
+      function applyDensity(mode) {
+        const body = document.body;
+        if (mode === "compact") body.classList.add("compact");
+        else body.classList.remove("compact");
+        localStorage.setItem(UI_DENSITY_KEY, mode);
+        const btn = document.getElementById("density-btn");
+        btn.textContent = mode === "compact" ? "가독성: 밀도" : "가독성: 편안";
+      }
+      function toggleDensity() {
+        const mode = localStorage.getItem(UI_DENSITY_KEY) || "comfortable";
+        applyDensity(mode === "comfortable" ? "compact" : "comfortable");
+      }
+
+      /* =========================================================
+   10) Controls (edit/save uses Google Sheet)
+========================================================= */
+      function setSavingState(isSaving) {
+        const saveBtn = document.getElementById("save-btn");
+        if (!saveBtn) return;
+        saveBtn.disabled = isSaving;
+        saveBtn.textContent = isSaving ? "저장중..." : "저장";
+      }
+
       function initControls() {
-        // lens buttons
         document.querySelectorAll(".seg button").forEach((btn) => {
           btn.onclick = () => {
             lens = btn.dataset.lens;
@@ -2105,7 +2274,6 @@
           };
         });
 
-        // period select
         const ps = document.getElementById("period-select");
         ps.onchange = () => {
           periodKey = ps.value;
@@ -2113,26 +2281,27 @@
           renderAll();
         };
 
-        // status select
         const ss = document.getElementById("status-select");
         ss.onchange = () => {
           statusFilter = ss.value;
           renderAll();
         };
 
-        // search
         const si = document.getElementById("search-input");
         si.oninput = () => {
           searchQuery = si.value || "";
           renderAll();
         };
 
-        // macro chips
         document.querySelectorAll("#macro-chips .chip").forEach((ch) => {
           ch.onclick = () => applyMacroView(ch.dataset.macro);
         });
 
-        // edit controls
+        // Theme / density
+        document.getElementById("theme-btn").onclick = toggleTheme;
+        document.getElementById("density-btn").onclick = toggleDensity;
+
+        // Edit controls
         const editBtn = document.getElementById("edit-btn");
         const saveBtn = document.getElementById("save-btn");
         const exitBtn = document.getElementById("exit-btn");
@@ -2144,64 +2313,119 @@
               toast("비밀번호 불일치", "bad");
               return;
             }
+            EDIT_PIN_SESSION = pw; // ✅ 저장 시 서버 검증용
             editMode = true;
+
             badge.textContent = "EDITING";
             badge.classList.add("on");
             editBtn.style.display = "none";
             saveBtn.style.display = "inline-block";
             exitBtn.style.display = "inline-block";
+
             toast("편집 모드 활성화", "good");
-            renderAll();
+            renderAll(false);
           });
         };
 
-        saveBtn.onclick = () => {
-          saveData();
-          toast("저장 완료 (브라우저 로컬 저장)", "good");
+        saveBtn.onclick = async () => {
+          if (!editMode) {
+            toast("읽기 모드에서는 저장 불가", "bad");
+            return;
+          }
+          if (!IS_GAS) {
+            toast("Apps Script 환경에서만 저장 가능", "bad");
+            return;
+          }
+          try {
+            setSavingState(true);
+            const res = await saveToGoogle();
+            if (res && res.ok) {
+              toast("저장 완료 (Google Sheet)", "good");
+            } else {
+              toast(
+                res?.error === "INVALID_PIN"
+                  ? "저장 실패: PIN 불일치"
+                  : "저장 실패",
+                "bad",
+              );
+            }
+          } catch (e) {
+            toast("저장 실패: 서버 호출 오류", "bad");
+          } finally {
+            setSavingState(false);
+          }
         };
 
         exitBtn.onclick = () => {
           editMode = false;
+          EDIT_PIN_SESSION = null;
+
           badge.textContent = "READ-ONLY";
           badge.classList.remove("on");
           editBtn.style.display = "inline-block";
           saveBtn.style.display = "none";
           exitBtn.style.display = "none";
+
           toast("편집 모드 종료", "");
-          renderAll();
+          renderAll(false);
         };
       }
 
       /* =========================================================
-   10) Render all
+   11) Render all
 ========================================================= */
       function renderAll(rebuildPeriods = true) {
         hydrateDueDates();
         if (rebuildPeriods) buildPeriods();
 
         renderDeptChips();
-        renderKPI();
-
-        // ✅ Macro timeline + totals/overview are scope-aware
         renderMacroTimeline();
         renderTotal();
         renderOverview();
-
         renderWBS();
       }
 
-      /* =========================================================
-   Boot
-========================================================= */
-      initControls();
-      buildPeriods();
-      syncMacroFromLens();
-      setLensButtonsActive();
-      setMacroChipsActive();
-      renderAll();
+      /* Boot (Google load → render) */
+      (async function boot() {
+        // Theme
+        const savedTheme = localStorage.getItem(UI_THEME_KEY) || "dark";
+        applyTheme(savedTheme);
 
-      /* default lens period selection */
-      document.getElementById("period-select").value = periodKey;
+        // Density
+        const savedDensity =
+          localStorage.getItem(UI_DENSITY_KEY) || "comfortable";
+        applyDensity(savedDensity);
+
+        if (!IS_GAS) {
+          toast(
+            "경고: Apps Script Web App에서 실행해야 구글 저장이 동작함",
+            "bad",
+          );
+        }
+
+        // ✅ 1) 서버에서 로드
+        try {
+          if (IS_GAS) await loadFromGoogle();
+          else DATA = deepClone(DEFAULT_DATA);
+        } catch (e) {
+          DATA = deepClone(DEFAULT_DATA);
+          toast("데이터 로드 실패: 기본값 표시", "bad");
+        }
+
+        // ✅ 2) 초기화/렌더
+        hydrateDueDates();
+        initControls();
+        buildPeriods();
+        syncMacroFromLens();
+        setLensButtonsActive();
+        setMacroChipsActive();
+        renderAll(false);
+
+        const ps = document.getElementById("period-select");
+        if (ps) ps.value = periodKey;
+      })();
     </script>
   </body>
 </html>
+
+이거 어디다 바꿔야해 쵲오 ㅗ싀

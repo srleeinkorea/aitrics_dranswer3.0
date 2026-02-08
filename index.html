@@ -14,25 +14,88 @@
     />
 
     <style>
+      /* =========================
+         Theme Tokens (Dark default)
+      ========================= */
       :root {
-        /* 시니어 디자이너 컬러 리비전 */
-        --bg: #090c14; /* 더 짙은 네이비 블랙 */
-        --card: #141821; /* 카드 톤 약간 톤다운 */
-        --border: #2b3644; /* 보더 색온도 통일 */
-        --text: #f3f5f9; /* 가독성 향상 톤업 */
-        --text-dim: #a0acb9;
+        /* Surfaces */
+        --bg: #070a12;
+        --bg-elev: rgba(7, 10, 18, 0.78);
+        --card: rgba(18, 24, 38, 0.86);
+        --card-strong: rgba(18, 24, 38, 0.96);
+        --border: rgba(148, 163, 184, 0.16);
 
-        /* 메인 팔레트 업그레이드 */
-        --cyan: #4ea8ff; /* 주조 블루 - 명시성 향상 */
-        --violet: #8b5cf6; /* 보조 바이올렛 - 미래감 */
-        --emerald: #10b981; /* 안정 에메랄드 */
+        /* Text */
+        --text: #f3f5f9;
+        --text-dim: rgba(226, 232, 240, 0.72);
+        --text-muted: rgba(226, 232, 240, 0.58);
 
-        /* 기관별 색상 코딩 */
-        --org-lead: var(--cyan);
-        --org-hospital: var(--emerald);
-        --org-ai: var(--violet);
+        /* Accents (No sky-blue) */
+        --accent: #2dd4bf; /* Teal */
+        --accent-2: #8b5cf6; /* Violet */
+        --accent-3: #10b981; /* Emerald */
 
-        --radius: 12px;
+        /* Derived */
+        --accent-soft: rgba(45, 212, 191, 0.14);
+        --accent-soft2: rgba(45, 212, 191, 0.22);
+        --accent-border: rgba(45, 212, 191, 0.38);
+        --accent-text: #99f6e4;
+
+        /* ✅ Violet highlight text tokens (기존 #c4b5fd / #ede9fe 하드코딩 제거) */
+        --accent2-label: #c4b5fd;
+        --accent2-title: #ede9fe;
+
+        /* ✅ Integration line gradient tokens (라이트/다크 자연스럽게) */
+        --g1: rgba(45, 212, 191, 0.4);
+        --g2: rgba(139, 92, 246, 0.34);
+        --g3: rgba(16, 185, 129, 0.32);
+
+        --radius: 14px;
+        --radius-sm: 10px;
+
+        --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.18);
+        --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.24);
+        --ring: 0 0 0 3px rgba(45, 212, 191, 0.22);
+
+        --header-h: 64px;
+        --content-pad: clamp(12px, 3vw, 28px);
+      }
+
+      /* =========================
+         Light Theme Overrides
+      ========================= */
+      html[data-theme="light"] {
+        --bg: #f6f7fb;
+        --bg-elev: rgba(246, 247, 251, 0.82);
+        --card: rgba(255, 255, 255, 0.92);
+        --card-strong: rgba(255, 255, 255, 0.98);
+        --border: rgba(15, 23, 42, 0.12);
+
+        --text: #0f172a;
+        --text-dim: rgba(15, 23, 42, 0.72);
+        --text-muted: rgba(15, 23, 42, 0.56);
+
+        --accent: #0f766e; /* Deeper teal for light mode */
+        --accent-2: #6d28d9;
+        --accent-3: #047857;
+
+        --accent-soft: rgba(15, 118, 110, 0.1);
+        --accent-soft2: rgba(15, 118, 110, 0.14);
+        --accent-border: rgba(15, 118, 110, 0.22);
+        --accent-text: #115e59;
+
+        /* ✅ light에서도 과도하게 튀지 않게 */
+        --accent2-label: #5b21b6;
+        --accent2-title: rgba(15, 23, 42, 0.92);
+
+        /* ✅ light용 그라데이션 */
+        --g1: rgba(15, 118, 110, 0.32);
+        --g2: rgba(109, 40, 217, 0.24);
+        --g3: rgba(4, 120, 87, 0.22);
+
+        --shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.1);
+        --shadow-md: 0 20px 48px rgba(15, 23, 42, 0.14);
+        --ring: 0 0 0 3px rgba(15, 118, 110, 0.18);
       }
 
       * {
@@ -40,16 +103,39 @@
         -webkit-font-smoothing: antialiased;
       }
 
+      html,
       body {
-        margin: 2rem;
+        height: 100%;
+      }
+
+      /* ✅ 밑줄 제거(전역) */
+      a,
+      a:visited,
+      a:hover,
+      a:active {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      body {
+        margin: 0;
         padding: 0;
         background:
           radial-gradient(
-            at 30% 40%,
-            rgba(78, 168, 255, 0.12),
-            transparent 70%
+            900px 520px at 22% 18%,
+            rgba(45, 212, 191, 0.16),
+            transparent 62%
           ),
-          radial-gradient(at 80% 60%, rgba(139, 92, 246, 0.1), transparent 70%),
+          radial-gradient(
+            860px 520px at 82% 44%,
+            rgba(139, 92, 246, 0.12),
+            transparent 64%
+          ),
+          radial-gradient(
+            760px 420px at 72% 88%,
+            rgba(16, 185, 129, 0.1),
+            transparent 60%
+          ),
           var(--bg);
         color: var(--text);
         font-family:
@@ -61,7 +147,26 @@
         line-height: 1.6;
       }
 
-      /* 좌우 여백 최소화 */
+      html[data-theme="light"] body {
+        background:
+          radial-gradient(
+            900px 520px at 18% 12%,
+            rgba(15, 118, 110, 0.12),
+            transparent 62%
+          ),
+          radial-gradient(
+            860px 520px at 84% 38%,
+            rgba(109, 40, 217, 0.1),
+            transparent 66%
+          ),
+          radial-gradient(
+            760px 420px at 72% 86%,
+            rgba(4, 120, 87, 0.08),
+            transparent 62%
+          ),
+          var(--bg);
+      }
+
       .container {
         width: 100%;
         max-width: none;
@@ -69,137 +174,213 @@
         padding: 0;
       }
 
-      /* 헤더 */
+      /* ✅ Header sticky */
       header {
-        position: sticky;
-        top: 0;
         z-index: 100;
-        background: rgba(9, 12, 20, 0.9);
+        height: var(--header-h);
+        display: grid;
+        align-items: center;
+        background: var(--bg-elev);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border);
-        padding: 12px 0;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
       }
+
       .header-inner {
         width: 100%;
         margin: 0;
-        padding: 0 8px;
+        padding: 0 var(--content-pad);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
       }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .logo-link {
+        display: inline-flex;
+        align-items: center;
+      }
+
       .logo {
-        font-size: 1.25rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
+        font-size: 1.18rem;
+        font-weight: 900;
+        letter-spacing: -0.6px;
         color: var(--text);
+        white-space: nowrap;
       }
       .logo span {
-        color: var(--cyan);
+        color: var(--accent);
       }
+
       .header-sub {
         font-size: 12px;
         color: var(--text-dim);
         text-align: right;
-        line-height: 1.3;
+        line-height: 1.25;
+        white-space: nowrap;
       }
 
-      /* 섹션 공통: 좌우 패딩 제거 */
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        font-weight: 800;
+        font-size: 12px;
+        cursor: pointer;
+        transition:
+          transform 0.15s ease,
+          background 0.2s ease,
+          border-color 0.2s ease;
+        user-select: none;
+      }
+      html[data-theme="light"] .theme-toggle {
+        background: rgba(15, 23, 42, 0.03);
+      }
+      .theme-toggle:hover {
+        transform: translateY(-1px);
+        border-color: var(--accent-border);
+        background: var(--accent-soft);
+      }
+      .theme-toggle:active {
+        transform: translateY(0px);
+      }
+      .theme-toggle:focus-visible {
+        outline: none;
+        box-shadow: var(--ring);
+      }
+      .theme-icon {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+      }
+      .theme-label {
+        color: var(--text-dim);
+        font-weight: 900;
+        letter-spacing: 0.2px;
+      }
+
       section {
         padding: 60px 0;
         border-bottom: 1px solid var(--border);
       }
 
-      /* 히어로 */
       .hero {
-        padding: 60px 0;
+        padding: 54px 0 60px;
       }
+
       .badge {
         display: inline-block;
-        padding: 6px 12px;
-        border-radius: 6px;
+        padding: 7px 12px;
+        border-radius: 999px;
         font-size: 12px;
-        font-weight: 700;
-        margin: 0 8px 16px;
-        background: rgba(78, 168, 255, 0.15);
-        color: #90cdfd;
-        border: 1px solid rgba(78, 168, 255, 0.25);
+        font-weight: 900;
+        margin: 0 var(--content-pad) 16px;
+        background: var(--accent-soft);
+        color: var(--accent-text);
+        border: 1px solid var(--accent-border);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
       }
+
+      html[data-theme="light"] .badge {
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      }
+
       h1 {
-        font-size: clamp(28px, 5vw, 48px);
-        font-weight: 800;
-        margin: 0 8px 24px;
-        line-height: 1.2;
-        letter-spacing: -1.5px;
+        font-size: clamp(30px, 4.8vw, 52px);
+        font-weight: 950;
+        margin: 0 var(--content-pad) 22px;
+        line-height: 1.16;
+        letter-spacing: -1.6px;
       }
+
       .hero-desc {
         font-size: clamp(15px, 2vw, 18px);
-        color: #b8c5d0;
-        max-width: none;
-        margin: 0 8px 40px;
-        line-height: 1.7;
+        color: var(--text-dim);
+        max-width: 1100px;
+        margin: 0 var(--content-pad) 38px;
+        line-height: 1.72;
       }
 
       .info-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1px;
-        background: var(--border);
-        border: 1px solid var(--border);
-        border-radius: 0;
-        overflow: hidden;
-        margin: 0;
+        gap: 10px;
+        margin: 0 var(--content-pad);
       }
+
       .info-item {
-        background: rgba(20, 24, 33, 0.7);
-        padding: 20px 12px;
-        transition: background 0.2s ease;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px 16px;
+        box-shadow: var(--shadow-sm);
+        transition:
+          transform 0.18s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
       }
+
       .info-item:hover {
-        background: rgba(25, 30, 42, 0.9);
+        transform: translateY(-2px);
+        border-color: var(--accent-border);
+        box-shadow: var(--shadow-md);
       }
+
       .info-item label {
         display: block;
         font-size: 12px;
-        color: var(--text-dim);
+        color: var(--text-muted);
         margin-bottom: 8px;
-        font-weight: 600;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.55px;
       }
+
       .info-item p {
         margin: 0;
         font-size: 15px;
-        font-weight: 700;
+        font-weight: 900;
         color: var(--text);
       }
 
-      /* 섹션 타이틀 */
       .section-title {
-        margin: 0 8px 24px;
+        margin: 0 var(--content-pad) 22px;
       }
+
       .section-title h2 {
-        font-size: clamp(24px, 4vw, 32px);
-        font-weight: 800;
+        font-size: clamp(24px, 3.6vw, 34px);
+        font-weight: 950;
         margin: 0;
-        letter-spacing: -1px;
+        letter-spacing: -1.1px;
       }
+
       .section-title p {
-        color: #9ca3af;
-        margin-top: 8px;
+        color: var(--text-dim);
+        margin-top: 10px;
         font-size: 15px;
       }
 
-      /* 카드류: 내부 좌우 패딩 최소화 */
       .arch-card {
-        background: rgba(20, 24, 33, 0.85);
+        background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 0;
-        padding: 24px 12px;
-        box-shadow: none;
-        margin: 0;
+        border-radius: var(--radius);
+        padding: 22px 16px;
+        box-shadow: var(--shadow-sm);
+        margin: 0 var(--content-pad);
       }
 
       .integration-box {
@@ -208,128 +389,173 @@
         gap: 16px;
         position: relative;
       }
+
+      /* ✅ var 기반 그라데이션으로 교체 */
       .integration-box::after {
         content: "";
         position: absolute;
-        top: 40px;
-        left: 8px;
-        right: 8px;
+        top: 44px;
+        left: 10px;
+        right: 10px;
         height: 2px;
-        background: linear-gradient(
-          90deg,
-          rgba(78, 168, 255, 0.35),
-          rgba(139, 92, 246, 0.35),
-          rgba(16, 185, 129, 0.35)
-        );
-        opacity: 0.5;
+        background: linear-gradient(90deg, var(--g1), var(--g2), var(--g3));
+        opacity: 0.62;
         z-index: 0;
+        border-radius: 999px;
       }
+
       .int-node {
         text-align: center;
         z-index: 1;
         position: relative;
+        padding-top: 2px;
       }
+
       .node-circle {
         width: 80px;
         height: 80px;
-        border-radius: 50%;
-        background: rgba(9, 12, 20, 0.9);
-        border: 2px solid var(--cyan);
-        margin: 0 auto 16px;
+        border-radius: 999px;
+        background: var(--card-strong);
+        border: 2px solid var(--accent);
+        margin: 0 auto 14px;
         display: grid;
         place-items: center;
-        font-weight: 800;
+        font-weight: 950;
         font-size: 14px;
-        color: var(--cyan);
-        box-shadow: 0 0 20px rgba(78, 168, 255, 0.15);
+        color: var(--accent);
+        box-shadow:
+          0 0 0 6px rgba(45, 212, 191, 0.08),
+          0 18px 40px rgba(0, 0, 0, 0.18);
       }
+
+      html[data-theme="light"] .node-circle {
+        box-shadow:
+          0 0 0 6px rgba(15, 118, 110, 0.08),
+          0 18px 40px rgba(15, 23, 42, 0.1);
+      }
+
       .int-node h4 {
         margin: 0 0 8px;
         font-size: 16px;
-      }
-      .int-node p {
-        font-size: 13px;
-        color: #9ca3af;
-        line-height: 1.5;
+        font-weight: 950;
       }
 
-      /* 서비스 */
+      .int-node p {
+        font-size: 13px;
+        color: var(--text-dim);
+        line-height: 1.55;
+        margin: 0;
+      }
+
       .svc-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 24px;
-        margin: 0;
+        gap: 22px;
+        margin: 0 var(--content-pad);
       }
+
       .svc-card {
-        background: rgba(20, 24, 33, 0.85);
+        background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 0;
+        border-radius: var(--radius);
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        transition: all 0.2s ease;
-        box-shadow: none;
+        transition:
+          transform 0.18s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+        box-shadow: var(--shadow-sm);
       }
+
       .svc-card:hover {
-        border-color: rgba(78, 168, 255, 0.5);
+        border-color: var(--accent-border);
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(78, 168, 255, 0.12);
+        box-shadow: var(--shadow-md);
       }
+
       .svc-header {
-        padding: 16px 12px;
+        padding: 16px 16px;
         border-bottom: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         gap: 12px;
         flex-wrap: wrap;
-        background: rgba(0, 0, 0, 0.08);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0)
+        );
       }
+
+      html[data-theme="light"] .svc-header {
+        background: linear-gradient(
+          180deg,
+          rgba(15, 23, 42, 0.03),
+          rgba(15, 23, 42, 0)
+        );
+      }
+
       .svc-title-wrap {
         display: grid;
         gap: 6px;
         flex: 1;
         min-width: 250px;
       }
+
       .svc-index {
         font-size: 11px;
-        font-weight: 900;
-        letter-spacing: 0.4px;
-        color: #90cdfd;
+        font-weight: 950;
+        letter-spacing: 0.55px;
+        color: var(--accent-text);
         opacity: 0.95;
       }
+
       .svc-header h3 {
         margin: 0;
         font-size: clamp(17px, 2.5vw, 20px);
-        font-weight: 800;
-        line-height: 1.3;
+        font-weight: 950;
+        line-height: 1.25;
+        letter-spacing: -0.2px;
       }
+
       .svc-tag {
         font-size: 11px;
-        font-weight: 800;
-        padding: 6px 10px;
-        border-radius: 6px;
-        background: rgba(42, 52, 65, 0.7);
-        color: #b8c5d0;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-weight: 950;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.1);
+        color: var(--text-dim);
+        border: 1px solid var(--border);
         white-space: nowrap;
         align-self: flex-start;
       }
+
       .svc-body {
-        padding: 16px 12px;
+        padding: 16px 16px;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 16px;
       }
+
       .svc-body h4 {
         font-size: 14px;
         margin: 0 0 12px;
         color: var(--text);
+        font-weight: 950;
+        letter-spacing: -0.15px;
       }
+
       .svc-footer {
-        padding: 0 12px 16px;
-        background: rgba(0, 0, 0, 0.18);
+        padding: 0 16px 16px;
+        background: rgba(0, 0, 0, 0.1);
         border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      html[data-theme="light"] .svc-footer {
+        background: rgba(15, 23, 42, 0.02);
+        border-top: 1px solid rgba(15, 23, 42, 0.06);
       }
 
       .mod-list {
@@ -337,259 +563,292 @@
         padding: 0;
         margin: 0;
       }
+
       .mod-list li {
         font-size: 13px;
-        color: #b8c5d0;
+        color: var(--text-dim);
         margin-bottom: 10px;
         padding-left: 16px;
         position: relative;
-        line-height: 1.5;
+        line-height: 1.55;
       }
+
       .mod-list li::before {
         content: "•";
         position: absolute;
         left: 0;
-        color: #90cdfd;
-        font-weight: bold;
+        color: var(--accent);
+        font-weight: 950;
       }
 
       .as-is-to-be {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
+        gap: 10px;
         margin-top: 12px;
       }
+
       .box {
         padding: 14px;
-        border-radius: 8px;
+        border-radius: var(--radius-sm);
         font-size: 13px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        line-height: 1.5;
+        border: 1px solid var(--border);
+        line-height: 1.55;
+        background: rgba(148, 163, 184, 0.06);
       }
+
+      html[data-theme="light"] .box {
+        background: rgba(15, 23, 42, 0.03);
+      }
+
       .box b {
         display: block;
         margin-bottom: 6px;
         font-size: 11px;
         letter-spacing: 0.5px;
-        font-weight: 700;
-      }
-      .box-as {
-        background: rgba(220, 38, 38, 0.08);
-        border-color: rgba(220, 38, 38, 0.2);
-        color: #fca5a5;
-      }
-      .box-to {
-        background: rgba(16, 185, 129, 0.08);
-        border-color: rgba(16, 185, 129, 0.2);
-        color: #6ee7b7;
+        font-weight: 950;
       }
 
-      /* AITRICS 하이라이트 */
+      .box-as {
+        background: rgba(220, 38, 38, 0.08);
+        border-color: rgba(220, 38, 38, 0.18);
+        color: inherit;
+      }
+
+      .box-to {
+        background: rgba(16, 185, 129, 0.08);
+        border-color: rgba(16, 185, 129, 0.18);
+        color: inherit;
+      }
+
       .aitrics-highlight {
         position: relative;
         overflow: hidden;
         background: linear-gradient(
           180deg,
-          rgba(139, 92, 246, 0.1) 0%,
-          rgba(20, 24, 33, 0.9) 40%
+          rgba(139, 92, 246, 0.12) 0%,
+          rgba(18, 24, 38, 0.92) 40%
         );
-        border-color: rgba(139, 92, 246, 0.45);
-        box-shadow: none;
+        border-color: rgba(139, 92, 246, 0.34);
       }
+
+      html[data-theme="light"] .aitrics-highlight {
+        background: linear-gradient(
+          180deg,
+          rgba(109, 40, 217, 0.1) 0%,
+          rgba(255, 255, 255, 0.96) 46%
+        );
+        border-color: rgba(109, 40, 217, 0.22);
+      }
+
       .aitrics-highlight .svc-header {
         background: linear-gradient(
           90deg,
-          rgba(139, 92, 246, 0.08),
+          rgba(139, 92, 246, 0.1),
           rgba(139, 92, 246, 0.02)
         );
       }
+
+      /* ✅ gradient 하드코딩 제거 */
       .aitrics-tag {
         background: linear-gradient(
           135deg,
-          #8b5cf6 0%,
-          #4ea8ff 100%
+          var(--accent-2) 0%,
+          var(--accent) 100%
         ) !important;
         color: #fff !important;
         border-color: transparent !important;
-        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+        box-shadow: 0 10px 24px rgba(139, 92, 246, 0.18);
       }
+
       .aitrics-highlight::before {
         content: "";
         position: absolute;
         inset: 0;
         background: radial-gradient(
-          circle at 30% 25%,
-          rgba(139, 92, 246, 0.12),
+          circle at 28% 22%,
+          rgba(139, 92, 246, 0.14),
           transparent 60%
         );
-        opacity: 0.5;
+        opacity: 0.55;
         pointer-events: none;
       }
-      .aitrics-highlight:hover {
-        transform: translateY(-2px);
-        border-color: rgba(139, 92, 246, 0.55);
-      }
-      .aitrics-highlight .svc-header h3::after {
-        content: "aitrics";
-        margin-left: 10px;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.5px;
-        color: #fff;
-        background: linear-gradient(135deg, #8b5cf6 0%, #4ea8ff 100%);
-        padding: 3px 8px;
-        border-radius: 999px;
-        vertical-align: middle;
-      }
-      .aitrics-highlight .mod-list li {
-        color: #d1d5db;
-      }
-      .aitrics-highlight .mod-list li::before {
-        color: #c4b5fd;
-      }
 
-      /* 색상 범례 */
       .org-legend {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        padding: 12px 8px;
-        background: rgba(255, 255, 255, 0.03);
+        padding: 14px 16px;
+        background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 0;
-        margin: 0;
+        border-radius: var(--radius);
+        margin: 0 var(--content-pad) 14px;
         font-size: 13px;
+        box-shadow: var(--shadow-sm);
       }
+
       .legend-item {
         display: flex;
         align-items: center;
         gap: 8px;
       }
+
       .legend-dot {
         width: 10px;
         height: 10px;
-        border-radius: 50%;
+        border-radius: 999px;
         flex-shrink: 0;
       }
+
       .legend-dot.lead {
-        background: var(--org-lead);
-        box-shadow: 0 0 8px rgba(78, 168, 255, 0.4);
-      }
-      .legend-dot.hospital {
-        background: var(--org-hospital);
-        box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
-      }
-      .legend-dot.ai {
-        background: var(--org-ai);
-        box-shadow: 0 0 8px rgba(139, 92, 246, 0.4);
+        background: var(--accent);
+        box-shadow: 0 0 0 4px var(--accent-soft);
       }
 
-      /* 역할 테이블 */
+      .legend-dot.hospital {
+        background: var(--accent-3);
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
+      }
+
+      .legend-dot.ai {
+        background: var(--accent-2);
+        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.14);
+      }
+
       .role-table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
+
       .role-table {
         width: 100%;
         border-collapse: collapse;
         font-size: 14px;
         text-align: left;
-        min-width: 600px;
+        min-width: 640px;
       }
+
       .role-table th {
-        background: rgba(78, 168, 255, 0.1);
-        color: #90cdfd;
-        padding: 12px 8px;
-        font-weight: 700;
+        background: rgba(45, 212, 191, 0.1);
+        color: var(--accent-text);
+        padding: 12px 14px;
+        font-weight: 950;
         border-bottom: 1px solid var(--border);
         position: sticky;
-        top: 0;
+        top: var(--header-h);
         z-index: 10;
+        backdrop-filter: blur(10px);
       }
+
+      html[data-theme="light"] .role-table th {
+        background: rgba(15, 118, 110, 0.08);
+      }
+
       .role-table td {
-        padding: 12px 8px;
+        padding: 12px 14px;
         border-bottom: 1px solid var(--border);
         vertical-align: middle;
+        color: var(--text-dim);
       }
+
       .role-table tr:last-child td {
         border-bottom: none;
       }
+
       .role-table tr.role-lead {
-        border-left: 4px solid var(--org-lead);
-        background: rgba(78, 168, 255, 0.05);
+        border-left: 4px solid var(--accent);
+        background: rgba(45, 212, 191, 0.05);
       }
+
       .role-table tr.role-hospital {
-        border-left: 4px solid var(--org-hospital);
+        border-left: 4px solid var(--accent-3);
         background: rgba(16, 185, 129, 0.05);
       }
+
       .role-table tr.role-ai {
-        border-left: 4px solid var(--org-ai);
+        border-left: 4px solid var(--accent-2);
         background: rgba(139, 92, 246, 0.05);
       }
+
       .role-category {
         background: transparent;
-        font-weight: 800;
+        font-weight: 950;
         color: var(--text);
         min-width: 100px;
       }
+
       .inst-name {
         color: var(--text);
-        font-weight: 700;
+        font-weight: 900;
         min-width: 180px;
       }
+
       .inst-name.lead {
-        color: #bfe2ff;
+        color: var(--accent-text);
       }
+
       .inst-name.hospital {
-        color: #9ff5d3;
+        color: var(--accent-3);
       }
+
       .inst-name.ai {
-        color: #c4b5fd;
+        color: var(--accent-2);
       }
+
       .role-desc {
-        color: #b8c5d0;
+        color: var(--text-dim);
         line-height: 1.6;
       }
 
-      /* 로고 태그 */
       .logos {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         margin-top: 12px;
-        padding: 0 8px 8px;
+        padding: 0 2px 2px;
       }
+
       .logo-tag {
         padding: 8px 12px;
-        background: rgba(42, 52, 65, 0.6);
+        background: rgba(148, 163, 184, 0.08);
         border-radius: 999px;
         font-size: 12px;
-        color: #a9b6c4;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--text-dim);
+        border: 1px solid var(--border);
         display: inline-flex;
         align-items: center;
         gap: 8px;
         line-height: 1.2;
-        transition: all 0.2s ease;
+        transition:
+          transform 0.15s ease,
+          background 0.2s ease,
+          border-color 0.2s ease;
       }
+
       .logo-tag:hover {
-        background: rgba(42, 52, 65, 0.9);
+        transform: translateY(-1px);
+        background: rgba(148, 163, 184, 0.12);
+        border-color: var(--accent-border);
       }
+
       .logo-tag.tag-lead {
-        border-color: rgba(78, 168, 255, 0.35);
-        background: rgba(78, 168, 255, 0.1);
-        color: #bfe2ff;
+        border-color: var(--accent-border);
+        background: var(--accent-soft);
+        color: var(--accent-text);
       }
+
       .logo-tag.tag-hospital {
-        border-color: rgba(16, 185, 129, 0.35);
-        background: rgba(16, 185, 129, 0.1);
-        color: #9ff5d3;
+        border-color: rgba(16, 185, 129, 0.26);
+        background: rgba(16, 185, 129, 0.08);
+        color: var(--accent-3);
       }
+
       .logo-tag.tag-ai {
-        border-color: rgba(139, 92, 246, 0.35);
-        background: rgba(139, 92, 246, 0.1);
-        color: #d6ccff;
+        border-color: rgba(139, 92, 246, 0.26);
+        background: rgba(139, 92, 246, 0.08);
+        color: var(--accent-2);
       }
+
       .logo-tag::before {
         content: "";
         width: 6px;
@@ -598,116 +857,146 @@
         border-radius: 50%;
         flex-shrink: 0;
       }
+
       .pill {
         font-size: 10px;
-        font-weight: 800;
+        font-weight: 950;
         padding: 3px 8px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--border);
+        background: rgba(148, 163, 184, 0.08);
         color: var(--text);
         white-space: nowrap;
       }
+
       .pill.cross {
-        border-color: rgba(78, 168, 255, 0.3);
-        color: #bfe2ff;
-        background: rgba(78, 168, 255, 0.1);
-      }
-      .pill.multi {
-        border-color: rgba(16, 185, 129, 0.3);
-        color: #9ff5d3;
-        background: rgba(16, 185, 129, 0.1);
+        border-color: var(--accent-border);
+        color: var(--accent-text);
+        background: var(--accent-soft);
       }
 
-      /* Roadmap */
+      .pill.multi {
+        border-color: rgba(16, 185, 129, 0.24);
+        color: var(--accent-3);
+        background: rgba(16, 185, 129, 0.08);
+      }
+
       .roadmap {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 16px;
         margin: 0;
       }
+
       .phase {
-        background: rgba(20, 24, 33, 0.95);
+        background: var(--card-strong);
         border: 1px solid var(--border);
-        border-radius: 0;
-        padding: 16px 12px;
+        border-radius: var(--radius);
+        padding: 16px 14px;
+        box-shadow: var(--shadow-sm);
       }
+
       .phase-header {
         font-size: 13px;
-        font-weight: 800;
-        color: #90cdfd;
+        font-weight: 950;
+        color: var(--accent-text);
         margin-bottom: 10px;
       }
+
       .phase-title {
         font-size: 16px;
-        font-weight: 800;
+        font-weight: 950;
         margin-bottom: 4px;
+        color: var(--text);
       }
+
       .phase-subtitle {
         font-size: 12px;
         color: var(--text-dim);
         margin-bottom: 12px;
       }
+
       .phase ul {
         list-style: none;
         padding: 0;
         margin: 0;
       }
+
       .phase ul li {
         font-size: 13px;
-        color: #b8c5d0;
+        color: var(--text-dim);
         margin-bottom: 10px;
         padding-left: 14px;
         position: relative;
       }
+
       .phase ul li::before {
         content: "•";
         position: absolute;
         left: 0;
-        color: var(--cyan);
-        font-weight: 900;
+        color: var(--accent);
+        font-weight: 950;
       }
+
       .phase.year-2026 {
         position: relative;
-        border-color: rgba(139, 92, 246, 0.6);
+        border-color: rgba(139, 92, 246, 0.4);
         background: linear-gradient(
           180deg,
-          rgba(139, 92, 246, 0.08) 0%,
-          rgba(20, 24, 33, 0.95) 45%
+          rgba(139, 92, 246, 0.12) 0%,
+          rgba(18, 24, 38, 0.96) 52%
         );
       }
+
+      html[data-theme="light"] .phase.year-2026 {
+        border-color: rgba(109, 40, 217, 0.26);
+        background: linear-gradient(
+          180deg,
+          rgba(109, 40, 217, 0.1) 0%,
+          rgba(255, 255, 255, 0.98) 56%
+        );
+      }
+
+      /* ✅ gradient 하드코딩 제거 */
       .phase.year-2026::before {
         content: "CORE DEVELOPMENT YEAR";
         position: absolute;
         top: -12px;
-        right: 8px;
+        right: 12px;
         font-size: 10px;
-        font-weight: 900;
+        font-weight: 950;
         letter-spacing: 0.6px;
         color: #fff;
-        background: linear-gradient(135deg, #8b5cf6, #4ea8ff);
+        background: linear-gradient(135deg, var(--accent-2), var(--accent));
         padding: 4px 10px;
         border-radius: 999px;
-      }
-      .phase.year-2026 .phase-header {
-        color: #c4b5fd;
-      }
-      .phase.year-2026 .phase-title {
-        color: #ede9fe;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
       }
 
-      /* 푸터 */
+      html[data-theme="light"] .phase.year-2026::before {
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+      }
+
+      /* ✅ 하드코딩 제거: violet 텍스트 토큰 사용 */
+      .phase.year-2026 .phase-header {
+        color: var(--accent2-label);
+      }
+
+      .phase.year-2026 .phase-title {
+        color: var(--accent2-title);
+      }
+
       footer {
-        padding: 40px 8px;
+        padding: 44px var(--content-pad);
         text-align: center;
         border-top: 1px solid var(--border);
         margin: 0;
       }
+
       footer p {
         margin: 8px 0;
       }
 
-      /* 반응형 */
       @media (max-width: 850px) {
         .svc-body,
         .as-is-to-be,
@@ -715,37 +1004,42 @@
           grid-template-columns: 1fr;
         }
         .integration-box::after {
-          left: 8px;
-          right: 8px;
+          left: 10px;
+          right: 10px;
         }
         h1 {
-          font-size: 28px;
-        }
-        .section-title {
-          margin: 0 8px 20px;
-        }
-      }
-      @media (max-width: 480px) {
-        .logo {
-          font-size: 1.1rem;
+          font-size: 30px;
         }
         .header-sub {
-          font-size: 10px;
+          display: none;
+        }
+        :root {
+          --header-h: 60px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo {
+          font-size: 1.05rem;
         }
         .badge {
           font-size: 11px;
-          padding: 5px 10px;
+          padding: 6px 10px;
         }
         .node-circle {
-          width: 70px;
-          height: 70px;
+          width: 72px;
+          height: 72px;
           font-size: 12px;
         }
         .box {
           padding: 12px;
           font-size: 12px;
         }
+        .theme-label {
+          display: none;
+        }
       }
+
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -753,13 +1047,16 @@
           animation-duration: 0.01ms !important;
           animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
         }
       }
+
       a:focus-visible,
       button:focus-visible {
-        outline: 2px solid var(--cyan);
-        outline-offset: 2px;
+        outline: none;
+        box-shadow: var(--ring);
       }
+
       @media print {
         header {
           position: relative;
@@ -780,7 +1077,26 @@
     <!-- 헤더 섹션 -->
     <header>
       <div class="header-inner">
-        <div class="logo">DR.ANSWER <span>3.0</span></div>
+        <div class="brand">
+          <a
+            href="https://sites.google.com/aitrics.com/dranswerteam/home"
+            class="logo-link"
+            aria-label="DR.ANSWER Team Home으로 이동"
+          >
+            <div class="logo">DR.ANSWER <span>3.0</span></div>
+          </a>
+
+          <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="테마 전환"
+          >
+            <span class="theme-icon" aria-hidden="true" id="themeIcon"></span>
+            <span class="theme-label" id="themeLabel">Theme</span>
+          </button>
+        </div>
+
         <div class="header-sub">
           TRI-Agentic AI<br />Technical Specification
         </div>
@@ -794,7 +1110,7 @@
         <span class="badge">과학기술정보통신부 · NIPA 지원사업</span>
         <h1 id="hero-title">
           초개인화 질환 관리를 통한<br />예후 향상 지원
-          <span style="color: var(--cyan)">Agentic AI</span> 토탈 솔루션
+          <span style="color: var(--accent)">Agentic AI</span> 토탈 솔루션
         </h1>
         <p class="hero-desc">
           본 과제는 6대 고위험 질환을 대상으로, 다기관 데이터와 웨어러블을
@@ -835,7 +1151,7 @@
           <div class="integration-box">
             <div class="int-node">
               <div class="node-circle" aria-label="EMR 연계">EMR</div>
-              <h4 style="margin: 0; color: var(--cyan)">의료 데이터 연계</h4>
+              <h4 style="margin: 0; color: var(--accent)">의료 데이터 연계</h4>
               <p style="font-size: 13px; color: var(--text-dim)">
                 개인 의료데이터(PHR) 기반<br />신뢰 기반 서비스 제공
               </p>
@@ -843,12 +1159,12 @@
             <div class="int-node">
               <div
                 class="node-circle"
-                style="border-color: var(--violet); color: var(--violet)"
+                style="border-color: var(--accent-2); color: var(--accent-2)"
                 aria-label="AI 에이전트"
               >
                 AI
               </div>
-              <h4 style="margin: 0; color: var(--violet)">지능형 에이전트</h4>
+              <h4 style="margin: 0; color: var(--accent-2)">지능형 에이전트</h4>
               <p style="font-size: 13px; color: var(--text-dim)">
                 자가 선별 및 위험 예측<br />의료진 진료 현장 활용
               </p>
@@ -856,12 +1172,12 @@
             <div class="int-node">
               <div
                 class="node-circle"
-                style="border-color: var(--emerald); color: var(--emerald)"
+                style="border-color: var(--accent-3); color: var(--accent-3)"
                 aria-label="디바이스 모니터링"
               >
                 DEVICE
               </div>
-              <h4 style="margin: 0; color: var(--emerald)">실시간 모니터링</h4>
+              <h4 style="margin: 0; color: var(--accent-3)">실시간 모니터링</h4>
               <p style="font-size: 13px; color: var(--text-dim)">
                 IoT 디바이스 데이터 수집<br />일상 속 상시적 관리
               </p>
@@ -877,7 +1193,6 @@
           <p>주관기관, 의료기관 및 기술 파트너 간의 R&R 최적화</p>
         </div>
 
-        <!-- 기관별 색상 범례 -->
         <div class="org-legend" role="list">
           <div class="legend-item" role="listitem">
             <div class="legend-dot lead" aria-hidden="true"></div>
@@ -893,7 +1208,7 @@
           </div>
         </div>
 
-        <div class="arch-card" style="padding: 0 0 16px; overflow: hidden">
+        <div class="arch-card" style="padding: 0; overflow: hidden">
           <div class="role-table-wrapper">
             <table class="role-table">
               <thead>
@@ -982,6 +1297,7 @@
               </tbody>
             </table>
           </div>
+          <div style="height: 16px"></div>
         </div>
       </section>
 
@@ -1086,7 +1402,10 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <div class="svc-index" style="color: #c4b5fd">SERVICE 02</div>
+                <!-- ✅ 하드코딩(#c4b5fd) 제거 -->
+                <div class="svc-index" style="color: var(--accent2-label)">
+                  SERVICE 02
+                </div>
                 <h3>소아 만성호흡부전 환자 재택 모니터링</h3>
               </div>
               <span class="svc-tag aitrics-tag"
@@ -1105,7 +1424,7 @@
                 <p
                   style="
                     font-size: 11px;
-                    color: #c4b5fd;
+                    color: var(--accent2-label);
                     margin-top: 10px;
                     font-weight: 700;
                   "
@@ -1216,7 +1535,10 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <div class="svc-index" style="color: #c4b5fd">SERVICE 05</div>
+                <!-- ✅ 하드코딩(#c4b5fd) 제거 -->
+                <div class="svc-index" style="color: var(--accent2-label)">
+                  SERVICE 05
+                </div>
                 <h3>위암 환자 수술 후 합병증 관리</h3>
               </div>
               <span class="svc-tag aitrics-tag">분당차병원 (AITRICS 참여)</span>
@@ -1248,7 +1570,10 @@
           <article class="svc-card aitrics-highlight">
             <div class="svc-header">
               <div class="svc-title-wrap">
-                <div class="svc-index" style="color: #c4b5fd">SERVICE 06</div>
+                <!-- ✅ 하드코딩(#c4b5fd) 제거 -->
+                <div class="svc-index" style="color: var(--accent2-label)">
+                  SERVICE 06
+                </div>
                 <h3>대장암 항암 환자 생활 습관 관리</h3>
               </div>
               <span class="svc-tag aitrics-tag">길의료재단 (AITRICS 참여)</span>
@@ -1286,7 +1611,7 @@
         </div>
 
         <div class="arch-card">
-          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 8px 12px">
+          <h4 style="font-size: 15px; color: var(--accent); margin: 0 0 12px">
             공동연구 개발기관 (의료/기업)
           </h4>
           <div class="logos">
@@ -1306,7 +1631,7 @@
 
           <div style="height: 24px"></div>
 
-          <h4 style="font-size: 15px; color: var(--cyan); margin: 0 8px 12px">
+          <h4 style="font-size: 15px; color: var(--accent); margin: 0 0 12px">
             실증 참여기관 (전국 단위)
           </h4>
           <div class="logos">
@@ -1332,5 +1657,61 @@
         © 2025 닥터앤서 3.0 프로젝트_SRLEE. All rights reserved.
       </p>
     </footer>
+
+    <!-- ✅ 테마 스크립트: 1개만 유지 -->
+    <script>
+      (function () {
+        const KEY = "theme";
+        const root = document.documentElement;
+        const btn = document.getElementById("themeToggle");
+        const icon = document.getElementById("themeIcon");
+        const label = document.getElementById("themeLabel");
+
+        if (!btn || !icon || !label) return;
+
+        const sunSvg =
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
+        const moonSvg =
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.2A7.5 7.5 0 0 1 10.8 3 6.5 6.5 0 1 0 21 13.2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+
+        function apply(theme, persist) {
+          root.setAttribute("data-theme", theme);
+          if (persist) localStorage.setItem(KEY, theme);
+
+          const isLight = theme === "light";
+          icon.innerHTML = isLight ? sunSvg : moonSvg;
+          label.textContent = isLight ? "Light" : "Dark";
+          btn.setAttribute(
+            "aria-label",
+            isLight ? "다크 모드로 전환" : "라이트 모드로 전환",
+          );
+        }
+
+        const stored = localStorage.getItem(KEY);
+        if (stored === "light" || stored === "dark") {
+          apply(stored, false);
+        } else {
+          const prefersLight =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches;
+          apply(prefersLight ? "light" : "dark", false);
+
+          const mq = window.matchMedia("(prefers-color-scheme: light)");
+          mq.addEventListener?.("change", (e) => {
+            const hasStored = localStorage.getItem(KEY);
+            if (hasStored) return;
+            apply(e.matches ? "light" : "dark", false);
+          });
+        }
+
+        btn.addEventListener("click", () => {
+          const current = root.getAttribute("data-theme") || "dark";
+          const next = current === "light" ? "dark" : "light";
+          apply(next, true);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
+    </script>
   </body>
 </html>

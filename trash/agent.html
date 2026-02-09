@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>2·5·6 질환 공통 Agentic AI 개발 배경</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
+
+    <style>
+      /* ===== Base ===== */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: #ffffff;
+        color: #0f172a;
+      }
+
+      .slide {
+        width: 1200px;
+        margin: 0 auto;
+        padding: 36px 48px;
+      }
+
+      /* ===== Header ===== */
+      .header {
+        background: #0b1c5d;
+        color: #ffffff;
+        padding: 24px 32px;
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .subtitle {
+        margin: 18px 0 28px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      /* ===== Tabs ===== */
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+
+      .tab {
+        padding: 10px 18px;
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .tab.active {
+        background: #0b1c5d;
+        color: #ffffff;
+        border-color: #0b1c5d;
+      }
+
+      /* ===== Content Layout ===== */
+      .content {
+        display: grid;
+        grid-template-columns: 280px 1fr 300px;
+        gap: 28px;
+        align-items: start;
+      }
+
+      /* ===== Left Flow ===== */
+      .flow {
+        display: grid;
+        gap: 16px;
+      }
+
+      .flow-box {
+        border: 2px solid #94a3b8;
+        padding: 18px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .arrow {
+        text-align: center;
+        font-size: 24px;
+        color: #64748b;
+      }
+
+      /* ===== Center Text ===== */
+      .center-box {
+        border: 1.5px solid #cbd5e1;
+        padding: 22px;
+        font-size: 15px;
+        line-height: 1.7;
+        min-height: 110px;
+      }
+
+      /* ===== Right Highlight ===== */
+      .highlight {
+        border-left: 6px solid #2563eb;
+        padding-left: 18px;
+        font-size: 15px;
+        line-height: 1.7;
+      }
+
+      .highlight-title {
+        font-weight: 900;
+        margin-bottom: 10px;
+        color: #2563eb;
+      }
+
+      /* ===== Hidden ===== */
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: contents;
+      }
+
+      body {
+        margin: 0;
+        font-family: Pretendard, sans-serif;
+        background: #ffffff;
+        color: #0f172a;
+      }
+
+      .container {
+        width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+      }
+
+      .slide {
+        display: none;
+      }
+      .slide.active {
+        display: block;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .nav-title {
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .nav-btn {
+        padding: 8px 14px;
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .footer {
+        margin-top: 40px;
+        text-align: right;
+        font-size: 14px;
+        color: #64748b;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="slide">
+      <div class="header">2·5·6 질환 Agentic AI 개발 배경</div>
+
+      <div class="subtitle">
+        환자 상태 악화를 조기에 인지하고, 일상 기반의 맞춤형 중재를 통해 임상
+        리스크를 감소시키는 지속형 Agentic AI 관리 서비스 구현
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <div class="tab active" onclick="showPanel('d2')">
+          2질환 (소아 만성호흡부전)
+        </div>
+        <div class="tab" onclick="showPanel('d5')">5질환 (위암)</div>
+        <div class="tab" onclick="showPanel('d6')">6질환 (대장암)</div>
+      </div>
+
+      <!-- ===== Panels ===== -->
+
+      <!-- 2질환 -->
+      <div class="panel active" id="d2">
+        <div class="content">
+          <div class="flow">
+            <div class="flow-box">개발 배경</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Agentic AI 도입 방안</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Agentic AI 개발 전략</div>
+          </div>
+
+          <div class="center-box">
+            재택 환경에서 보호자 주관 판단에 의존하는 구조로 인해 급성 호흡 악화
+            및 응급 상황의 조기 인지가 어려우며, 의료진 개입 시점이 지연되는
+            문제가 지속적으로 발생
+          </div>
+
+          <div class="highlight">
+            <div class="highlight-title">[ 핵심 차별성 ]</div>
+            다수의 AI Agent가 환자의 호흡 신호, 이벤트, 보호자 입력을 행위
+            단위로 분리·협력 수행하는 Agentic AI 구조를 통해 재택 환경에서도
+            선제적 개입이 가능한 관리 체계 확립
+          </div>
+        </div>
+      </div>
+
+      <!-- 5질환 -->
+      <div class="panel" id="d5">
+        <div class="content">
+          <div class="flow">
+            <div class="flow-box">개발 배경</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Agentic AI 도입 방안</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Agentic AI 개발 전략</div>
+          </div>
+
+          <div class="center-box">
+            위암 수술 및 치료 이후 퇴원 환자의 합병증, 영양 상태 저하, 증상
+            변화가 일상에서 축적되나 병원 중심 관리 체계로는 지속적 추적이
+            어려움
+          </div>
+
+          <div class="highlight">
+            <div class="highlight-title">[ 핵심 차별성 ]</div>
+            치료 이후의 상태 변화를 Agent 단위로 분해·분석하고, 이벤트 기반
+            중재를 자동 조정하는 Agentic AI 구조를 통해 장기 추적 관리가 가능한
+            확장형 의료 AI 서비스 구현
+          </div>
+        </div>
+      </div>
+
+      <!-- 6질환 -->
+      <div class="panel" id="d6">
+        <div class="content">
+          <div class="flow">
+            <div class="flow-box">개발 배경</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Agentic AI 도입 방안</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Agentic AI 개발 전략</div>
+          </div>
+
+          <div class="center-box">
+            항암 치료 과정에서 발생하는 부작용, 생활 기능 저하, 증상 악화 신호가
+            분산되어 축적되며 의료진의 실시간 파악이 제한됨
+          </div>
+
+          <div class="highlight">
+            <div class="highlight-title">[ 핵심 차별성 ]</div>
+            환자 상태 데이터를 지속적으로 수집·해석하는 다중 Agent 기반 Agentic
+            AI 구조를 통해 치료 전주기 관리와 질환 확장성을 동시에 확보
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function showPanel(id) {
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".tab")
+          .forEach((t) => t.classList.remove("active"));
+
+        document.getElementById(id).classList.add("active");
+        event.target.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

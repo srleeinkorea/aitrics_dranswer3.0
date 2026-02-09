@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>닥터앤서 3.0 공식 기술 명세 | TRI-Agentic AI</title>
+    <meta
+      name="description"
+      content="위험도 분류 기반 경과 관리를 통한 초개인화 질환 관리 지원 Agentic AI 토탈 솔루션"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
+    <style>
+      /* =====================================================
+   Agentic Color Modes (Operation)
+===================================================== */
+      html[data-mode="official"] {
+        --accent: #0f766e;
+        --accent-2: #8b5cf6;
+        --accent-3: #10b981;
+        --accent-4: #b91010;
+      }
+      html[data-mode="demo"] {
+        --accent: #0ea5e9;
+        --accent-2: #7c3aed;
+        --accent-3: #10b981;
+        --accent-4: #b91010;
+      }
+      html[data-mode="pitch"] {
+        --accent: #0284c7;
+        --accent-2: #9333ea;
+        --accent-3: #22c55e;
+        --accent-4: #dc2626;
+      }
+
+      /* =====================================================
+   Tokens
+===================================================== */
+      :root {
+        --bg: #070a12;
+        --bg-elev: rgba(7, 10, 18, 0.78);
+        --card: rgba(18, 24, 38, 0.86);
+        --card-strong: rgba(18, 24, 38, 0.96);
+        --border: rgba(148, 163, 184, 0.16);
+
+        --text: #f3f5f9;
+        --text-dim: rgba(226, 232, 240, 0.72);
+        --text-muted: rgba(226, 232, 240, 0.58);
+
+        --accent-soft: rgba(15, 118, 110, 0.14);
+        --accent-soft2: rgba(15, 118, 110, 0.22);
+        --accent-border: rgba(15, 118, 110, 0.38);
+        --accent-text: #99f6e4;
+
+        --accent2-label: #c4b5fd;
+        --accent2-title: #ede9fe;
+
+        --radius: 14px;
+        --radius-sm: 10px;
+
+        --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.18);
+        --shadow-md: 0 18px 44px rgba(0, 0, 0, 0.24);
+
+        --header-h: 64px;
+        --content-pad: clamp(14px, 3vw, 28px);
+
+        --ink: rgba(226, 232, 240, 0.26);
+        --ink-strong: rgba(226, 232, 240, 0.46);
+        --ink-soft: rgba(226, 232, 240, 0.14);
+      }
+
+      /* =====================================================
+   Reset / Base
+===================================================== */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Pretendard, system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img,
+      svg {
+        max-width: 100%;
+        display: block;
+      }
+
+      /* =====================================================
+   Layout
+===================================================== */
+      .container {
+        width: 100%;
+      }
+      section {
+        padding: 64px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* =====================================================
+   Header / Logo
+===================================================== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: var(--header-h);
+        background: var(--bg-elev);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+      .header-inner {
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 var(--content-pad);
+      }
+      .logo {
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+        white-space: nowrap;
+      }
+      .logo .dot {
+        color: var(--accent);
+        font-weight: 900;
+      }
+      .logo .ver {
+        font-weight: 400;
+        opacity: 0.85;
+        margin-left: 2px;
+      }
+
+      /* =====================================================
+   Hero
+===================================================== */
+      .hero {
+        padding-top: 56px;
+      }
+      .badge {
+        display: inline-block;
+        margin: 0 var(--content-pad) 16px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 900;
+        background: var(--accent-soft);
+        border: 1px solid var(--accent-border);
+        color: var(--accent-text);
+      }
+      .hero h1 {
+        margin: 0 var(--content-pad) 22px;
+        font-size: clamp(30px, 4.8vw, 52px);
+        font-weight: 950;
+        letter-spacing: -1.4px;
+      }
+      .hero-desc {
+        margin: 0 var(--content-pad) 28px;
+        max-width: 1100px;
+        font-size: 16px;
+        color: var(--text-dim);
+      }
+      .hero-visual {
+        margin: 32px var(--content-pad);
+      }
+      .hero-visual-caption {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--text-muted);
+        text-align: right;
+      }
+
+      /* =====================================================
+   Info Grid
+===================================================== */
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+        margin: 0 var(--content-pad);
+      }
+      .info-item {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px;
+        box-shadow: var(--shadow-sm);
+      }
+      .info-item label {
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--text-muted);
+      }
+      .info-item p {
+        margin: 4px 0 0;
+        font-weight: 900;
+      }
+
+      /* =====================================================
+   Section Titles
+===================================================== */
+      .section-title {
+        margin: 0 var(--content-pad) 28px;
+      }
+      .section-title h2 {
+        margin: 0;
+        font-size: clamp(24px, 3.6vw, 34px);
+        font-weight: 950;
+      }
+      .section-title p {
+        margin-top: 8px;
+        color: var(--text-dim);
+      }
+
+      /* =====================================================
+   Architecture / Cards
+===================================================== */
+      .arch-card {
+        margin: 0 var(--content-pad);
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+        padding: 22px;
+      }
+      .integration-box {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 22px;
+      }
+      .int-node {
+        text-align: center;
+      }
+      .node-circle {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 12px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+      }
+
+      /* =====================================================
+   Org Legend / Table
+===================================================== */
+      .org-legend {
+        display: flex;
+        gap: 18px;
+        margin: 0 var(--content-pad) 18px;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+      }
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .legend-dot.lead {
+        background: var(--accent);
+      }
+      .legend-dot.hospital {
+        background: var(--accent-3);
+      }
+      .legend-dot.ai {
+        background: var(--accent-2);
+      }
+
+      .role-table-wrapper {
+        overflow-x: auto;
+      }
+      .role-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      .role-table th,
+      .role-table td {
+        padding: 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      .role-table th {
+        text-align: left;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      /* =====================================================
+   Roadmap
+===================================================== */
+      .roadmap {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+      .phase {
+        background: var(--card-strong);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px;
+      }
+      .phase-header {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+      .phase-title {
+        font-weight: 900;
+        margin-top: 6px;
+      }
+      .phase-subtitle {
+        font-size: 13px;
+        color: var(--text-dim);
+      }
+
+      /* =====================================================
+   Services
+===================================================== */
+      .svc-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin: 0 var(--content-pad);
+      }
+      .svc-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-sm);
+      }
+      .svc-header {
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .svc-body {
+        padding: 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+      .mod-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .mod-list li {
+        position: relative;
+        padding-left: 14px;
+        color: var(--text-dim);
+      }
+      .mod-list li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+
+      .as-is-to-be {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .box {
+        padding: 12px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+      }
+      .box-as {
+        background: rgba(185, 16, 16, 0.12);
+        border: 1px solid rgba(185, 16, 16, 0.28);
+      }
+      .box-to {
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.28);
+      }
+
+      .aitrics-highlight {
+        background: rgba(139, 92, 246, 0.06);
+        border-color: rgba(139, 92, 246, 0.34);
+      }
+
+      /* =====================================================
+   Logos / Tags
+===================================================== */
+      .logos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .logo-tag {
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        background: rgba(148, 163, 184, 0.12);
+      }
+
+      /* =====================================================
+   Footer
+===================================================== */
+      footer {
+        padding: 32px var(--content-pad);
+        text-align: center;
+        color: var(--text-dim);
+        font-size: 13px;
+      }
+
+      /* =====================================================
+   Agentic State Visualization (Idle / Decide / Act)
+===================================================== */
+      .agentic-state {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 900;
+        background: rgba(148, 163, 184, 0.12);
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+      }
+      .agentic-state .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--ink);
+      }
+
+      /* Idle */
+      .state-idle .dot {
+        background: var(--ink-strong);
+      }
+
+      /* Decide */
+      .state-decide {
+        background: rgba(139, 92, 246, 0.12);
+        border-color: rgba(139, 92, 246, 0.38);
+        color: var(--accent2-title);
+      }
+      .state-decide .dot {
+        background: var(--accent-2);
+        animation: decide-pulse 1.6s infinite;
+      }
+      @keyframes decide-pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 6px rgba(139, 92, 246, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+        }
+      }
+
+      /* Act */
+      .state-act {
+        background: rgba(16, 185, 129, 0.14);
+        border-color: rgba(16, 185, 129, 0.38);
+        color: var(--accent-3);
+      }
+      .state-act .dot {
+        background: var(--accent-3);
+      }
+
+      /* =====================================================
+   Responsive
+===================================================== */
+      @media (max-width: 900px) {
+        .svc-body {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 헤더 -->
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <div class="logo">DR.ANSWER <span>3.0</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- HERO -->
+      <section class="hero">
+        <span class="badge">과학기술정보통신부 · NIPA 지원사업</span>
+        <h1>
+          초개인화 질환 관리를 통한<br />
+          <span style="color: var(--accent)">Agentic AI</span> 기반 의료 서비스
+        </h1>
+
+        <!-- ✅ 최종 수정 반영 문단 -->
+        <p class="hero-desc">
+          본 과제는 6대 고위험 질환을 대상으로, 다기관 데이터와 웨어러블을
+          결합한 TRI-Agentic AI 기반 질환 관리 서비스로서 자가
+          선별(Self-Triage), 위험도 분류 기반 경과 관리(Risk-aware Care),
+          초개인화 관리(Individualized Care)를 개발·실증하여, 치료 이후까지
+          책임지는 국가 연구과제로서 제시되는 차세대 의료 AI 참조 모델을
+          구축하는 사업입니다.
+        </p>
+      </section>
+
+      <!-- ===== 중략 없음: 구조 동일 ===== -->
+
+      <!-- SERVICE 02 -->
+      <section>
+        <article class="svc-card aitrics-highlight">
+          <div class="svc-header">
+            <h3>소아 만성호흡부전 환자 재택 모니터링</h3>
+          </div>
+          <div class="svc-body">
+            <ul class="mod-list">
+              <li><strong>EMR 기반 개인 맞춤형 상담 에이전트</strong></li>
+              <li>가정용 인공호흡기 데이터 기반 위험도 분류 및 알람</li>
+              <li>데이터 기반 자가 증상(PRO) 실시간 위험도 분류</li>
+              <li>응급 상황 시 의료진 연계 및 내원 권고</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- SERVICE 05 -->
+      <section>
+        <article class="svc-card aitrics-highlight">
+          <div class="svc-header">
+            <h3>위암 환자 수술 후 관리</h3>
+          </div>
+          <div class="svc-body">
+            <ul class="mod-list">
+              <li><strong>능동형 위암 예후관리 Agentic AI</strong></li>
+              <li>수술 후 합병증 발생 가능성 평가 기반 AI 서비스</li>
+              <li>웨어러블 디바이스 연동 생체신호 모니터링</li>
+              <li>EMR 연동 맞춤형 식이/영양 관리 솔루션</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- SERVICE 06 -->
+      <section>
+        <article class="svc-card aitrics-highlight">
+          <div class="svc-header">
+            <h3>대장암 항암 환자 생활 습관 관리</h3>
+          </div>
+          <div class="svc-body">
+            <ul class="mod-list">
+              <li>대장암 및 용종 재발 발생 가능성 평가</li>
+              <li>항암 부작용 위험도 분류 및 자가 대처 가이드</li>
+              <li>웨어러블 연동 운동 가이드 및 모니터링</li>
+              <li>개인 맞춤형 항암 생활습관 상담 에이전트</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 닥터앤서 3.0 프로젝트. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

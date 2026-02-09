@@ -1,1362 +1,566 @@
 <!doctype html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>
-      AITRICS 2026 | WBS & Step-based Gantt (Final + Cards + Export)
-    </title>
+    <title>Agentic AI Deck (HTML Slide)</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+    />
 
     <style>
       :root {
-        --bg: #030406;
-        --surface: #0b0d12;
-        --border: #1e222d;
-        --text-p: #f8fafc;
-        --text-s: #94a3b8;
-        --data: #00d1ff;
-        --ai: #a855f7;
-        --svc: #f43f5e;
-        --reg: #fbbf24;
-        --done: #10b981;
-        --warn: #fb7185;
+        --bg: #ffffff;
+        --surface: #f8fafc;
+        --border: #cbd5e1;
+        --text: #0f172a;
+        --text-dim: #334155;
+        --accent: #2563eb;
+        --accent-2: #7c3aed;
+        --ok: #16a34a;
+        --warn: #f59e0b;
+
+        --radius: 12px;
+        --w: 1180px;
+        --h: 664px;
       }
+
       * {
         box-sizing: border-box;
       }
+      html,
       body {
-        margin: 0;
-        padding: 20px;
-        background: var(--bg);
-        color: var(--text-p);
-        font-family:
-          Pretendard,
-          system-ui,
-          -apple-system,
-          Segoe UI,
-          Roboto,
-          "Noto Sans KR",
-          sans-serif;
-      }
-      h2 {
-        margin: 0 0 12px 0;
-      }
-      a {
-        color: inherit;
-      }
-      .card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 14px;
-        margin-bottom: 16px;
-        overflow-x: auto;
-      }
-      .nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin: 10px 0 14px 0;
-      }
-      .nav button {
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
-        color: var(--text-p);
-        border-radius: 10px;
-        padding: 8px 10px;
-        font-size: 12px;
-        font-weight: 900;
-        cursor: pointer;
-      }
-      .nav button:hover {
-        background: rgba(255, 255, 255, 0.04);
-      }
-      .nav button.active {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.22);
-      }
-      .small {
-        font-size: 11px;
-        color: var(--text-s);
-      }
-      .badge {
-        display: inline-block;
-        font-size: 10px;
-        font-weight: 900;
-        padding: 3px 8px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        background: #161b22;
-        color: var(--text-s);
-      }
-      .btn {
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
-        color: var(--text-p);
-        border-radius: 10px;
-        padding: 8px 10px;
-        font-size: 12px;
-        font-weight: 900;
-        cursor: pointer;
-      }
-      .btn:hover {
-        background: rgba(255, 255, 255, 0.04);
-      }
-      .btn.primary {
-        border-color: rgba(56, 189, 248, 0.25);
-      }
-      .btn.danger {
-        border-color: rgba(251, 113, 133, 0.35);
-      }
-      .input {
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.02);
-        color: var(--text-p);
-        border-radius: 10px;
-        padding: 8px 10px;
-        font-size: 12px;
-        font-weight: 800;
-        outline: none;
-      }
-      .grid-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-      @media (max-width: 1100px) {
-        .grid-3 {
-          grid-template-columns: 1fr;
-        }
-      }
-      @media (max-width: 900px) {
-        .grid-2 {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .p-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 12px;
-      }
-      .p-top {
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        align-items: flex-start;
-      }
-      .p-name {
-        font-size: 12.5px;
-        font-weight: 900;
-      }
-      .p-meta {
-        font-family: ui-monospace, Menlo, Consolas, monospace;
-        font-size: 11px;
-        color: var(--text-s);
-        text-align: right;
-        white-space: nowrap;
-      }
-      .p-bar {
-        margin-top: 10px;
-        height: 10px;
-        border-radius: 999px;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .p-fill {
         height: 100%;
       }
-      .p-foot {
-        margin-top: 10px;
+      body {
+        margin: 0;
+        font-family:
+          Pretendard,
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      /* ===== Top Nav ===== */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+      }
+      .topbar-inner {
+        max-width: calc(var(--w) + 40px);
+        margin: 0 auto;
+        padding: 10px 16px;
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        gap: 10px;
-        align-items: center;
+        gap: 12px;
       }
-      .pill {
-        font-family: ui-monospace, Menlo, Consolas, monospace;
-        font-size: 10px;
-        font-weight: 900;
-        padding: 3px 7px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: #161b22;
-        color: var(--text-s);
-        white-space: nowrap;
-      }
-
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th,
-      td {
-        border: 1px solid var(--border);
-        padding: 6px 8px;
-        font-size: 12px;
-        vertical-align: top;
-      }
-      th {
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--text-s);
-        white-space: nowrap;
-      }
-      .gantt-cell {
-        width: 56px;
-        position: relative;
-        min-width: 56px;
-      }
-      .bar {
-        position: absolute;
-        top: 6px;
-        left: 4px;
-        height: 18px;
-        border-radius: 6px;
-      }
-      .cb {
-        accent-color: var(--done);
-        cursor: pointer;
-      }
-      .stepline {
+      .brand {
         display: flex;
-        gap: 8px;
         align-items: center;
+        gap: 10px;
+      }
+      .brand strong {
+        font-size: 14px;
+      }
+      .hint {
         font-size: 12px;
-        margin: 2px 0;
-      }
-      .dept {
-        font-weight: 900;
-        margin-top: 10px;
-      }
-      .task {
-        margin-left: 12px;
+        color: var(--text-dim);
       }
 
-      .chips {
+      .nav {
         display: flex;
         gap: 6px;
         flex-wrap: wrap;
-        align-items: center;
       }
-      .chip {
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.02);
-        color: var(--text-s);
+      .nav button {
+        border: 1px solid var(--border);
+        background: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 8px 10px;
         border-radius: 999px;
-        padding: 6px 10px;
-        font-size: 11px;
-        font-weight: 900;
         cursor: pointer;
-        user-select: none;
       }
-      .chip.on {
-        color: var(--text-p);
-        border-color: rgba(56, 189, 248, 0.25);
-        background: rgba(56, 189, 248, 0.08);
+      .nav button.active {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: var(--surface);
       }
 
-      .hr {
-        height: 1px;
-        background: var(--border);
-        margin: 12px 0;
+      /* ===== Stage ===== */
+      .stage {
+        max-width: calc(var(--w) + 40px);
+        margin: 0 auto;
+        padding: 16px;
+        display: flex;
+        justify-content: center;
       }
-      .mono {
-        font-family: ui-monospace, Menlo, Consolas, monospace;
+
+      .deck {
+        width: 100%;
+        max-width: var(--w);
+        aspect-ratio: 16/9;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        padding: 26px;
+        display: none;
+      }
+      .slide.active {
+        display: block;
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: 22px;
+      }
+      p {
+        margin: 0;
+        color: var(--text-dim);
+        line-height: 1.6;
+      }
+
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px;
+        background: #fff;
+      }
+      .card strong {
+        font-size: 14px;
+      }
+      .card ul {
+        margin: 10px 0 0;
+        padding-left: 18px;
+        font-size: 13px;
+        color: var(--text-dim);
+      }
+
+      .callout {
+        margin-top: 16px;
+        padding: 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        font-size: 13px;
+        color: var(--text-dim);
+      }
+
+      .bar {
+        margin-top: 14px;
+        border-left: 5px solid var(--accent);
+        padding: 10px 12px;
+        font-size: 13px;
+        color: var(--text-dim);
+      }
+
+      /* Tabs */
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .tab {
+        border: 1px solid var(--border);
+        background: #fff;
+        padding: 8px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .tab.active {
+        border-color: var(--accent-2);
+        color: var(--accent-2);
+        background: var(--surface);
+      }
+
+      .tabpanel {
+        margin-top: 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px;
+      }
+
+      .row2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 12px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 800;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 6px 10px;
+        background: var(--surface);
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .dot.p {
+        background: var(--accent-2);
+      }
+      .dot.g {
+        background: var(--ok);
+      }
+      .dot.w {
+        background: var(--warn);
+      }
+
+      /* Footer */
+      .footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-top: 1px solid var(--border);
+        background: #fff;
+        padding: 10px 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .pager {
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .ctrl button {
+        border: 1px solid var(--border);
+        background: #fff;
+        padding: 8px 10px;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 980px) {
+        .deck {
+          aspect-ratio: auto;
+          min-height: 72vh;
+        }
+        .grid3,
+        .row2 {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
 
   <body>
-    <h2>📅 AITRICS 2026 – Step 기반 WBS + 자동 Gantt + 제출용 표</h2>
-
-    <div class="nav">
-      <button class="active" data-tab="dash">요약 카드</button>
-      <button data-tab="gantt">Gantt</button>
-      <button data-tab="wbs">WBS(체크)</button>
-      <button data-tab="export">기관 제출용 WBS 표</button>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <strong
+            >Agentic AI 발표 덱 –
+            <span id="diseaseTitle">공통 프레임</span></strong
+          >
+          <span class="hint">← → 키 / 클릭 / 스와이프</span>
+        </div>
+        <div class="nav" id="nav"></div>
+      </div>
     </div>
 
-    <!-- DASH -->
-    <div class="card" id="tab-dash"></div>
+    <div class="stage">
+      <div class="deck" id="deck">
+        <!-- SLIDE 01 -->
+        <section class="slide active" data-title="01 개발 배경">
+          <h2>01. Agentic AI 개발 배경</h2>
 
-    <!-- GANTT -->
-    <div class="card" id="tab-gantt" style="display: none"></div>
+          <!-- 질환 선택 탭 -->
+          <div class="tabs" id="bgTabs"></div>
 
-    <!-- WBS -->
-    <div class="card" id="tab-wbs" style="display: none"></div>
+          <!-- 공통 설명 -->
+          <p style="margin: 14px 0 18px">
+            본 슬라이드는 <strong>질환별 문제 정의는 상이하되</strong>, 이를
+            해결하기 위한 <strong>Agentic AI 구조는 공통</strong>임을 설명한다.
+          </p>
 
-    <!-- EXPORT -->
-    <div class="card" id="tab-export" style="display: none"></div>
+          <!-- 2-COLUMN -->
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px">
+            <!-- LEFT : 3 STEP (내용만 바뀜) -->
+            <div id="bgContent"></div>
+
+            <!-- RIGHT : 공통 차별성 -->
+            <div
+              style="border-left: 1px solid var(--border); padding-left: 20px"
+            >
+              <h3 style="margin-top: 0; color: var(--accent)">
+                [ 공통 차별성 ]
+              </h3>
+              <p style="font-size: 14px; line-height: 1.7">
+                질환별 임상 특성과 관리 목적은 다르지만, 환자 상태를 지속적으로
+                인지하고 판단·중재를 수행하는
+                <strong>Agentic AI 실행 구조는 동일</strong>하다.<br /><br />
+                질환별 차이는 판단 기준·임계값·중재 콘텐츠로 분리되어
+                <strong>플러그인 형태로 확장</strong>된다.
+              </p>
+            </div>
+          </div>
+
+          <div class="footer">
+            <div class="pager"></div>
+            <div class="ctrl">
+              <button data-act="prev">이전</button>
+              <button data-act="next">다음</button>
+            </div>
+          </div>
+        </section>
+        <!-- SLIDE 02 -->
+        <section class="slide" data-title="02 서비스 흐름">
+          <h2>02. Agentic AI 서비스 흐름 (공통 프레임)</h2>
+          <p>질환 확장은 Plugin 추가로 수행되며, 상위 구조는 동일하다.</p>
+
+          <div class="tabs" id="diseaseTabs"></div>
+
+          <div class="tabpanel">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <span class="tag"><span class="dot"></span> Intake</span>
+              <span class="tag"><span class="dot p"></span> Agent Runtime</span>
+              <span class="tag"><span class="dot g"></span> Action</span>
+              <span class="tag"
+                ><span class="dot w"></span> Disease Plugin</span
+              >
+            </div>
+
+            <div class="row2">
+              <div class="card">
+                <strong>공통 흐름</strong>
+                <ul>
+                  <li>EMR/PRO/Device 수집</li>
+                  <li>상태·규칙 기반 분기</li>
+                  <li>위험 분류 및 가이드 생성</li>
+                  <li>알림·내원·의료진 연계</li>
+                </ul>
+              </div>
+              <div class="card" id="diseaseBox"></div>
+            </div>
+          </div>
+
+          <div class="footer">
+            <div class="pager"></div>
+            <div class="ctrl">
+              <button data-act="prev">이전</button>
+              <button data-act="next">다음</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
     <script>
-      /* =====================
-   CONFIG
-===================== */
-      const MONTHS = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+      /* ===== 질환 플러그인 데이터 ===== */
+      const DISEASES = [
+        {
+          id: "d2",
+          label: "2질환",
+          title: "소아 만성호흡부전",
+          bullets: [
+            "입력: EMR + 인공호흡기 신호 + PRO",
+            "트리아지: 위험도/임계값 기반 분류",
+            "상태 전이: 악화·응급·관찰",
+            "가이드: 보호자 행동 + 의료진 연계",
+          ],
+        },
+        {
+          id: "d5",
+          label: "5질환",
+          title: "위암 수술 후 합병증",
+          bullets: [
+            "입력: EMR + 회복 지표 + PRO",
+            "트리아지: 발열·통증·섭취 저하",
+            "상태 전이: 경고 → 의심 → 내원",
+            "가이드: 식이·영양·증상 대응",
+          ],
+        },
+        {
+          id: "d6",
+          label: "6질환",
+          title: "대장암 항암 생활관리",
+          bullets: [
+            "입력: EMR + 부작용/생활 PRO",
+            "트리아지: 항암 부작용 위험",
+            "상태 전이: 중재 필요도 기반",
+            "가이드: 운동·식단·부작용 관리",
+          ],
+        },
       ];
-      const fmt = (d) => d.toISOString().slice(0, 10);
 
-      /* =====================
-   DATA (기본자료 기반 + 합리적 가정 Step 분해/가중치)
-   - "서버=50%, 문서=10%" 같은 개념은 각 task 성격에 맞춰 반영(개발/구현/시험 비중 ↑, 문서 비중 10%대)
-===================== */
-      const DATA = {
-        roadmap: [
-          {
-            dept: "데이터 엔지니어링/연계",
-            color: "var(--data)",
-            tasks: [
-              {
-                id: "DE-1",
-                text: "가정용 인공호흡기 신호 데이터 수집 및 전송, 분석 파이프라인 설계",
-                steps: [
-                  {
-                    week: "Feb W1",
-                    label: "수집 신호/변수 범위 정의",
-                    weight: 15,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Feb W2",
-                    label: "데이터 전송 방식·주기 설계",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W1",
-                    label: "분석 파이프라인 아키텍처 설계",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W2",
-                    label: "장애/누락/재처리 시나리오 정의",
-                    weight: 25,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W3",
-                    label: "설계 문서 정리(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-              {
-                id: "DE-2",
-                text: "가정용 인공호흡기 데이터 결측값 및 이상치 처리",
-                steps: [
-                  {
-                    week: "Mar W1",
-                    label: "결측/이상치 기준 정의",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W2",
-                    label: "처리 정책 설계",
-                    weight: 25,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W1",
-                    label: "처리 로직 파이프라인 반영(개발)",
-                    weight: 35,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W2",
-                    label: "샘플 검증 및 튜닝(시험)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W3",
-                    label: "처리 규칙 문서화(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-              {
-                id: "DE-3",
-                text: "PRO 설문 데이터 구조 설계 및 기획",
-                steps: [
-                  {
-                    week: "Mar W1",
-                    label: "PRO 항목 후보 정의",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W2",
-                    label: "데이터 구조/스키마 설계",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W1",
-                    label: "수집 주기·연계 포인트 정의",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W2",
-                    label: "API/저장 구조 정리",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W3",
-                    label: "명세 문서화(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-              {
-                id: "DE-4",
-                text: "T-Bridge, MDIP 연계 모듈 데이터 송/수신 파이프라인 설계&개발",
-                steps: [
-                  {
-                    week: "Feb W3",
-                    label: "외부 시스템 요구사항 정리",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W1",
-                    label: "송·수신 인터페이스 설계",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W2",
-                    label: "파이프라인 구현(개발)",
-                    weight: 40,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W1",
-                    label: "통합 테스트·예외 처리(시험)",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W2",
-                    label: "운영/명세 문서 정리(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            dept: "AI 알고리즘/모델 개발",
-            color: "var(--ai)",
-            tasks: [
-              {
-                id: "AI-1",
-                text: "가정용 인공호흡기 신호 모니터링 인공지능 알고리즘 설계",
-                steps: [
-                  {
-                    week: "Mar W1",
-                    label: "문제 정의·평가지표 설정",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W2",
-                    label: "입력 피처/신호 표현 설계",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W1",
-                    label: "모델링 전략·구조 설계",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W2",
-                    label: "판단/알림 로직 설계",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W3",
-                    label: "설계 문서화(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-              {
-                id: "AI-2",
-                text: "알고리즘 성능 평가 및 재택 환경 적합성 확보를 위한 모델 성능 보정",
-                steps: [
-                  {
-                    week: "May W1",
-                    label: "평가 시나리오·데이터셋 정의",
-                    weight: 15,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "May W2",
-                    label: "1차 성능 평가(시험)",
-                    weight: 25,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Jun W1",
-                    label: "재택 환경 반영 보정(개발)",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Jun W2",
-                    label: "성능 재평가·튜닝(시험)",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Jun W3",
-                    label: "평가 보고서(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-              {
-                id: "AI-3",
-                text: "역할 분리형 다중 컴포넌트 구조 AI 시스템 설계",
-                steps: [
-                  {
-                    week: "Apr W1",
-                    label: "역할 분리 기준 정의",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W2",
-                    label: "컴포넌트 간 I/O 설계",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "May W1",
-                    label: "로그·추적성 설계",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "May W2",
-                    label: "안전·인허가 관점 검토",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "May W3",
-                    label: "아키텍처 문서(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            dept: "서비스 개발/구현",
-            color: "var(--svc)",
-            tasks: [
-              {
-                id: "SV-1",
-                text: "소아호흡부전 특화 질의·응답 챗봇 모듈 개발 및 트리아제 모듈 개발 위한 전문가 자문 및 사용자 인터뷰",
-                steps: [
-                  {
-                    week: "Mar W2",
-                    label: "대상자/전문가 선정",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W3",
-                    label: "인터뷰 가이드 설계",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W1",
-                    label: "인터뷰·자문 수행",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W2",
-                    label: "인사이트 정리·요구사항 반영",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Apr W3",
-                    label: "결과 문서(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-              {
-                id: "SV-2",
-                text: "모바일 앱 기능 개발",
-                steps: [
-                  {
-                    week: "May W1",
-                    label: "기능 정의·백로그 확정",
-                    weight: 15,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "May W2",
-                    label: "핵심 기능 구현(개발)",
-                    weight: 40,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Jun W1",
-                    label: "데이터·AI 연계(개발)",
-                    weight: 25,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Jun W2",
-                    label: "QA·사용성 개선(시험)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Jun W3",
-                    label: "릴리즈/운영 문서(문서 10%)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            dept: "인허가",
-            color: "var(--reg)",
-            tasks: [
-              {
-                id: "RA-1",
-                text: "디지털 의료기기 인허가 사전상담",
-                steps: [
-                  {
-                    week: "Mar W1",
-                    label: "의도된 사용·출력 정의",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W2",
-                    label: "기능분리·리스크 정리",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W3",
-                    label: "사전상담 자료 패키징",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Mar W4",
-                    label: "결과 정리 문서(문서)",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-              {
-                id: "RA-2",
-                text: "디지털 의료기기 인허가 수행",
-                steps: [
-                  {
-                    week: "Jul W1",
-                    label: "기술문서·QMS 확정",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Aug W1",
-                    label: "성능·위험관리 자료 작성(문서/근거)",
-                    weight: 30,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Sep W1",
-                    label: "제출본 QA·갭 클로징(검토)",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Oct W1",
-                    label: "제출·보완 대응",
-                    weight: 20,
-                    done: false,
-                    doneAt: null,
-                  },
-                  {
-                    week: "Dec W2",
-                    label: "최종 문서 정리",
-                    weight: 10,
-                    done: false,
-                    doneAt: null,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      };
+      /* ===== Deck Logic ===== */
+      const deck = document.getElementById("deck");
+      const slides = Array.from(deck.querySelectorAll(".slide"));
+      const nav = document.getElementById("nav");
+      let idx = 0;
 
-      /* =====================
-   STATE
-===================== */
-      let viewDept = "ALL"; // 요약/표에서 Dept 필터
-
-      /* =====================
-   UTIL
-===================== */
-      function normalizeWeights(task) {
-        // 혹시 가중치 합이 100이 아닌 경우 대비(데이터 바꿔도 안전)
-        const sum = task.steps.reduce((s, x) => s + (Number(x.weight) || 0), 0);
-        if (sum === 100 || sum === 0) return;
-        // 비율 유지하며 100으로 스케일 후 반올림, 마지막 step 보정
-        const scaled = task.steps.map((s) =>
-          Math.round((s.weight / sum) * 100),
-        );
-        const diff = 100 - scaled.reduce((a, b) => a + b, 0);
-        scaled[scaled.length - 1] += diff;
-        task.steps.forEach((s, i) => (s.weight = scaled[i]));
-      }
-      function taskProgress(task) {
-        normalizeWeights(task);
-        const done = task.steps
-          .filter((s) => s.done)
-          .reduce((sum, s) => sum + s.weight, 0);
-        return Math.round(done);
-      }
-      function deptProgress(group) {
-        const allSteps = group.tasks.flatMap((t) =>
-          t.steps.map((s) => ({ t, s })),
-        );
-        const total = allSteps.reduce((sum, x) => sum + (x.s.weight || 0), 0);
-        const done = allSteps
-          .filter((x) => x.s.done)
-          .reduce((sum, x) => sum + (x.s.weight || 0), 0);
-        // total은 task당 100씩이니 (task 수*100)으로 떨어짐
-        return Math.round(total ? (done / total) * 100 : 0);
-      }
-      function totalProgress() {
-        const groups = DATA.roadmap;
-        const totalTasks = groups.reduce((sum, g) => sum + g.tasks.length, 0);
-        const doneWeighted = groups.reduce(
-          (sum, g) => sum + g.tasks.reduce((s, t) => s + taskProgress(t), 0),
-          0,
-        );
-        return Math.round(
-          totalTasks ? (doneWeighted / (totalTasks * 100)) * 100 : 0,
-        );
-      }
-      function getWeeksTimeline() {
-        const weeks = [];
-        MONTHS.forEach((m) => {
-          for (let w = 1; w <= 4; w++) weeks.push(`${m} W${w}`);
-        });
-        return weeks;
-      }
-      function colorForDept(dept) {
-        const g = DATA.roadmap.find((x) => x.dept === dept);
-        return g ? g.color : "rgba(255,255,255,.2)";
-      }
-
-      /* =====================
-   TABS
-===================== */
-      document.querySelectorAll(".nav button").forEach((btn) => {
-        btn.onclick = () => {
-          document
-            .querySelectorAll(".nav button")
-            .forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-          const tab = btn.dataset.tab;
-          ["dash", "gantt", "wbs", "export"].forEach((k) => {
-            document.getElementById("tab-" + k).style.display =
-              k === tab ? "block" : "none";
-          });
-          renderAll();
-        };
+      slides.forEach((s, i) => {
+        const b = document.createElement("button");
+        b.textContent = s.dataset.title;
+        b.onclick = () => go(i);
+        nav.appendChild(b);
       });
 
-      /* =====================
-   DASH: Dept/Task 요약 카드
-===================== */
-      function renderDash() {
-        const el = document.getElementById("tab-dash");
-        const total = totalProgress();
-        const depts = DATA.roadmap.map((g) => ({
-          dept: g.dept,
-          pct: deptProgress(g),
-          color: g.color,
-          tasks: g.tasks.length,
-        }));
-
-        // Dept chips
-        const chipHtml = `
-    <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-      <div>
-        <span class="badge">TOTAL</span>
-        <span style="font-weight:900;font-size:22px;margin-left:8px">${total}%</span>
-        <span class="small" style="margin-left:8px">전체(Dept/Task/Step 가중치 기반)</span>
-      </div>
-      <div class="chips" id="dept-chips"></div>
-    </div>
-    <div class="hr"></div>
-  `;
-
-        const deptCards = `
-    <div class="grid-3" style="margin-bottom:10px">
-      ${depts
-        .map(
-          (d) => `
-        <div class="p-card" style="cursor:pointer" onclick="setDeptFilter('${escapeHtml(d.dept)}')">
-          <div class="p-top">
-            <div class="p-name">${escapeHtml(d.dept)}</div>
-            <div class="p-meta">${d.pct}%<br/><span>${d.tasks} tasks</span></div>
-          </div>
-          <div class="p-bar"><div class="p-fill" style="width:${d.pct}%;background:${d.color}"></div></div>
-          <div class="p-foot">
-            <span class="pill">SCOPE: 2026</span>
-            <span class="pill mono">${d.pct}%</span>
-          </div>
-        </div>
-      `,
-        )
-        .join("")}
-    </div>
-  `;
-
-        // Task cards (dept filter 적용)
-        const groups =
-          viewDept === "ALL"
-            ? DATA.roadmap
-            : DATA.roadmap.filter((g) => g.dept === viewDept);
-        const taskCards = `
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-      <div style="font-weight:900">Task 진행률 (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
-      <div class="small">* Task % = Step 가중치 합</div>
-    </div>
-    <div class="hr"></div>
-    <div class="grid-3">
-      ${groups
-        .flatMap((g) =>
-          g.tasks.map((t) => {
-            const pct = taskProgress(t);
-            return `
-          <div class="p-card">
-            <div class="p-top">
-              <div class="p-name"><span class="mono" style="color:${g.color}">${t.id}</span> · ${escapeHtml(t.text)}</div>
-              <div class="p-meta">${pct}%</div>
-            </div>
-            <div class="p-bar"><div class="p-fill" style="width:${pct}%;background:${g.color}"></div></div>
-            <div class="p-foot">
-              <span class="pill">${escapeHtml(g.dept)}</span>
-              <span class="pill">${t.steps.filter((s) => s.done).length}/${t.steps.length} steps</span>
-            </div>
-          </div>
-        `;
-          }),
-        )
-        .join("")}
-    </div>
-  `;
-
-        el.innerHTML = chipHtml + deptCards + taskCards;
-
-        // chips render
-        const chips = el.querySelector("#dept-chips");
-        chips.innerHTML = "";
-        const allChip = document.createElement("div");
-        allChip.className = "chip " + (viewDept === "ALL" ? "on" : "");
-        allChip.textContent = "전체";
-        allChip.onclick = () => setDeptFilter("ALL");
-        chips.appendChild(allChip);
-
-        DATA.roadmap.forEach((g) => {
-          const c = document.createElement("div");
-          c.className = "chip " + (viewDept === g.dept ? "on" : "");
-          c.textContent = g.dept;
-          c.onclick = () => setDeptFilter(g.dept);
-          chips.appendChild(c);
+      function go(i) {
+        idx = (i + slides.length) % slides.length;
+        slides.forEach((s, k) => s.classList.toggle("active", k === idx));
+        update();
+      }
+      function update() {
+        nav
+          .querySelectorAll("button")
+          .forEach((b, i) => b.classList.toggle("active", i === idx));
+        slides.forEach((s) => {
+          const p = s.querySelector(".pager");
+          if (p) p.textContent = `${idx + 1} / ${slides.length}`;
         });
       }
-      function setDeptFilter(dept) {
-        viewDept = dept;
-        renderAll();
-      }
+      deck.addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-act]");
+        if (!b) return;
+        go(b.dataset.act === "next" ? idx + 1 : idx - 1);
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") go(idx + 1);
+        if (e.key === "ArrowLeft") go(idx - 1);
+      });
 
-      /* =====================
-   GANTT (월/주)
-   - bar는 step 단위 완료 여부로 채워짐(각 step이 해당 주 칸에 0% or 100%)
-===================== */
-      function renderGantt() {
-        const el = document.getElementById("tab-gantt");
-        const weeks = getWeeksTimeline();
+      /* ===== Disease Tabs ===== */
+      const tabsEl = document.getElementById("diseaseTabs");
+      const diseaseBox = document.getElementById("diseaseBox");
+      const diseaseTitle = document.getElementById("diseaseTitle");
 
-        const groups =
-          viewDept === "ALL"
-            ? DATA.roadmap
-            : DATA.roadmap.filter((g) => g.dept === viewDept);
-
-        let html = `
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-      <div style="font-weight:900">월/주 타임라인 Gantt (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
-      <div class="small">* 각 주 칸은 step이 있으면 0%/100%로 채움</div>
-    </div>
-    <div class="hr"></div>
-    <table>
-      <thead>
-        <tr><th style="min-width:90px">Task ID</th><th style="min-width:360px">Task</th>
-  `;
-        weeks.forEach((w) => (html += `<th>${w}</th>`));
-        html += `</tr></thead><tbody>`;
-
-        groups.forEach((g) => {
-          g.tasks.forEach((t) => {
-            html += `<tr>
-        <td class="mono" style="color:${g.color};font-weight:900">${t.id}</td>
-        <td>${escapeHtml(t.text)} <span class="badge" style="margin-left:6px">${taskProgress(t)}%</span></td>
-      `;
-            weeks.forEach((w) => {
-              const step = t.steps.find((s) => s.week === w);
-              if (step) {
-                html += `
-            <td class="gantt-cell">
-              <div class="bar" style="width:${step.done ? 100 : 0}%;background:${g.color}"></div>
-            </td>
-          `;
-              } else {
-                html += `<td class="gantt-cell"></td>`;
-              }
-            });
-            html += `</tr>`;
-          });
+      function renderTabs() {
+        DISEASES.forEach((d, i) => {
+          const b = document.createElement("button");
+          b.className = "tab" + (i === 0 ? " active" : "");
+          b.textContent = d.label;
+          b.onclick = () => setDisease(d.id);
+          tabsEl.appendChild(b);
         });
-
-        html += `</tbody></table>`;
-        el.innerHTML = html;
       }
-
-      /* =====================
-   WBS (체크)
-   - step 체크 시 doneAt 자동 기록
-===================== */
-      function renderWBS() {
-        const el = document.getElementById("tab-wbs");
-        const groups =
-          viewDept === "ALL"
-            ? DATA.roadmap
-            : DATA.roadmap.filter((g) => g.dept === viewDept);
-
-        let html = `
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
-      <div style="font-weight:900">WBS (Step 체크) (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
-      <div class="small">* step 완료 시 자동 완료일 기록(오늘)</div>
-    </div>
-    <div class="hr"></div>
-  `;
-
-        groups.forEach((g, gi) => {
-          html += `<div class="dept" style="color:${g.color}">${escapeHtml(g.dept)} <span class="badge">${deptProgress(g)}%</span></div>`;
-          g.tasks.forEach((t, ti) => {
-            html += `<div class="task small"><span class="mono" style="color:${g.color};font-weight:900">${t.id}</span> · ${escapeHtml(t.text)} <span class="badge">${taskProgress(t)}%</span></div>`;
-            t.steps.forEach((s, si) => {
-              html += `
-          <div class="stepline task">
-            <input type="checkbox" class="cb" ${s.done ? "checked" : ""}
-              onchange="toggleStep(${gi},${ti},${si},this.checked)">
-            <span class="mono">${s.week}</span>
-            <span>${escapeHtml(s.label)}</span>
-            <span class="small">(${s.weight}%)</span>
-            <span class="small mono">${s.doneAt || ""}</span>
-          </div>
-        `;
-            });
-          });
+      function setDisease(id) {
+        const d = DISEASES.find((x) => x.id === id);
+        if (!d) return;
+        diseaseTitle.textContent = d.title;
+        [...tabsEl.children].forEach((b, i) => {
+          b.classList.toggle("active", DISEASES[i].id === id);
         });
-
-        el.innerHTML = html;
-      }
-
-      function toggleStep(gi, ti, si, val) {
-        const step = DATA.roadmap[gi].tasks[ti].steps[si];
-        step.done = val;
-        step.doneAt = val ? fmt(new Date()) : null;
-        renderAll();
-      }
-
-      /* =====================
-   EXPORT: 기관 제출용 WBS 표 변환
-   - flatten table: Dept / TaskID / Task명 / Step(주차) / Step명 / 가중치 / 완료여부 / 완료일
-   - CSV 다운로드 + 클립보드 복사
-===================== */
-      function renderExport() {
-        const el = document.getElementById("tab-export");
-        const groups =
-          viewDept === "ALL"
-            ? DATA.roadmap
-            : DATA.roadmap.filter((g) => g.dept === viewDept);
-
-        const rows = [];
-        groups.forEach((g) => {
-          g.tasks.forEach((t) => {
-            normalizeWeights(t);
-            t.steps.forEach((s, idx) => {
-              const range = weekToDateRange(s.week);
-              const taskRange = taskDateRange(t);
-
-              rows.push({
-                Dept: g.dept,
-                TaskID: t.id,
-                Task: t.text,
-
-                TaskStartDate: taskRange.start, // ✅ Task 시작일
-                TaskEndDate: taskRange.end, // ✅ Task 종료일
-
-                Year: range.year,
-                Month: range.month,
-                Week: range.week,
-                StartDate: range.start,
-                EndDate: range.end,
-
-                StepNo: idx + 1,
-                Step: s.label,
-                Weight: s.weight,
-                Status: s.done ? "DONE" : "OPEN",
-                DoneAt: s.doneAt || "",
-              });
-            });
-          });
-        });
-
-        // Controls
-        let html = `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap">
-      <div>
-        <div style="font-weight:900">기관 제출용 WBS 표 (${viewDept === "ALL" ? "전체" : "Dept: " + viewDept})</div>
-        <div class="small">* Excel/공문 제출에 적합한 “평면(Flatten) 테이블”</div>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <button class="btn primary" onclick="downloadCSV()">CSV 다운로드</button>
-        <button class="btn" onclick="copyCSV()">CSV 복사</button>
-        <span class="badge">${rows.length} rows</span>
-      </div>
-    </div>
-    <div class="hr"></div>
+        diseaseBox.innerHTML = `
+    <strong>${d.label} 플러그인 (${d.title})</strong>
+    <ul>${d.bullets.map((x) => `<li>${x}</li>`).join("")}</ul>
   `;
-
-        // Table
-        html += `<table id="export-table">
-    <thead>
-      <tr>
-        <th>Dept</th>
-<th>Task ID</th>
-<th>Task</th>
-
-<th>TaskStartDate</th>   <!-- ✅ -->
-<th>TaskEndDate</th>     <!-- ✅ -->
-
-<th>Year</th>
-<th>Month</th>
-<th>Week</th>
-<th>StartDate</th>
-<th>EndDate</th>
-
-<th>Step #</th>
-<th>Step</th>
-   
-        
-        </tr>
-    </thead>
-    <tbody>
-  `;
-        rows.forEach((r) => {
-          html += `<tr>
-      <td>${escapeHtml(r.Dept)}</td>
-      <td class="mono">${escapeHtml(r.TaskID)}</td>
-      <td>${escapeHtml(r.Task)}</td>
-      <td class="mono">${r.StepNo}</td>
-      <td class="mono">${escapeHtml(r.PlanWeek)}</td>
-      <td>${escapeHtml(r.Step)}</td>
-      <td class="mono">${r.Weight}</td>
-      <td>${r.Status === "DONE" ? `<span style="color:var(--done);font-weight:900">DONE</span>` : `<span style="color:var(--text-s)">OPEN</span>`}</td>
-      <td class="mono">${escapeHtml(r.DoneAt)}</td>
-    </tr>`;
-        });
-        html += `</tbody></table>`;
-
-        // CSV textarea preview (optional)
-        html += `
-    <div class="hr"></div>
-    <div class="small" style="margin-bottom:6px">CSV 미리보기 (복사/검증용)</div>
-    <textarea class="input mono" id="csv-preview" style="width:100%;min-height:140px;resize:vertical"></textarea>
-  `;
-
-        el.innerHTML = html;
-
-        // fill preview
-        const csv = buildCSV(rows);
-        el.querySelector("#csv-preview").value = csv;
-
-        // expose to buttons
-        window.__EXPORT_ROWS__ = rows;
-        window.__EXPORT_CSV__ = csv;
       }
 
-      function buildCSV(rows) {
-        const headers = [
-          "Dept",
-          "TaskID",
-          "Task",
-          "TaskStartDate",
-          "TaskEndDate", // ✅ 추가
-          "Year",
-          "Month",
-          "Week",
-          "StartDate",
-          "EndDate",
-          "StepNo",
-          "Step",
-          "Weight",
-          "Status",
-          "DoneAt",
-        ];
-        const esc = (v) => {
-          const s = String(v ?? "");
-          // CSV escape
-          if (/[",\n]/.test(s)) return `"${s.replaceAll('"', '""')}"`;
-          return s;
-        };
-        const lines = [];
-        lines.push(headers.join(","));
-        rows.forEach((r) => {
-          lines.push(headers.map((h) => esc(r[h])).join(","));
-        });
-        return lines.join("\n");
-      }
-      function downloadCSV() {
-        const csv = window.__EXPORT_CSV__ || "";
-        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `AITRICS_2026_WBS_${viewDept === "ALL" ? "ALL" : viewDept}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      }
-      async function copyCSV() {
-        const csv = window.__EXPORT_CSV__ || "";
-        try {
-          await navigator.clipboard.writeText(csv);
-          alert("CSV가 클립보드에 복사되었습니다.");
-        } catch (e) {
-          // fallback: select textarea
-          const ta = document.getElementById("csv-preview");
-          ta.focus();
-          ta.select();
-          document.execCommand("copy");
-          alert("CSV 복사(호환 모드) 완료");
-        }
-      }
+      renderTabs();
+      setDisease(DISEASES[0].id);
+      update();
+      /* ===== Global Disease State ===== */
+      let CURRENT_DISEASE = DISEASES[0].id;
 
-      /* =====================
-   ESCAPE
-===================== */
-      function escapeHtml(s) {
-        return String(s ?? "")
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
-
-      /* =====================
-   Render All
-===================== */
-      function renderAll() {
-        renderDash();
-        renderGantt();
-        renderWBS();
-        renderExport();
-      }
-
-      /* =====================
-   BOOT
-===================== */
-      /* =====================
-   WEEK → DATE RANGE
-===================== */
-      const YEAR = 2026;
-      const MONTH_MAP = {
-        Jan: 0,
-        Feb: 1,
-        Mar: 2,
-        Apr: 3,
-        May: 4,
-        Jun: 5,
-        Jul: 6,
-        Aug: 7,
-        Sep: 8,
-        Oct: 9,
-        Nov: 10,
-        Dec: 11,
+      /* ===== 01 슬라이드용 데이터 ===== */
+      const BG_CONTENT = {
+        d2: {
+          step1:
+            "재택 환경에서 호흡 상태 악화를 조기에 인지하지 못해 응급 내원과 재입원이 반복됨.",
+          step2:
+            "연속 신호 기반으로 상태를 인지·판단하는 Agentic AI 구조 필요.",
+          step3:
+            "고빈도 모니터링과 즉각적 중재가 가능한 오케스트레이션 구조로 설계.",
+        },
+        d5: {
+          step1:
+            "위암 수술 후 합병증 징후를 환자가 인지하지 못해 치료 지연 발생.",
+          step2: "이벤트 중심 상태 변화를 탐지하는 Agentic AI 도입.",
+          step3: "합병증 징후 기반 단계적 내원 판단 구조로 설계.",
+        },
+        d6: {
+          step1:
+            "항암 치료 과정에서 부작용과 생활 관리 실패로 치료 순응도 저하.",
+          step2: "생활 데이터 기반 판단·중재를 수행하는 Agentic AI 필요.",
+          step3: "중·장기 추적과 행동 가이드를 포함한 구조로 설계.",
+        },
       };
 
-      function firstMondayOfMonth(year, monthIdx) {
-        const d = new Date(year, monthIdx, 1);
-        const day = d.getDay(); // 0=Sun,1=Mon
-        const diff = day === 0 ? 1 : day === 1 ? 0 : 8 - day;
-        d.setDate(d.getDate() + diff);
-        return d;
+      /* ===== 01 슬라이드 렌더링 ===== */
+      const bgTabs = document.getElementById("bgTabs");
+      const bgContent = document.getElementById("bgContent");
+
+      function renderBgTabs() {
+        bgTabs.innerHTML = "";
+        DISEASES.forEach((d) => {
+          const b = document.createElement("button");
+          b.className = "tab" + (d.id === CURRENT_DISEASE ? " active" : "");
+          b.textContent = `${d.label} (${d.title})`;
+          b.onclick = () => setDiseaseGlobal(d.id);
+          bgTabs.appendChild(b);
+        });
       }
 
-      function weekToDateRange(weekLabel) {
-        // "Mar W2"
-        if (!weekLabel) return { start: "", end: "", year: YEAR, month: "" };
-        const m = weekLabel.match(/^([A-Za-z]{3})\s+W(\d)$/);
-        if (!m) return { start: "", end: "", year: YEAR, month: "" };
-
-        const mon = m[1];
-        const w = Number(m[2]);
-        const monthIdx = MONTH_MAP[mon];
-
-        const firstMon = firstMondayOfMonth(YEAR, monthIdx);
-        const start = new Date(firstMon);
-        start.setDate(firstMon.getDate() + (w - 1) * 7);
-
-        const end = new Date(start);
-        end.setDate(start.getDate() + 4); // 금요일
-
-        return {
-          year: YEAR,
-          month: `${YEAR}-${String(monthIdx + 1).padStart(2, "0")}`,
-          week: weekLabel,
-          start: start.toISOString().slice(0, 10),
-          end: end.toISOString().slice(0, 10),
-        };
+      function renderBgContent() {
+        const c = BG_CONTENT[CURRENT_DISEASE];
+        bgContent.innerHTML = `
+    ${stepBox("개발 배경", c.step1)}
+    ${arrow()}
+    ${stepBox("Agentic AI 도입", c.step2)}
+    ${arrow()}
+    ${stepBox("개발 전략", c.step3)}
+  `;
       }
-      renderAll();
 
-      /* =====================
-   TASK DATE RANGE (min/max of steps)
-===================== */
-      function taskDateRange(task) {
-        const ranges = task.steps
-          .map((s) => weekToDateRange(s.week))
-          .filter((r) => r.start && r.end);
-
-        if (ranges.length === 0) {
-          return { start: "", end: "" };
-        }
-
-        const start = ranges.reduce(
-          (min, r) => (r.start < min ? r.start : min),
-          ranges[0].start,
-        );
-
-        const end = ranges.reduce(
-          (max, r) => (r.end > max ? r.end : max),
-          ranges[0].end,
-        );
-
-        return { start, end };
+      function stepBox(title, text) {
+        return `
+    <div style="display:flex; gap:14px; margin-bottom:14px;">
+      <div class="card" style="min-width:140px; font-weight:800; text-align:center;">${title}</div>
+      <div class="card">${text}</div>
+    </div>
+  `;
       }
+      function arrow() {
+        return `<div style="text-align:center; color:#94a3b8;">↓</div>`;
+      }
+
+      /* ===== 전역 질환 변경 ===== */
+      function setDiseaseGlobal(id) {
+        CURRENT_DISEASE = id;
+        renderBgTabs();
+        renderBgContent();
+        setDisease(id); // 기존 02번 슬라이드 내용도 함께 변경
+      }
+
+      /* ===== 초기화 ===== */
+      renderBgTabs();
+      renderBgContent();
     </script>
   </body>
 </html>

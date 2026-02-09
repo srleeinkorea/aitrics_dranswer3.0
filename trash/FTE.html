@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="ko" data-mode="official">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>월별 개인별 Task 캘린더 → 간트 (10명 고정) 최종본</title>
+
+    <style>
+      /* ===============================
+   GLOBAL / FONT / BASE
+   =============================== */
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        background: #f8f9fa;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+          "Malgun Gothic", "Noto Sans KR", Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #1f2937;
+      }
+
+      .container {
+        max-width: 1500px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 40px 48px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      /* ===============================
+   HEADINGS
+   =============================== */
+      h1 {
+        font-size: 2em;
+        margin: 0 0 12px 0;
+        padding-bottom: 10px;
+        border-bottom: 4px solid #1e40af;
+        color: #111827;
+      }
+
+      h2 {
+        margin-top: 36px;
+        margin-bottom: 12px;
+        font-size: 1.4em;
+        color: #1e40af;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 8px;
+      }
+
+      /* ===============================
+   NOTICE / META
+   =============================== */
+      .notice {
+        background: #fff3cd;
+        border-left: 6px solid #facc15;
+        padding: 14px 16px;
+        margin: 16px 0;
+        font-weight: 800;
+        color: #92400e;
+      }
+
+      .meta {
+        font-size: 12px;
+        color: #6b7280;
+        margin-top: 8px;
+      }
+
+      /* ===============================
+   FILTER BAR (월 / 분기 토글)
+   =============================== */
+      .filter-bar {
+        margin: 18px 0 12px 0;
+      }
+
+      .filter-bar button {
+        padding: 6px 14px;
+        margin-right: 6px;
+        border-radius: 6px;
+        border: 1px solid #c7d2fe;
+        background: #eef2ff;
+        color: #1e3a8a;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .filter-bar button:hover {
+        background: #e0e7ff;
+      }
+
+      .filter-bar button.active {
+        background: #1e40af;
+        color: #ffffff;
+        border-color: #1e40af;
+      }
+
+      /* ===============================
+   TABLE WRAPPER
+   =============================== */
+      .wrap {
+        overflow-x: auto;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        margin-top: 12px;
+      }
+
+      /* ===============================
+   TABLE BASE
+   =============================== */
+      table {
+        border-collapse: collapse;
+        width: max-content;
+        min-width: 1300px;
+        font-size: 12.5px;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 8px 6px;
+        text-align: center;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+
+      thead th {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        background: #1e40af;
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      tbody tr:nth-child(even) td {
+        background: #fafafa;
+      }
+
+      /* ===============================
+   STICKY NAME COLUMN
+   =============================== */
+      .stickyCol {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: #ffffff;
+        border-right: 1px solid #e5e7eb;
+        min-width: 260px;
+        max-width: 260px;
+        text-align: left;
+        padding-left: 12px;
+        white-space: normal;
+      }
+
+      thead .stickyCol {
+        z-index: 4;
+        background: #1e40af;
+        color: #ffffff;
+      }
+
+      .stickyCol b {
+        display: block;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .stickyCol div {
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      /* ===============================
+   CELL
+   =============================== */
+      .cell {
+        width: 74px;
+        min-width: 74px;
+        max-width: 74px;
+      }
+
+      /* ===============================
+   GANTT BAR
+   =============================== */
+      .bar {
+        height: 10px;
+        border-radius: 999px;
+        border: 1px solid #c7d2fe;
+        background: #e5e7eb;
+        margin: 0 auto 6px auto;
+      }
+
+      .bar.on {
+        background: #1e40af;
+        border-color: #1e40af;
+      }
+
+      .bar.risk {
+        background: #dc2626;
+        border-color: #991b1b;
+      }
+
+      /* ===============================
+   TASK TAG / FTE
+   =============================== */
+      .tag {
+        display: block;
+        font-size: 11px;
+        line-height: 1.25;
+        color: #111827;
+        white-space: normal;
+      }
+
+      .fte {
+        display: block;
+        margin-top: 4px;
+        font-size: 11px;
+        color: #6b7280;
+      }
+
+      /* ===============================
+   FOOTER
+   =============================== */
+      .foot {
+        margin-top: 36px;
+        text-align: center;
+        font-weight: 800;
+        font-size: 13px;
+        color: #374151;
+      }
+
+      /* ===============================
+   PRINT (PDF 출력 대응)
+   =============================== */
+      @media print {
+        body {
+          background: #ffffff;
+          padding: 0;
+        }
+
+        .container {
+          box-shadow: none;
+          padding: 24px;
+        }
+
+        .filter-bar {
+          display: none;
+        }
+
+        thead th {
+          background: #111827 !important;
+          color: #ffffff !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>월별 개인별 Task 캘린더 → 간트 변환 (10명 고정 운영) 최종본</h1>
+
+      <div class="notice">
+        본 프로젝트는 전 기간 동안 <b>월별 총 투입 인원 = 10명(FTE)</b>으로 고정
+        운영됨<br />
+        <b>본 진행률은 산출물 승인 또는 인허가 완료를 의미하지 않음</b>
+      </div>
+
+      <div>
+        <span class="pill">범위</span
+        ><span class="pill mono">2025-02 ~ 2027-12</span>
+        <span class="pill">표기</span><span class="pill">월별(YYYY-MM)</span>
+        <span class="pill warn">연말 미완 리스크</span
+        ><span class="pill warn mono">2026-12</span>
+      </div>
+
+      <div class="legend">
+        <span
+          ><span
+            class="swatch"
+            style="background: #0056b3; border-color: #004493"
+          ></span>
+          해당 월 주요 Task 수행</span
+        >
+        <span
+          ><span
+            class="swatch"
+            style="background: #d6e3ff; border-color: #b8cdfc"
+          ></span>
+          해당 월 비중 낮음/대기(표시 없음)</span
+        >
+        <span
+          ><span
+            class="swatch"
+            style="background: #c0392b; border-color: #962d20"
+          ></span>
+          연말 미완 리스크 구간(2026-12 포함)</span
+        >
+      </div>
+
+      <p class="meta">
+        간트 셀 구성: 상단 바(수행 여부) + Task 태그(월별 핵심 수행) + FTE
+        표기.<br />
+        본 간트는 “월별 개인별 FTE 분해표”의 고정 제약(합계 10.0)을 그대로
+        사용하며, Task 태그는 WBS Step에 직접 연결되는 월별 핵심 작업을
+        표시합니다.
+      </p>
+
+      <h2>개인별 월간 Task 간트</h2>
+      <div class="wrap">
+        <table id="gantt"></table>
+      </div>
+
+      <div class="foot">END OF DOCUMENT</div>
+    </div>
+    <script>
+      /* =========================
+   1) 인원 정의
+   ========================= */
+      const people = [
+        { name: "김도현", role: "총괄 PM" },
+        { name: "박지은", role: "데이터 엔지니어(S)" },
+        { name: "이성훈", role: "데이터 엔지니어(M)" },
+        { name: "최민수", role: "ML Scientist" },
+        { name: "정유진", role: "AI Engineer" },
+        { name: "한상우", role: "Backend Engineer" },
+        { name: "오지현", role: "App/Frontend Engineer" },
+        { name: "윤서연", role: "DevOps Engineer" },
+        { name: "장현아", role: "RA(Regulatory)" },
+        { name: "Dr. K", role: "의료자문(MD)" },
+      ];
+
+      /* =========================
+   2) 월 계산 유틸
+   ========================= */
+      function ymToNum(ym) {
+        const [y, m] = ym.split("-").map(Number);
+        return y * 12 + (m - 1);
+      }
+      function numToYm(n) {
+        const y = Math.floor(n / 12);
+        const m = (n % 12) + 1;
+        return `${y}-${String(m).padStart(2, "0")}`;
+      }
+      function monthsBetweenInclusive(a, b) {
+        const s = ymToNum(a),
+          e = ymToNum(b);
+        const arr = [];
+        for (let i = s; i <= e; i++) arr.push(numToYm(i));
+        return arr;
+      }
+      function r1(x) {
+        return Math.round(x * 10) / 10;
+      }
+
+      const months = monthsBetweenInclusive("2025-02", "2027-12");
+
+      /* =========================
+   3) 월별 개인별 FTE 패턴
+   - 항상 합계 = 10.0
+   ========================= */
+      function ftePattern(month) {
+        const n = ymToNum(month);
+        let m = {};
+
+        if (n <= ymToNum("2025-03")) {
+          m = {
+            김도현: 1.2,
+            박지은: 1.1,
+            이성훈: 0.9,
+            최민수: 0.9,
+            정유진: 0.7,
+            한상우: 0.8,
+            오지현: 0.7,
+            윤서연: 0.6,
+            장현아: 1.6,
+            "Dr. K": 0.5,
+          };
+        } else if (n <= ymToNum("2025-06")) {
+          m = {
+            김도현: 1.0,
+            박지은: 1.3,
+            이성훈: 1.2,
+            최민수: 1.4,
+            정유진: 1.0,
+            한상우: 0.9,
+            오지현: 0.7,
+            윤서연: 0.6,
+            장현아: 0.5,
+            "Dr. K": 0.4,
+          };
+        } else if (n <= ymToNum("2025-11")) {
+          m = {
+            김도현: 1.0,
+            박지은: 0.8,
+            이성훈: 0.7,
+            최민수: 1.4,
+            정유진: 1.2,
+            한상우: 1.2,
+            오지현: 1.1,
+            윤서연: 0.6,
+            장현아: 0.5,
+            "Dr. K": 0.5,
+          };
+        } else if (month === "2025-12") {
+          m = {
+            김도현: 1.1,
+            박지은: 0.7,
+            이성훈: 0.7,
+            최민수: 1.0,
+            정유진: 1.0,
+            한상우: 1.0,
+            오지현: 0.9,
+            윤서연: 0.8,
+            장현아: 1.0,
+            "Dr. K": 0.8,
+          };
+        } else if (n <= ymToNum("2026-06")) {
+          m = {
+            김도현: 1.0,
+            박지은: 0.6,
+            이성훈: 0.6,
+            최민수: 0.9,
+            정유진: 0.8,
+            한상우: 0.9,
+            오지현: 0.7,
+            윤서연: 1.4,
+            장현아: 1.7,
+            "Dr. K": 0.5,
+          };
+        } else if (n <= ymToNum("2026-11")) {
+          m = {
+            김도현: 1.0,
+            박지은: 0.5,
+            이성훈: 0.5,
+            최민수: 1.6,
+            정유진: 0.9,
+            한상우: 0.7,
+            오지현: 0.6,
+            윤서연: 0.8,
+            장현아: 1.8,
+            "Dr. K": 0.6,
+          };
+        } else if (month === "2026-12") {
+          m = {
+            김도현: 1.0,
+            박지은: 0.5,
+            이성훈: 0.5,
+            최민수: 1.8,
+            정유진: 0.9,
+            한상우: 0.6,
+            오지현: 0.5,
+            윤서연: 0.7,
+            장현아: 1.5,
+            "Dr. K": 0.5,
+          };
+        } else if (n <= ymToNum("2027-06")) {
+          m = {
+            김도현: 0.9,
+            박지은: 0.6,
+            이성훈: 0.9,
+            최민수: 0.8,
+            정유진: 0.7,
+            한상우: 0.6,
+            오지현: 0.5,
+            윤서연: 1.2,
+            장현아: 1.2,
+            "Dr. K": 0.6,
+          };
+        } else {
+          m = {
+            김도현: 0.8,
+            박지은: 0.7,
+            이성훈: 1.0,
+            최민수: 0.6,
+            정유진: 0.5,
+            한상우: 0.6,
+            오지현: 0.4,
+            윤서연: 1.5,
+            장현아: 1.1,
+            "Dr. K": 0.8,
+          };
+        }
+        return m;
+      }
+
+      const fteByMonth = {};
+      months.forEach((mon) => (fteByMonth[mon] = ftePattern(mon)));
+
+      /* =========================
+   4) 월별 개인별 핵심 Task 태그
+   ========================= */
+      function taskTag(person, month) {
+        const n = ymToNum(month);
+        let phase = "";
+        if (n <= ymToNum("2025-03")) phase = "A";
+        else if (n <= ymToNum("2025-06")) phase = "B";
+        else if (n <= ymToNum("2025-11")) phase = "C";
+        else if (month === "2025-12") phase = "D";
+        else if (n <= ymToNum("2026-06")) phase = "E";
+        else if (n <= ymToNum("2026-12")) phase = "F";
+        else if (n <= ymToNum("2027-06")) phase = "G";
+        else phase = "H";
+
+        const map = {
+          김도현: {
+            A: "WBS·IRB 통합",
+            B: "일정 통제",
+            C: "개발 피크 관리",
+            D: "통합 안정화",
+            E: "SaMD 일정",
+            F: "연말 리스크",
+            G: "운영 KPI",
+            H: "운영 안정",
+          },
+          박지은: {
+            A: "데이터 정의",
+            B: "FHIR 매핑",
+            C: "구조 동결",
+            D: "정합성 점검",
+            E: "문서 근거",
+            F: "Dual 검증",
+            G: "다기관 검증",
+            H: "구조 유지",
+          },
+          이성훈: {
+            A: "수집 규칙",
+            B: "품질 룰",
+            C: "품질 운영",
+            D: "품질 리포트",
+            E: "운영 품질",
+            F: "연말 안정",
+            G: "이질성 분석",
+            H: "정례 품질",
+          },
+          최민수: {
+            A: "학습 정의",
+            B: "모델 학습",
+            C: "모델 개선",
+            D: "릴리즈 후보",
+            E: "성능 정리",
+            F: "Dual 최종",
+            G: "재튜닝",
+            H: "드리프트",
+          },
+          정유진: {
+            A: "Agent 설계",
+            B: "RAG 설계",
+            C: "Agent 구현",
+            D: "폴백 강화",
+            E: "감사로그",
+            F: "Dual 연동",
+            G: "유지보수",
+            H: "안정화",
+          },
+          한상우: {
+            A: "API 스켈레톤",
+            B: "연계 API",
+            C: "Orchestration",
+            D: "통합 테스트",
+            E: "운영 API",
+            F: "핫픽스",
+            G: "장애 분석",
+            H: "유지보수",
+          },
+          오지현: {
+            A: "UI 설계",
+            B: "UI 구현",
+            C: "앱/대시보드",
+            D: "UI Freeze",
+            E: "경량 개선",
+            F: "UI 동결",
+            G: "운영 개선",
+            H: "유지",
+          },
+          윤서연: {
+            A: "Dev 환경",
+            B: "CI 초안",
+            C: "CI/모니터",
+            D: "릴리즈",
+            E: "Prod CI",
+            F: "안정화",
+            G: "24/7 운영",
+            H: "SRE",
+          },
+          장현아: {
+            A: "IRB",
+            B: "SaMD 구조",
+            C: "전략 수립",
+            D: "정합 점검",
+            E: "문서 작성",
+            F: "식약처 제출",
+            G: "PMS",
+            H: "변경 영향",
+          },
+          "Dr. K": {
+            A: "임상 기준",
+            B: "트리아지 검토",
+            C: "임상 검수",
+            D: "통합 검증",
+            E: "임상 자문",
+            F: "최종 검수",
+            G: "성과 평가",
+            H: "정례 검토",
+          },
+        };
+        return map[person]?.[phase] || "";
+      }
+
+      /* =========================
+   5) 간트 렌더링
+   ========================= */
+      (function render() {
+        const tbl = document.getElementById("gantt");
+        const thead = document.createElement("thead");
+        const trH = document.createElement("tr");
+
+        const th0 = document.createElement("th");
+        th0.className = "stickyCol";
+        th0.textContent = "인원(직무)";
+        trH.appendChild(th0);
+
+        months.forEach((m) => {
+          const th = document.createElement("th");
+          th.textContent = m;
+          trH.appendChild(th);
+        });
+        thead.appendChild(trH);
+
+        const tbody = document.createElement("tbody");
+
+        people.forEach((p) => {
+          const tr = document.createElement("tr");
+          const tdName = document.createElement("td");
+          tdName.className = "stickyCol";
+          tdName.innerHTML = `<b>${p.name}</b><div>${p.role}</div>`;
+          tr.appendChild(tdName);
+
+          months.forEach((m) => {
+            const fte = fteByMonth[m][p.name] || 0;
+            const tag = taskTag(p.name, m);
+            const td = document.createElement("td");
+            const isRisk = m === "2026-12";
+            const on = fte >= 0.5;
+            td.innerHTML = `
+        <div class="bar ${isRisk && on ? "risk" : on ? "on" : ""}"></div>
+        <div>${on ? tag : ""}</div>
+        <div>${r1(fte).toFixed(1)} FTE</div>
+      `;
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+
+        tbl.innerHTML = "";
+        tbl.appendChild(thead);
+        tbl.appendChild(tbody);
+      })();
+
+      /* =========================
+   월 / 분기(Q) 토글 기능
+   ========================= */
+
+      let currentView = "month";
+
+      function setView(view) {
+        currentView = view;
+
+        document.getElementById("btnMonth").classList.remove("active");
+        document.getElementById("btnQuarter").classList.remove("active");
+
+        if (view === "month") {
+          document.getElementById("btnMonth").classList.add("active");
+          renderGanttByMonth();
+        } else {
+          document.getElementById("btnQuarter").classList.add("active");
+          renderGanttByQuarter();
+        }
+      }
+
+      /* -------------------------
+   분기 계산 유틸
+   ------------------------- */
+      function getQuarter(ym) {
+        const [y, m] = ym.split("-").map(Number);
+        const q = Math.floor((m - 1) / 3) + 1;
+        return `${y}-Q${q}`;
+      }
+
+      /* -------------------------
+   월별 렌더 (기존)
+   ------------------------- */
+      function renderGanttByMonth() {
+        render(); // 기존 월별 render 재호출
+      }
+
+      /* -------------------------
+   분기별 렌더
+   ------------------------- */
+      function renderGanttByQuarter() {
+        const tbl = document.getElementById("gantt");
+        const quarters = [...new Set(months.map(getQuarter))];
+
+        const thead = document.createElement("thead");
+        const trH = document.createElement("tr");
+
+        const th0 = document.createElement("th");
+        th0.className = "stickyCol";
+        th0.textContent = "인원(직무)";
+        trH.appendChild(th0);
+
+        quarters.forEach((q) => {
+          const th = document.createElement("th");
+          th.textContent = q;
+          trH.appendChild(th);
+        });
+        thead.appendChild(trH);
+
+        const tbody = document.createElement("tbody");
+
+        people.forEach((p) => {
+          const tr = document.createElement("tr");
+
+          const tdName = document.createElement("td");
+          tdName.className = "stickyCol";
+          tdName.innerHTML = `<b>${p.name}</b><div>${p.role}</div>`;
+          tr.appendChild(tdName);
+
+          quarters.forEach((q) => {
+            const monthsInQ = months.filter((m) => getQuarter(m) === q);
+            const avgFte =
+              monthsInQ.reduce((s, m) => s + (fteByMonth[m][p.name] || 0), 0) /
+              monthsInQ.length;
+
+            const td = document.createElement("td");
+            const on = avgFte >= 0.5;
+
+            td.innerHTML = `
+        <div class="bar ${on ? "on" : ""}"></div>
+        <div class="fte">${avgFte.toFixed(1)} FTE</div>
+      `;
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        });
+
+        tbl.innerHTML = "";
+        tbl.appendChild(thead);
+        tbl.appendChild(tbody);
+      }
+    </script>
+  </body>
+</html>

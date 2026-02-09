@@ -1,0 +1,1336 @@
+
+  <body>
+    <!-- 헤더 섹션 -->
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <a
+            href="https://sites.google.com/aitrics.com/dranswerteam/home"
+            class="logo-link"
+            aria-label="DR.ANSWER Team Home으로 이동"
+          >
+            <div class="logo">
+              Dr<span class="dot">.</span>answer <span class="ver">3.0</span>
+            </div>
+          </a>
+
+          <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="테마 전환"
+          >
+            <span class="theme-icon" aria-hidden="true" id="themeIcon"></span>
+            <span class="theme-label" id="themeLabel">Theme</span>
+          </button>
+        </div>
+
+        <div class="header-sub">
+          TRI-Agentic AI<br />Technical Specification
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="container">
+      <!-- 히어로 섹션 -->
+      <section class="hero" aria-labelledby="hero-title">
+        <span class="badge">과학기술정보통신부 · NIPA 지원사업</span>
+        <h1 id="hero-title">
+          초개인화 질환 관리를 통한<br />예후 향상 지원
+          <span style="color: var(--accent)">Agentic AI</span> 토탈 솔루션
+        </h1>
+        <p class="hero-desc">
+          본 과제는 6대 고위험 질환을 대상으로, 다기관 데이터와 웨어러블을
+          결합한 TRI-Agentic AI 기반 예후 관리 서비스: 자가 선별(Self-Triage),
+          예후 예측(Prognosis), 초개인화 관리(Individualized Care)를
+          개발·실증하여, 치료 이후까지 책임지는 국가 차원의 차세대 의료 AI 표준
+          모델을 구축하는 사업입니다.
+        </p>
+
+        <!-- ✅ A 스타일(기술 도식/와이어프레임) SVG : 그라데이션 없음 -->
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- blueprint grid (no gradient) -->
+              <pattern
+                id="gridSm"
+                width="16"
+                height="16"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M16 0H0V16"
+                  fill="none"
+                  stroke="var(--ink-soft)"
+                  stroke-width="1"
+                />
+              </pattern>
+              <pattern
+                id="gridLg"
+                width="80"
+                height="80"
+                patternUnits="userSpaceOnUse"
+              >
+                <rect width="80" height="80" fill="url(#gridSm)" />
+                <path
+                  d="M80 0H0V80"
+                  fill="none"
+                  stroke="var(--ink)"
+                  stroke-width="1"
+                />
+              </pattern>
+
+              <filter
+                id="softShadow"
+                x="-20%"
+                y="-20%"
+                width="140%"
+                height="140%"
+              >
+                <feDropShadow
+                  dx="0"
+                  dy="10"
+                  stdDeviation="12"
+                  flood-color="rgba(0,0,0,0.25)"
+                />
+              </filter>
+            </defs>
+
+            <!-- background -->
+            <rect x="0" y="0" width="1200" height="360" fill="url(#gridLg)" />
+            <rect
+              x="24"
+              y="24"
+              width="1152"
+              height="312"
+              rx="18"
+              fill="rgba(148,163,184,0.03)"
+              stroke="var(--border)"
+            />
+
+            <!-- left lane: intake -->
+            <g filter="url(#softShadow)">
+              <rect
+                x="72"
+                y="78"
+                width="260"
+                height="204"
+                rx="18"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <rect
+                x="72"
+                y="78"
+                width="260"
+                height="36"
+                rx="18"
+                fill="rgba(148,163,184,0.06)"
+              />
+              <text
+                x="92"
+                y="102"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                DATA INTAKE
+              </text>
+
+              <!-- modules -->
+              <g>
+                <rect
+                  x="92"
+                  y="132"
+                  width="220"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="110"
+                  y="161"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  EMR / OCS / PACS
+                </text>
+                <circle cx="304" cy="156" r="6" fill="var(--accent)" />
+              </g>
+
+              <g>
+                <rect
+                  x="92"
+                  y="192"
+                  width="220"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="110"
+                  y="221"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  PHR / PRO
+                </text>
+                <circle cx="304" cy="216" r="6" fill="var(--accent-3)" />
+              </g>
+
+              <g>
+                <rect
+                  x="92"
+                  y="252"
+                  width="220"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="110"
+                  y="281"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  IoT / Wearable
+                </text>
+                <circle cx="304" cy="276" r="6" fill="var(--accent-2)" />
+              </g>
+            </g>
+
+            <!-- center: orchestration -->
+            <g filter="url(#softShadow)">
+              <rect
+                x="388"
+                y="62"
+                width="420"
+                height="236"
+                rx="18"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <rect
+                x="388"
+                y="62"
+                width="420"
+                height="36"
+                rx="18"
+                fill="rgba(148,163,184,0.06)"
+              />
+              <text
+                x="408"
+                y="86"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                AGENTIC ORCHESTRATION LAYER
+              </text>
+
+              <rect
+                x="412"
+                y="114"
+                width="372"
+                height="86"
+                rx="16"
+                fill="rgba(18,24,38,0.25)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="432"
+                y="144"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                TRI-Agentic Core
+              </text>
+              <text
+                x="432"
+                y="168"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                Self-Triage · Prognosis · Individualized Care
+              </text>
+
+              <!-- chips -->
+              <g>
+                <rect
+                  x="432"
+                  y="214"
+                  width="112"
+                  height="38"
+                  rx="999"
+                  fill="rgba(45,212,191,0.10)"
+                  stroke="var(--accent-border)"
+                />
+                <text
+                  x="460"
+                  y="238"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--accent-text)"
+                >
+                  Triage
+                </text>
+              </g>
+              <g>
+                <rect
+                  x="552"
+                  y="214"
+                  width="124"
+                  height="38"
+                  rx="999"
+                  fill="rgba(139,92,246,0.10)"
+                  stroke="rgba(139,92,246,0.28)"
+                />
+                <text
+                  x="580"
+                  y="238"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--accent2-label)"
+                >
+                  Prognosis
+                </text>
+              </g>
+              <g>
+                <rect
+                  x="684"
+                  y="214"
+                  width="100"
+                  height="38"
+                  rx="999"
+                  fill="rgba(16,185,129,0.10)"
+                  stroke="rgba(16,185,129,0.28)"
+                />
+                <text
+                  x="712"
+                  y="238"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--accent-3)"
+                >
+                  Care
+                </text>
+              </g>
+
+              <!-- ports -->
+              <circle cx="388" cy="156" r="7" fill="var(--accent)" />
+              <circle cx="388" cy="216" r="7" fill="var(--accent-3)" />
+              <circle cx="388" cy="276" r="7" fill="var(--accent-2)" />
+
+              <circle cx="808" cy="140" r="7" fill="var(--accent)" />
+              <circle cx="808" cy="180" r="7" fill="var(--accent-2)" />
+              <circle cx="808" cy="220" r="7" fill="var(--accent-3)" />
+              <circle cx="808" cy="260" r="7" fill="var(--accent)" />
+            </g>
+
+            <!-- right lane: actions -->
+            <g filter="url(#softShadow)">
+              <rect
+                x="864"
+                y="78"
+                width="264"
+                height="204"
+                rx="18"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <rect
+                x="864"
+                y="78"
+                width="264"
+                height="36"
+                rx="18"
+                fill="rgba(148,163,184,0.06)"
+              />
+              <text
+                x="884"
+                y="102"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                CARE ACTIONS
+              </text>
+
+              <g>
+                <rect
+                  x="884"
+                  y="132"
+                  width="224"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="902"
+                  y="161"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  Alert / Guidance
+                </text>
+                <circle cx="884" cy="156" r="6" fill="var(--accent)" />
+              </g>
+
+              <g>
+                <rect
+                  x="884"
+                  y="192"
+                  width="224"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="902"
+                  y="221"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  Clinician Link
+                </text>
+                <circle cx="884" cy="216" r="6" fill="var(--accent-2)" />
+              </g>
+
+              <g>
+                <rect
+                  x="884"
+                  y="252"
+                  width="224"
+                  height="48"
+                  rx="12"
+                  fill="rgba(18,24,38,0.25)"
+                  stroke="var(--ink)"
+                />
+                <text
+                  x="902"
+                  y="281"
+                  font-size="12"
+                  font-weight="900"
+                  fill="var(--text-dim)"
+                >
+                  Longitudinal Follow-up
+                </text>
+                <circle cx="884" cy="276" r="6" fill="var(--accent-3)" />
+              </g>
+            </g>
+
+            <!-- wiring / flows (wireframe, dashed) -->
+            <g fill="none" stroke-linecap="round" stroke-width="2">
+              <!-- EMR -> core -->
+              <path d="M332 156H372" stroke="var(--ink-strong)" opacity="0.6" />
+              <path
+                d="M332 156C350 156 354 156 372 156"
+                stroke="var(--ink-strong)"
+                opacity="0.6"
+                stroke-dasharray="6 6"
+              />
+              <path d="M372 156H388" stroke="var(--ink-strong)" opacity="0.6" />
+
+              <!-- PHR -> core -->
+              <path
+                d="M332 216H388"
+                stroke="var(--ink-strong)"
+                opacity="0.55"
+                stroke-dasharray="6 6"
+              />
+
+              <!-- IoT -> core -->
+              <path
+                d="M332 276H388"
+                stroke="var(--ink-strong)"
+                opacity="0.55"
+                stroke-dasharray="6 6"
+              />
+
+              <!-- core -> actions (key path highlights) -->
+              <path
+                d="M808 140H864"
+                stroke="var(--accent)"
+                opacity="0.55"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M808 180H864"
+                stroke="var(--accent-2)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M808 220H864"
+                stroke="var(--accent-3)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M808 260H864"
+                stroke="var(--accent)"
+                opacity="0.35"
+                stroke-dasharray="7 6"
+              />
+            </g>
+
+            <!-- subtle callouts -->
+            <g
+              font-family="Pretendard, system-ui, sans-serif"
+              font-size="11"
+              font-weight="900"
+              fill="var(--text-dim)"
+              opacity="0.9"
+            >
+              <text x="92" y="56">SYSTEM OVERVIEW (wireframe)</text>
+              <text x="884" y="56">OUTPUTS & WORKFLOWS</text>
+            </g>
+          </svg>
+          <div class="hero-visual-caption">
+            Blueprint: TRI-Agentic Architecture
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <label>연구개발기간</label>
+            <p>2025. 10. 01 ~ 2028. 12. 31</p>
+          </div>
+          <div class="info-item">
+            <label>주관기관</label>
+            <p>세브란스병원 (연세대 산단)</p>
+          </div>
+          <div class="info-item">
+            <label>1차년도 예산</label>
+            <p>정부지원금 38억원</p>
+          </div>
+          <div class="info-item">
+            <label>성과 목표</label>
+            <p>SCI 논문 7건 / 인허가 7건</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRI-Agentic AI 아키텍처 -->
+      <section aria-labelledby="tri-architecture">
+        <div class="section-title">
+          <h2 id="tri-architecture">TRI-Agentic AI Architecture</h2>
+          <p>EMR + AI + Device의 전격적 연동을 통한 Holistic Care 실현</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="integration-box">
+            <div class="int-node">
+              <div class="node-circle" aria-label="EMR 연계">EMR</div>
+              <h4 style="margin: 0; color: var(--accent)">의료 데이터 연계</h4>
+              <p style="font-size: 13px; color: var(--text-dim)">
+                개인 의료데이터(PHR) 기반<br />신뢰 기반 서비스 제공
+              </p>
+            </div>
+            <div class="int-node">
+              <div
+                class="node-circle"
+                style="border-color: var(--accent-2); color: var(--accent-2)"
+                aria-label="AI 에이전트"
+              >
+                AI
+              </div>
+              <h4 style="margin: 0; color: var(--accent-2)">지능형 에이전트</h4>
+              <p style="font-size: 13px; color: var(--text-dim)">
+                자가 선별 및 위험 예측<br />의료진 진료 현장 활용
+              </p>
+            </div>
+            <div class="int-node">
+              <div
+                class="node-circle"
+                style="border-color: var(--accent-3); color: var(--accent-3)"
+                aria-label="디바이스 모니터링"
+              >
+                DEVICE
+              </div>
+              <h4 style="margin: 0; color: var(--accent-3)">실시간 모니터링</h4>
+              <p style="font-size: 13px; color: var(--text-dim)">
+                IoT 디바이스 데이터 수집<br />일상 속 상시적 관리
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ✅ A 스타일(기술 도식) 보조 SVG(그림) -->
+        <div class="arch-visual" aria-hidden="true">
+          <svg viewBox="0 0 1200 240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="gridSm2"
+                width="14"
+                height="14"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M14 0H0V14"
+                  fill="none"
+                  stroke="var(--ink-soft)"
+                  stroke-width="1"
+                />
+              </pattern>
+              <pattern
+                id="gridLg2"
+                width="70"
+                height="70"
+                patternUnits="userSpaceOnUse"
+              >
+                <rect width="70" height="70" fill="url(#gridSm2)" />
+                <path
+                  d="M70 0H0V70"
+                  fill="none"
+                  stroke="var(--ink)"
+                  stroke-width="1"
+                />
+              </pattern>
+            </defs>
+
+            <rect x="0" y="0" width="1200" height="240" fill="url(#gridLg2)" />
+            <rect
+              x="24"
+              y="24"
+              width="1152"
+              height="192"
+              rx="18"
+              fill="rgba(148,163,184,0.03)"
+              stroke="var(--border)"
+            />
+
+            <!-- pipeline boxes -->
+            <g>
+              <rect
+                x="72"
+                y="70"
+                width="270"
+                height="120"
+                rx="16"
+                fill="rgba(18,24,38,0.20)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="92"
+                y="98"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                Ingestion
+              </text>
+              <text
+                x="92"
+                y="122"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                EMR/PHR/Device
+              </text>
+              <circle cx="342" cy="130" r="6" fill="var(--accent)" />
+              <circle cx="342" cy="150" r="6" fill="var(--accent-3)" />
+              <circle cx="342" cy="170" r="6" fill="var(--accent-2)" />
+            </g>
+
+            <g>
+              <rect
+                x="420"
+                y="56"
+                width="360"
+                height="148"
+                rx="18"
+                fill="rgba(18,24,38,0.20)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="440"
+                y="86"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                Orchestration
+              </text>
+              <text
+                x="440"
+                y="110"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                Routing · Guardrails · Personalization
+              </text>
+
+              <rect
+                x="440"
+                y="128"
+                width="320"
+                height="56"
+                rx="14"
+                fill="rgba(148,163,184,0.05)"
+                stroke="var(--border)"
+              />
+              <text
+                x="460"
+                y="162"
+                font-size="12"
+                font-weight="900"
+                fill="var(--text-dim)"
+              >
+                Agentic Core (TRI)
+              </text>
+
+              <circle cx="780" cy="96" r="6" fill="var(--accent-2)" />
+              <circle cx="780" cy="116" r="6" fill="var(--accent)" />
+              <circle cx="780" cy="136" r="6" fill="var(--accent-3)" />
+            </g>
+
+            <g>
+              <rect
+                x="858"
+                y="70"
+                width="270"
+                height="120"
+                rx="16"
+                fill="rgba(18,24,38,0.20)"
+                stroke="var(--ink)"
+              />
+              <text
+                x="878"
+                y="98"
+                font-size="12"
+                font-weight="950"
+                fill="var(--text)"
+              >
+                Actions
+              </text>
+              <text
+                x="878"
+                y="122"
+                font-size="12"
+                font-weight="800"
+                fill="var(--text-dim)"
+              >
+                Alert · Guidance · Link
+              </text>
+              <circle cx="858" cy="130" r="6" fill="var(--accent)" />
+              <circle cx="858" cy="150" r="6" fill="var(--accent-2)" />
+              <circle cx="858" cy="170" r="6" fill="var(--accent-3)" />
+            </g>
+
+            <!-- arrows (wireframe dashed) -->
+            <g fill="none" stroke-linecap="round" stroke-width="2">
+              <path
+                d="M342 130H404"
+                stroke="var(--ink-strong)"
+                opacity="0.55"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M342 150H404"
+                stroke="var(--ink-strong)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M342 170H404"
+                stroke="var(--ink-strong)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+
+              <path
+                d="M780 96H842"
+                stroke="var(--accent-2)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M780 116H842"
+                stroke="var(--accent)"
+                opacity="0.50"
+                stroke-dasharray="7 6"
+              />
+              <path
+                d="M780 136H842"
+                stroke="var(--accent-3)"
+                opacity="0.45"
+                stroke-dasharray="7 6"
+              />
+            </g>
+
+            <!-- arrow tips -->
+            <g
+              fill="none"
+              stroke="var(--ink-strong)"
+              opacity="0.55"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M404 130l-10-6m10 6l-10 6" />
+              <path d="M404 150l-10-6m10 6l-10 6" opacity="0.45" />
+              <path d="M404 170l-10-6m10 6l-10 6" opacity="0.45" />
+
+              <path d="M842 96l-10-6m10 6l-10 6" opacity="0.45" />
+              <path d="M842 116l-10-6m10 6l-10 6" opacity="0.50" />
+              <path d="M842 136l-10-6m10 6l-10 6" opacity="0.45" />
+            </g>
+
+            <!-- title -->
+            <text
+              x="72"
+              y="44"
+              font-size="11"
+              font-weight="950"
+              fill="var(--text-dim)"
+            >
+              PIPELINE VIEW (wireframe)
+            </text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- 기관별 역할 상세 -->
+      <section aria-labelledby="roles-table">
+        <div class="section-title">
+          <h2 id="roles-table">기관별 역할 상세 명세</h2>
+          <p>주관기관, 의료기관 및 기술 파트너 간의 R&R 최적화</p>
+        </div>
+
+        <div class="org-legend" role="list">
+          <div class="legend-item" role="listitem">
+            <div class="legend-dot lead" aria-hidden="true"></div>
+            <span><strong>주관기관</strong> - 총괄 및 통합 조정</span>
+          </div>
+          <div class="legend-item" role="listitem">
+            <div class="legend-dot hospital" aria-hidden="true"></div>
+            <span><strong>의료기관</strong> - 임상 데이터 및 실증</span>
+          </div>
+          <div class="legend-item" role="listitem">
+            <div class="legend-dot ai" aria-hidden="true"></div>
+            <span><strong>AI·기업</strong> - 기술 개발 및 플랫폼</span>
+          </div>
+        </div>
+
+        <div class="arch-card" style="padding: 0; overflow: hidden">
+          <div class="role-table-wrapper">
+            <table class="role-table">
+              <thead>
+                <tr>
+                  <th scope="col">구분</th>
+                  <th scope="col">기관명</th>
+                  <th scope="col">주요 역할 및 담당 질환</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="role-lead">
+                  <td class="role-category">주관기관</td>
+                  <td class="inst-name lead">연세대학교 산학협력단</td>
+                  <td class="role-desc">
+                    총괄 PMO, 사업 관리 및 통합 조정, 임상·기술·사업화 연계
+                  </td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="role-category" rowspan="6">의료기관</td>
+                  <td class="inst-name hospital">연세의료원</td>
+                  <td class="role-desc">산모 전주기 모니터링 주관기관</td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">서울아산병원</td>
+                  <td class="role-desc">소아 만성호흡부전 주관기관</td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">삼성서울병원</td>
+                  <td class="role-desc">
+                    전립선비대증 데이터셋 구축 및 의학적 전문성 제공
+                  </td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">중앙대학교병원</td>
+                  <td class="role-desc">척추·관절 수술 후 재활 관리 실증</td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">분당차병원</td>
+                  <td class="role-desc">위암 수술 후 합병증 예측 모델 검증</td>
+                </tr>
+                <tr class="role-hospital">
+                  <td class="inst-name hospital">길의료재단</td>
+                  <td class="role-desc">대장암 예후 관리 및 생활 습관 실증</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="role-category" rowspan="8">
+                    AI·플랫폼<br />디바이스
+                  </td>
+                  <td class="inst-name ai">파이디지털헬스케어</td>
+                  <td class="role-desc">데이터 연계 플랫폼 (T-Bridge) 구축</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">아크릴</td>
+                  <td class="role-desc">Agentic AI 핵심 엔진 개발</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">aitrics</td>
+                  <td class="role-desc">
+                    예후·합병증 예측 AI 모델 & Agentic AI 개발
+                  </td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">아이픽셀</td>
+                  <td class="role-desc">AI 기반 재활 운동 콘텐츠 개발</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">메쥬 / 에터널</td>
+                  <td class="role-desc">
+                    웨어러블 생체신호 및 산모·태아 신호 측정 디바이스
+                  </td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">에버트라이</td>
+                  <td class="role-desc">
+                    의료기기 규제 대응 및 인허가 전략 수립
+                  </td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">사운더블헬스코리아</td>
+                  <td class="role-desc">소리 분석 기반 배뇨/호흡 모니터링</td>
+                </tr>
+                <tr class="role-ai">
+                  <td class="inst-name ai">Xolution</td>
+                  <td class="role-desc">생활습관 중재 프로그램 개발</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="height: 16px"></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Strategic Roadmap (2025–2028)</h2>
+          <p>과제 목적–기술 범위–연차별 도달 수준에 기반한 단계적 추진 계획</p>
+        </div>
+
+        <div class="arch-card">
+          <div class="roadmap">
+            <div class="phase">
+              <div class="phase-header">2025 (Year 1)</div>
+              <div class="phase-title">Foundation</div>
+              <div class="phase-subtitle">기반 구축 단계</div>
+              <ul>
+                <li>IRB 승인 절차 수행 및 임상 데이터 정의 확정함</li>
+                <li>T-Bridge 기반 데이터 연계 구조 설계함</li>
+                <li>질환별 데이터 표준화 전략 수립함</li>
+              </ul>
+            </div>
+
+            <div class="phase year-2026">
+              <div class="phase-header">2026 (Year 2)</div>
+              <div class="phase-title">Development</div>
+              <div class="phase-subtitle">기술 개발 단계</div>
+              <ul>
+                <li>Agentic AI 핵심 기능 모듈 구현함</li>
+                <li>질환별 파일럿 테스트 수행함</li>
+                <li>의료기기 규제 대응 및 인허가 준비 착수함</li>
+              </ul>
+            </div>
+
+            <div class="phase">
+              <div class="phase-header">2027 (Year 3)</div>
+              <div class="phase-title">Validation</div>
+              <div class="phase-subtitle">실증 및 검증 단계</div>
+              <ul>
+                <li>다기관 기반 기술적 교차 검증 수행함</li>
+                <li>시스템 안정성 및 성능 고도화 진행함</li>
+                <li>임상 적용 가능성에 대한 기술적 검토 수행함</li>
+              </ul>
+            </div>
+
+            <div class="phase">
+              <div class="phase-header">2028 (Year 4)</div>
+              <div class="phase-title">Expansion</div>
+              <div class="phase-subtitle">확산 및 사업화 단계</div>
+              <ul>
+                <li>상용 서비스 전환을 위한 운영 모델 정립함</li>
+                <li>국내외 규제 환경 검토 및 확장 전략 수립함</li>
+                <li>다질환 기반 서비스 확산 가능성 검토함</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 중점질환 예후관리 서비스 -->
+      <section aria-labelledby="svc-spec">
+        <div class="section-title">
+          <h2 id="svc-spec">중점질환 예후관리 서비스 명세</h2>
+          <p>각 세부 과제별 핵심 모듈 및 기대 효과</p>
+        </div>
+
+        <div class="svc-grid">
+          <!-- SERVICE 01 -->
+          <article class="svc-card">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index">SERVICE 01</div>
+                <h3>산모 전주기 관리 모니터링</h3>
+              </div>
+              <span class="svc-tag">세브란스병원 (권자영 교수)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>임상질의 기반 개인 상태 자가 Triage</li>
+                  <li>태아 도플러 시그널 실시간 모니터링</li>
+                  <li>임신부 자궁 수축 자가 선별 서비스</li>
+                  <li>임신부 고혈압/당뇨 능동형 모니터링</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>
+                    온라인 정보 불신 및 막연한 불안감
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>
+                    병력 기반 가이드로 심리적 안심 제공
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 02 - AITRICS -->
+          <article class="svc-card aitrics-highlight aitrics-primary">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index" style="color: var(--accent2-label)">
+                  SERVICE 02
+                </div>
+                <h3>소아 만성호흡부전 환자 재택 모니터링</h3>
+              </div>
+              <span class="svc-tag aitrics-tag"
+                >서울아산병원 (김경원 교수)</span
+              >
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성 (기술집약)</h4>
+                <ul class="mod-list">
+                  <li><strong>EMR 기반 개인 맞춤형 상담 에이전트</strong></li>
+                  <li>가정용 인공호흡기 위험도 예측 및 알람</li>
+                  <li>데이터 기반 자가 증상(PRO) 실시간 분류</li>
+                  <li>응급 상황 시 의료진 연계 및 내원 권고</li>
+                </ul>
+                <p
+                  style="
+                    font-size: 11px;
+                    color: var(--accent2-label);
+                    margin-top: 10px;
+                    font-weight: 700;
+                  "
+                >
+                  ※ 에이아이트릭스: 데이터 기반 위험도 트리아제 분류(3단계) 및
+                  인공호흡기 분석·위험도별 알람 시스템 앱 개발
+                </p>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>보호자의 조치 방법 미숙 및 불안
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>위험 징후 실시간 확인 및 트리아제
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="svc-footer">
+              <div class="logos">
+                <span class="logo-tag tag-hospital"
+                  >신촌세브란스병원
+                  <span class="pill cross">교차검증</span></span
+                >
+                <span class="logo-tag tag-hospital"
+                  >삼성서울병원 <span class="pill cross">교차검증</span></span
+                >
+                <span class="logo-tag tag-hospital"
+                  >서울아산병원 <span class="pill cross">교차검증</span></span
+                >
+                <span class="logo-tag tag-hospital2"
+                  >서울대학교병원
+                  <span class="pill multi">다기관실증</span></span
+                >
+                <span class="logo-tag tag-hospital2"
+                  >전남대학교병원
+                  <span class="pill multi">다기관실증</span></span
+                >
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 03 -->
+          <article class="svc-card">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index">SERVICE 03</div>
+                <h3>수술 후 재활운동 재택 관리</h3>
+              </div>
+              <span class="svc-tag">중앙대병원 (김성환 교수)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>하지/척추 수술 후 맞춤형 예후 관리 설명</li>
+                  <li>AI 기반 개인 맞춤형 재활 코칭 서비스</li>
+                  <li>실시간 자세 및 운동 분석 피드백 모듈</li>
+                  <li>이상징후 감지 시 의료진 연계 모듈</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>혼자 할 때 자세가 틀릴까 봐 걱정
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>실시간 AI 코칭으로 재활 회복 속도 향상
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 04 -->
+          <article class="svc-card">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index">SERVICE 04</div>
+                <h3>전립선 비대증 환자 생활 습관 관리</h3>
+              </div>
+              <span class="svc-tag">삼성서울병원 (한덕현 교수)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>가정 내 요속 측정 및 지능형 분석 서비스</li>
+                  <li>PRO 기반 잔뇨량 증가 위험도 평가</li>
+                  <li>남성 하부요로증상(LUTS) 원인 감별 AI</li>
+                  <li>하부요로증상 중증도 자동 분류 AI</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>진료 대기 중 증상 악화 불안
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>자동 배뇨 기록 및 선제적 조치 알림
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 05 - AITRICS -->
+          <article class="svc-card aitrics-highlight">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index" style="color: var(--accent2-label)">
+                  SERVICE 05
+                </div>
+                <h3>위암 환자 수술 후 합병증 관리</h3>
+              </div>
+              <span class="svc-tag aitrics-tag">분당차병원 (AITRICS 참여)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li><strong>능동형 위암 예후관리 Agentic AI</strong></li>
+                  <li>수술 후 합병증 발생 예측 AI 서비스</li>
+                  <li>웨어러블 디바이스 연동 생체신호 모니터링</li>
+                  <li>EMR 연동 맞춤형 식이/영양 관리 솔루션</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>퇴원 후 증상 발생 시 병원 방문 판단 어려움
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>실시간 데이터 기반 합병증 전조 증상 알림
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- SERVICE 06 - AITRICS -->
+          <article class="svc-card aitrics-highlight">
+            <div class="svc-header">
+              <div class="svc-title-wrap">
+                <div class="svc-index" style="color: var(--accent2-label)">
+                  SERVICE 06
+                </div>
+                <h3>대장암 항암 환자 생활 습관 관리</h3>
+              </div>
+              <span class="svc-tag aitrics-tag">길의료재단 (AITRICS 참여)</span>
+            </div>
+            <div class="svc-body">
+              <div>
+                <h4>핵심 모듈 구성</h4>
+                <ul class="mod-list">
+                  <li>대장암 및 용종 재발 발생률 정밀 예측</li>
+                  <li>항암 부작용 예측 및 자가 대처 가이드</li>
+                  <li>웨어러블 연동 운동 가이드 및 모니터링</li>
+                  <li>개인 맞춤형 항암 생활습관 상담 에이전트</li>
+                </ul>
+              </div>
+              <div>
+                <div class="as-is-to-be">
+                  <div class="box box-as">
+                    <b>AS-IS</b>재발 공포 및 정보 부족으로 인한 무리한 운동
+                  </div>
+                  <div class="box box-to">
+                    <b>TO-BE</b>믿을 수 있는 정보와 맞춤형 식단/운동 관리
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 사업 컨소시엄 -->
+      <section aria-labelledby="consortium">
+        <div class="section-title">
+          <h2 id="consortium">사업 컨소시엄 구성</h2>
+          <p>국내 의료기관 및 기술 기업 협업 체계</p>
+        </div>
+
+        <div class="arch-card">
+          <h4 style="font-size: 15px; margin: 0 0 12px">
+            공동연구 개발기관 (의료기관/기업)
+          </h4>
+          <div class="logos">
+            <span class="logo-tag tag-hospital">서울아산병원</span>
+            <span class="logo-tag tag-hospital">중앙대학교병원</span>
+            <span class="logo-tag tag-hospital">삼성서울병원</span>
+            <span class="logo-tag tag-hospital">분당차병원</span>
+            <span class="logo-tag tag-hospital">길의료재단</span>
+          </div>
+          <div class="logos">
+            <span class="logo-tag tag-ai">에이아이트릭스 (AITRICS)</span>
+            <span class="logo-tag tag-ai">파이디지털헬스케어</span>
+            <span class="logo-tag tag-ai">아크릴</span>
+            <span class="logo-tag tag-ai">메쥬</span>
+            <span class="logo-tag tag-ai">사운더블헬스코리아</span>
+            <span class="logo-tag tag-ai">아이픽셀</span>
+            <span class="logo-tag tag-ai">딥메트릭스 외</span>
+          </div>
+
+          <div style="height: 24px"></div>
+
+          <h4 style="font-size: 15px; margin: 0 0 12px">
+            실증 참여기관 (전국 단위)
+          </h4>
+          <div class="logos">
+            <span class="logo-tag tag-hospital">서울대학교병원</span>
+            <span class="logo-tag tag-hospital">고려대안암병원</span>
+            <span class="logo-tag tag-hospital">계명대동산병원</span>
+            <span class="logo-tag tag-hospital">인제대해운대백병원</span>
+            <span class="logo-tag tag-hospital">전남대학교병원</span>
+            <span class="logo-tag tag-hospital">충남대학교병원</span>
+            <span class="logo-tag tag-hospital">칠곡경북대병원 외 14개소</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer>
+      <p style="font-size: 13px; color: var(--text-dim)">
+        본 페이지는 닥터앤서 3.0 공식 발표자료/운영 문서를 기반으로 aitrics가
+        재구성한 페이지입니다.
+      </p>
+      <p style="font-size: 12px; color: var(--text-dim); margin-top: 8px">
+        © 2025 닥터앤서 3.0 프로젝트_SRLEE. All rights reserved.
+      </p>
+    </footer>
+
+    <!-- ✅ 테마 스크립트 -->
+    <script>
+      (function () {
+        const KEY = "theme";
+        const root = document.documentElement;
+        const btn = document.getElementById("themeToggle");
+        const icon = document.getElementById("themeIcon");
+        const label = document.getElementById("themeLabel");
+
+        if (!btn || !icon || !label) return;
+
+        const sunSvg =
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
+        const moonSvg =
+          '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.2A7.5 7.5 0 0 1 10.8 3 6.5 6.5 0 1 0 21 13.2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+
+        function apply(theme, persist) {
+          root.setAttribute("data-theme", theme);
+          if (persist) localStorage.setItem(KEY, theme);
+
+          const isLight = theme === "light";
+          icon.innerHTML = isLight ? sunSvg : moonSvg;
+          label.textContent = isLight ? "Light" : "Dark";
+          btn.setAttribute(
+            "aria-label",
+            isLight ? "다크 모드로 전환" : "라이트 모드로 전환",
+          );
+        }
+
+        const stored = localStorage.getItem(KEY);
+        if (stored === "light" || stored === "dark") {
+          apply(stored, false);
+        } else {
+          const prefersLight =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches;
+          apply(prefersLight ? "light" : "dark", false);
+
+          const mq = window.matchMedia("(prefers-color-scheme: light)");
+          mq.addEventListener?.("change", (e) => {
+            const hasStored = localStorage.getItem(KEY);
+            if (hasStored) return;
+            apply(e.matches ? "light" : "dark", false);
+          });
+        }
+
+        btn.addEventListener("click", () => {
+          const current = root.getAttribute("data-theme") || "dark";
+          const next = current === "light" ? "dark" : "light";
+          apply(next, true);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
+    </script>
+  </body>
